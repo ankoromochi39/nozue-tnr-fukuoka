@@ -1,202 +1,104 @@
 /**
- * のずえんち 保護猫支援ページ — Home
- * Theme: "やさしい陽だまり" — Organic Warmth / Japanese Zine
- * Layout: Single-page scroll, scrapbook-style with paper texture, hand-drawn motifs
- * Colors: Terracotta #C2522A primary, sage green, creamy off-white bg
- * Fonts: Klee One (headings), Noto Sans JP (body)
- * Icons: SVG hand-drawn line illustrations in brand colors — NO emoji icons
- * Brand: のずえんち wordmark always with seated cat + heart-tail silhouette
+ * のずえんち 保護猫支援ページ v2
+ * Theme: "ポップかわいい猫ラブ" — Kawaii Pop / Cat Lover Zine
+ * 場所: 福岡県
+ * Colors: Coral Pink primary, Sunny Yellow, Mint Green, warm white bg
+ * Fonts: Klee One (headings), M PLUS Rounded 1c (body) — rounded & cute
+ * Photos: Real rescue cat photos from user
  */
 
 import { useEffect, useRef } from "react";
 
-const HERO_IMAGE = "https://d2xsxph8kpxj0f.cloudfront.net/310519663786704229/LNrDcQhMB6DebqMoECxQSy/hero-cats-8aPW4gn4vaAXrCGZUqLrCb.webp";
-const LOGO_IMAGE = "https://d2xsxph8kpxj0f.cloudfront.net/310519663786704229/LNrDcQhMB6DebqMoECxQSy/logo-cat-68vFAzdm4iGge5t42quVHf.webp";
-const PAYPAY_ID = "nozuenchi";
+// ── Asset URLs ──
+const LOGO_CAT = "https://d2xsxph8kpxj0f.cloudfront.net/310519663786704229/LNrDcQhMB6DebqMoECxQSy/logo-cat-68vFAzdm4iGge5t42quVHf.webp";
+const PROFILE_ICON = "/manus-storage/cat-icon-cropped_71823e1a.jpg";   // 黒白猫 — プロフィールアイコン（クロップ済み）
+const CAT_TABBY    = "/manus-storage/cat1-tabby_e53711c8.jpg";          // キジトラ子猫
+const CAT_WHITE    = "/manus-storage/cat2-white-blue_7d2edb32.jpg";     // 白猫（青い目）
+const CAT_FLUFFY   = "/manus-storage/cat3-fluffy_485f2c8f.jpg";         // もふもふ子猫
+const CAT_KITTENS  = "/manus-storage/cat4-kittens_4f3810ed.jpg";        // 子猫たち
+const CAT_VIDEO    = "/manus-storage/cats-video_dcfef93a.mp4";
+
+const PAYPAY_ID  = "nozuenchi";
 const AMAZON_URL = "https://www.amazon.co.jp/hz/wishlist/ls/232W7EZA4";
 const INSTAGRAM_URL = "https://www.instagram.com/nozue.tnr";
-const PAYPAY_QR = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https://qr.paypay.ne.jp/p2p01_${PAYPAY_ID}&bgcolor=FDF8F2&color=3D2B1F&margin=12`;
+const PAYPAY_QR  = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https://qr.paypay.ne.jp/p2p01_${PAYPAY_ID}&bgcolor=FFF0F3&color=C2522A&margin=14`;
 
-// ── Intersection Observer hook for fade-in ──
+// ── Intersection Observer hook ──
 function useFadeInUp() {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          el.classList.add("visible");
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { el.classList.add("visible"); obs.disconnect(); }
+    }, { threshold: 0.1 });
+    obs.observe(el);
+    return () => obs.disconnect();
   }, []);
   return ref;
 }
 
-function FadeSection({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
+function Fade({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   const ref = useFadeInUp();
-  return (
-    <div ref={ref} className={`fade-in-up ${className}`} style={{ transitionDelay: `${delay}ms` }}>
-      {children}
-    </div>
-  );
+  return <div ref={ref} className={`fade-in-up ${className}`} style={{ transitionDelay: `${delay}ms` }}>{children}</div>;
 }
 
-// ── Hand-drawn style SVG icons ──
-
-function IconShelter({ className = "", style = {} }: { className?: string; style?: React.CSSProperties }) {
-  return (
-    <svg className={className} style={style} viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M8 22L24 8l16 14" />
-      <path d="M12 22v16h24V22" />
-      <path d="M19 38V28h10v10" />
-      <path d="M24 8v-3" />
-    </svg>
-  );
-}
-
-function IconScissors({ className = "", style = {} }: { className?: string; style?: React.CSSProperties }) {
-  return (
-    <svg className={className} style={style} viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="14" cy="14" r="5" />
-      <circle cx="14" cy="34" r="5" />
-      <line x1="18" y1="17" x2="38" y2="37" />
-      <line x1="18" y1="31" x2="38" y2="11" />
-    </svg>
-  );
-}
-
-function IconHeart({ className = "", style = {} }: { className?: string; style?: React.CSSProperties }) {
-  return (
-    <svg className={className} style={style} viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M24 40s-16-10-16-22a8 8 0 0116 0 8 8 0 0116 0c0 12-16 22-16 22z" />
-    </svg>
-  );
-}
-
-function IconPaw({ className = "", style = {} }: { className?: string; style?: React.CSSProperties }) {
-  return (
-    <svg className={className} style={style} viewBox="0 0 48 48" fill="currentColor">
-      <ellipse cx="24" cy="30" rx="9" ry="8" />
-      <ellipse cx="11" cy="21" rx="4.5" ry="4" />
-      <ellipse cx="37" cy="21" rx="4.5" ry="4" />
-      <ellipse cx="16" cy="13" rx="4" ry="3.5" />
-      <ellipse cx="32" cy="13" rx="4" ry="3.5" />
-    </svg>
-  );
-}
-
-function IconCamera({ className = "", style = {} }: { className?: string; style?: React.CSSProperties }) {
-  return (
-    <svg className={className} style={style} viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="6" y="16" width="36" height="26" rx="4" />
-      <circle cx="24" cy="29" r="7" />
-      <path d="M16 16l3-6h10l3 6" />
-      <circle cx="38" cy="22" r="1.5" fill="currentColor" />
-    </svg>
-  );
-}
-
-function IconFood({ className = "", style = {} }: { className?: string; style?: React.CSSProperties }) {
-  return (
-    <svg className={className} style={style} viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M10 20c0-6 4-12 14-12s14 6 14 12" />
-      <path d="M8 20h32" />
-      <path d="M12 20v16" />
-      <path d="M36 20v16" />
-      <path d="M10 36h28" />
-    </svg>
-  );
-}
-
-function IconMedical({ className = "", style = {} }: { className?: string; style?: React.CSSProperties }) {
-  return (
-    <svg className={className} style={style} viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="10" y="10" width="28" height="28" rx="4" />
-      <line x1="24" y1="18" x2="24" y2="30" />
-      <line x1="18" y1="24" x2="30" y2="24" />
-    </svg>
-  );
-}
-
-function IconBox({ className = "", style = {} }: { className?: string; style?: React.CSSProperties }) {
-  return (
-    <svg className={className} style={style} viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M8 16l16-8 16 8v20l-16 8-16-8V16z" />
-      <path d="M8 16l16 8 16-8" />
-      <line x1="24" y1="24" x2="24" y2="44" />
-      <path d="M16 12l16 8" />
-    </svg>
-  );
-}
-
-// ── Hand-drawn divider ──
-function WaveDivider({ flip = false }: { flip?: boolean }) {
-  return (
-    <div style={{ lineHeight: 0, transform: flip ? "scaleY(-1)" : "none" }}>
-      <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style={{ display: "block", width: "100%", height: "48px" }}>
-        <path
-          d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z"
-          fill="oklch(0.975 0.012 80)"
-        />
-      </svg>
-    </div>
-  );
-}
-
-// ── Paper texture overlay ──
-function PaperTexture() {
+// ── Decorative bubble shape ──
+function Bubble({ color, size, className = "" }: { color: string; size: number; className?: string }) {
   return (
     <div
-      className="absolute inset-0 pointer-events-none"
-      style={{
-        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E")`,
-        opacity: 0.6,
-      }}
+      className={`absolute rounded-full pointer-events-none ${className}`}
+      style={{ width: size, height: size, background: color, opacity: 0.18 }}
     />
   );
 }
 
-// ── Hand-drawn underline ──
-function HandUnderline({ color = "oklch(0.62 0.13 48)" }: { color?: string }) {
+// ── Paw print SVG ──
+function Paw({ className = "", color = "currentColor" }: { className?: string; color?: string }) {
   return (
-    <svg viewBox="0 0 200 12" style={{ display: "block", width: "100%", maxWidth: "200px", height: "10px", marginTop: "4px" }}>
-      <path
-        d="M4,8 C40,3 80,10 120,6 C160,2 180,9 196,7"
-        fill="none"
-        stroke={color}
-        strokeWidth="3"
-        strokeLinecap="round"
-        opacity="0.7"
-      />
+    <svg className={className} viewBox="0 0 40 40" fill={color}>
+      <ellipse cx="20" cy="26" rx="8" ry="7" />
+      <ellipse cx="10" cy="18" rx="4" ry="3.5" />
+      <ellipse cx="30" cy="18" rx="4" ry="3.5" />
+      <ellipse cx="14" cy="11" rx="3.5" ry="3" />
+      <ellipse cx="26" cy="11" rx="3.5" ry="3" />
+    </svg>
+  );
+}
+
+// ── Heart SVG ──
+function Heart({ className = "", color = "currentColor" }: { className?: string; color?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill={color}>
+      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+    </svg>
+  );
+}
+
+// ── Star SVG ──
+function Star({ className = "" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
     </svg>
   );
 }
 
 export default function Home() {
   return (
-    <div className="min-h-screen" style={{ background: "oklch(0.975 0.012 80)" }}>
+    <div className="min-h-screen overflow-x-hidden" style={{ background: "oklch(0.985 0.008 15)" }}>
 
       {/* ── HEADER ── */}
       <header className="fixed top-0 left-0 right-0 z-50" id="site-header">
         <div className="container flex items-center justify-between py-3">
-          {/* Wordmark: logo + name */}
           <div className="flex items-center gap-2">
-            <img src={LOGO_IMAGE} alt="のずえんちロゴ" className="w-9 h-9 object-contain drop-shadow-sm" />
+            <img src={PROFILE_ICON} alt="のずえんち" className="w-10 h-10 rounded-full object-cover border-2" style={{ borderColor: "oklch(0.68 0.16 15)" }} />
             <div>
-              <span
-                className="font-bold text-lg leading-none block"
-                style={{ fontFamily: "'Klee One', serif", color: "oklch(0.22 0.03 55)" }}
-              >
+              <span className="font-bold text-base leading-none block" style={{ fontFamily: "'Klee One', serif", color: "oklch(0.22 0.03 55)" }}>
                 のずえんち
               </span>
-              <span className="text-[10px] tracking-widest block" style={{ color: "oklch(0.62 0.13 48)" }}>
-                TNR保護猫活動
+              <span className="text-[10px] font-medium tracking-wide block" style={{ color: "oklch(0.68 0.16 15)" }}>
+                🐾 福岡県 TNR保護猫活動
               </span>
             </div>
           </div>
@@ -204,263 +106,263 @@ export default function Home() {
             href={INSTAGRAM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-sm font-medium px-3 py-1.5 rounded-full btn-press transition-colors"
-            style={{ background: "oklch(0.62 0.13 48 / 0.1)", color: "oklch(0.50 0.13 48)" }}
+            className="btn-press flex items-center gap-1.5 text-sm font-bold px-4 py-2 rounded-full"
+            style={{ background: "oklch(0.68 0.16 15)", color: "white", boxShadow: "0 3px 12px oklch(0.68 0.16 15 / 0.35)" }}
           >
             <InstagramIcon className="w-4 h-4" />
-            <span className="hidden sm:inline">Instagram</span>
+            <span className="hidden sm:inline">フォローする</span>
           </a>
         </div>
       </header>
 
       {/* ── HERO ── */}
-      <section className="relative min-h-[95vh] flex items-end overflow-hidden">
-        <div className="absolute inset-0">
-          <img src={HERO_IMAGE} alt="保護猫たち" className="w-full h-full object-cover" />
-          <div
-            className="absolute inset-0"
-            style={{
-              background: "linear-gradient(to bottom, oklch(0 0 0 / 0.05) 0%, oklch(0 0 0 / 0.1) 35%, oklch(0 0 0 / 0.75) 100%)"
-            }}
-          />
-        </div>
+      <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-20 pb-10">
+        {/* Colorful background bubbles */}
+        <Bubble color="oklch(0.68 0.16 15)" size={400} className="-top-20 -right-20" />
+        <Bubble color="oklch(0.88 0.12 90)" size={300} className="top-1/3 -left-24" />
+        <Bubble color="oklch(0.82 0.10 165)" size={250} className="bottom-10 right-10" />
 
-        <div className="relative container pb-20 pt-32">
-          <div className="max-w-2xl">
-            <div className="flex items-center gap-2 mb-3">
-              <IconPaw className="w-5 h-5" style={{ color: "oklch(0.82 0.08 55)" } as React.CSSProperties} />
-              <span className="text-xs font-semibold tracking-[0.2em] uppercase" style={{ color: "oklch(0.88 0.06 60)" }}>
-                TNR保護猫活動
-              </span>
-            </div>
-            <h1
-              className="text-4xl sm:text-5xl font-bold leading-snug mb-5"
-              style={{ fontFamily: "'Klee One', serif", color: "white", textShadow: "0 2px 16px oklch(0 0 0 / 0.5)" }}
-            >
-              あなたの支援が、<br />猫の命を救います
-            </h1>
-            <p className="text-base sm:text-lg mb-8 leading-relaxed" style={{ color: "oklch(0.93 0.01 80)" }}>
-              人間(4) 犬(1) 猫(10) の大家族母ちゃんが<br />
-              TNR活動（猫保護 → 去勢 → 譲渡）をしています。<br />
-              一緒に猫の命を救いませんか？
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <a
-                href="#paypay"
-                className="btn-press inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-bold text-base transition-all"
-                style={{
-                  background: "oklch(0.62 0.13 48)",
-                  color: "white",
-                  boxShadow: "0 4px 20px oklch(0.62 0.13 48 / 0.45)"
-                }}
-              >
-                <PayPayWordmark className="h-5" />
-                PayPayで支援する
-              </a>
-              <a
-                href="#amazon"
-                className="btn-press inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-bold text-base transition-all"
-                style={{
-                  background: "oklch(1 0 0 / 0.92)",
-                  color: "oklch(0.22 0.03 55)",
-                  boxShadow: "0 4px 20px oklch(0 0 0 / 0.18)"
-                }}
-              >
-                <IconBox className="w-5 h-5" style={{ color: "oklch(0.55 0.12 70)" } as React.CSSProperties} />
-                物資を支援する
-              </a>
-            </div>
+        <div className="container relative z-10 flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
+          {/* Left: text */}
+          <div className="flex-1 text-center lg:text-left">
+            <Fade>
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-bold mb-5"
+                style={{ background: "oklch(0.68 0.16 15 / 0.12)", color: "oklch(0.55 0.16 15)" }}>
+                <Paw className="w-4 h-4" color="oklch(0.68 0.16 15)" />
+                福岡県 保護猫活動
+              </div>
+            </Fade>
+            <Fade delay={80}>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-5"
+                style={{ fontFamily: "'Klee One', serif", color: "oklch(0.22 0.03 55)" }}>
+                この子たちに、<br />
+                <span style={{ color: "oklch(0.68 0.16 15)" }}>あたたかい</span><br />
+                お家を🐾
+              </h1>
+            </Fade>
+            <Fade delay={160}>
+              <p className="text-base sm:text-lg leading-relaxed mb-8" style={{ color: "oklch(0.42 0.025 60)" }}>
+                人間(4) 犬(1) 猫(10) の大家族母ちゃんが<br />
+                TNR活動（猫保護 → 去勢 → 譲渡）をしています。<br />
+                一緒に猫の命を救いませんか？
+              </p>
+            </Fade>
+            <Fade delay={240}>
+              <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
+                <a href="#paypay"
+                  className="btn-press inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-base"
+                  style={{ background: "oklch(0.68 0.16 15)", color: "white", boxShadow: "0 6px 20px oklch(0.68 0.16 15 / 0.4)" }}>
+                  💝 PayPayで支援する
+                </a>
+                <a href="#amazon"
+                  className="btn-press inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-base"
+                  style={{ background: "oklch(0.88 0.12 90)", color: "oklch(0.30 0.06 70)", boxShadow: "0 6px 20px oklch(0.88 0.12 90 / 0.4)" }}>
+                  📦 物資を支援する
+                </a>
+              </div>
+            </Fade>
           </div>
-        </div>
 
-        {/* Scroll hint */}
-        <div className="absolute bottom-7 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-60">
-          <span className="text-xs text-white tracking-wider">スクロール</span>
-          <div className="w-px h-8 overflow-hidden rounded-full" style={{ background: "oklch(1 0 0 / 0.25)" }}>
-            <div className="w-full rounded-full" style={{ height: "50%", background: "white", animation: "scrollDot 1.6s ease-in-out infinite" }} />
+          {/* Right: profile photo + floating cat photos */}
+          <div className="flex-shrink-0 relative w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96" style={{ isolation: "isolate" }}>
+            {/* Main profile circle */}
+            <Fade delay={100}>
+              <div className="w-full h-full rounded-full overflow-hidden border-4 relative z-10"
+                style={{ borderColor: "oklch(0.68 0.16 15)", boxShadow: "0 0 0 8px oklch(0.68 0.16 15 / 0.15), 0 20px 60px oklch(0.68 0.16 15 / 0.25)" }}>
+                <img src={PROFILE_ICON} alt="のずえんち 黒白猫" className="w-full h-full object-cover" />
+              </div>
+            </Fade>
+            {/* Floating mini photos */}
+            <div className="absolute -top-4 -right-4 w-20 h-20 rounded-2xl overflow-hidden border-3 rotate-6 shadow-lg"
+              style={{ border: "3px solid white", boxShadow: "0 8px 20px oklch(0 0 0 / 0.15)" }}>
+              <img src={CAT_FLUFFY} alt="もふもふ子猫" className="w-full h-full object-cover" />
+            </div>
+            <div className="absolute -bottom-4 -left-4 w-20 h-20 rounded-2xl overflow-hidden border-3 -rotate-6 shadow-lg"
+              style={{ border: "3px solid white", boxShadow: "0 8px 20px oklch(0 0 0 / 0.15)" }}>
+              <img src={CAT_WHITE} alt="白猫" className="w-full h-full object-cover" />
+            </div>
+            {/* Decorative elements */}
+            <div className="absolute -top-2 left-8 text-2xl animate-bounce" style={{ animationDuration: "2s" }}>🐾</div>
+            <div className="absolute bottom-4 -right-6 text-2xl animate-bounce" style={{ animationDuration: "2.5s", animationDelay: "0.5s" }}>💕</div>
           </div>
         </div>
       </section>
 
-      {/* ── ABOUT ── */}
-      <section className="relative py-20 overflow-hidden" style={{ background: "oklch(0.975 0.012 80)" }}>
-        <PaperTexture />
-        {/* Decorative paw marks */}
-        <div className="absolute top-8 right-12 opacity-5">
-          <IconPaw className="w-32 h-32" style={{ color: "oklch(0.62 0.13 48)" } as React.CSSProperties} />
-        </div>
-        <div className="absolute bottom-8 left-8 opacity-5">
-          <IconPaw className="w-20 h-20" style={{ color: "oklch(0.62 0.13 48)" } as React.CSSProperties} />
-        </div>
-
-        <div className="container relative">
-          <FadeSection>
-            <div className="flex items-center gap-3 mb-2">
-              <img src={LOGO_IMAGE} alt="" className="w-10 h-10 object-contain" />
-              <div>
-                <h2 className="text-3xl font-bold" style={{ fontFamily: "'Klee One', serif", color: "oklch(0.22 0.03 55)" }}>
-                  のずえんちについて
-                </h2>
-                <HandUnderline />
-              </div>
+      {/* ── CATS GALLERY ── */}
+      <section className="py-16 relative overflow-hidden" style={{ background: "white" }}>
+        <Bubble color="oklch(0.82 0.10 165)" size={200} className="-top-10 -left-10" />
+        <div className="container relative z-10">
+          <Fade>
+            <div className="text-center mb-10">
+              <h2 className="text-3xl font-bold mb-2" style={{ fontFamily: "'Klee One', serif", color: "oklch(0.22 0.03 55)" }}>
+                保護猫たちを紹介するにゃ🐱
+              </h2>
+              <p className="text-sm" style={{ color: "oklch(0.55 0.02 60)" }}>
+                福岡県で保護した子たちです。みんな里親さんを待っています！
+              </p>
             </div>
-            <p className="mt-4 mb-10 text-sm leading-relaxed max-w-xl" style={{ color: "oklch(0.48 0.025 60)" }}>
-              大阪で保護猫活動を続けて数年。猫の命を一つでも多く救うために、
-              毎日奮闘しています。
-            </p>
-          </FadeSection>
+          </Fade>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              {
-                icon: <IconShelter className="w-10 h-10" />,
-                title: "保護",
-                desc: "外で暮らす猫を保護し、安全な環境で一時的に預かります。",
-                color: "oklch(0.62 0.13 48)",
-                delay: 0,
-              },
-              {
-                icon: <IconScissors className="w-10 h-10" />,
-                title: "去勢・不妊手術",
-                desc: "TNR活動の核心。手術により猫の数を適切に管理します。",
-                color: "oklch(0.55 0.08 145)",
-                delay: 100,
-              },
-              {
-                icon: <IconHeart className="w-10 h-10" />,
-                title: "譲渡",
-                desc: "里親さんを探し、猫たちに新しい家族と幸せな生活を。",
-                color: "oklch(0.62 0.13 48)",
-                delay: 200,
-              },
-            ].map((item) => (
-              <FadeSection key={item.title} delay={item.delay}>
-                <div
-                  className="support-card p-7 rounded-3xl relative overflow-hidden"
-                  style={{
-                    background: "oklch(0.995 0.006 75)",
-                    border: "1.5px solid oklch(0.90 0.02 70)",
-                    boxShadow: "0 2px 16px oklch(0.62 0.13 48 / 0.07)"
-                  }}
-                >
-                  <div style={{ color: item.color }} className="mb-4">{item.icon}</div>
-                  <h3 className="text-xl font-bold mb-2" style={{ fontFamily: "'Klee One', serif", color: "oklch(0.22 0.03 55)" }}>
-                    {item.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed" style={{ color: "oklch(0.48 0.025 60)" }}>
-                    {item.desc}
-                  </p>
-                  {/* Corner decoration */}
-                  <div className="absolute bottom-3 right-3 opacity-10" style={{ color: item.color }}>
-                    <IconPaw className="w-8 h-8" />
+              { src: CAT_TABBY,   label: "キジトラちゃん",   emoji: "🐾", color: "oklch(0.68 0.16 15)" },
+              { src: CAT_WHITE,   label: "白猫ちゃん",       emoji: "💙", color: "oklch(0.65 0.12 220)" },
+              { src: CAT_FLUFFY,  label: "もふもふちゃん",   emoji: "✨", color: "oklch(0.68 0.12 60)" },
+              { src: CAT_KITTENS, label: "子猫たち",         emoji: "💕", color: "oklch(0.68 0.16 15)" },
+            ].map((cat, i) => (
+              <Fade key={cat.label} delay={i * 80}>
+                <div className="pop-card rounded-3xl overflow-hidden"
+                  style={{ boxShadow: "0 4px 20px oklch(0 0 0 / 0.08)", border: "2px solid oklch(0.92 0.02 15)" }}>
+                  <div className="aspect-square overflow-hidden">
+                    <img src={cat.src} alt={cat.label} className="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
+                  </div>
+                  <div className="p-3 text-center" style={{ background: "white" }}>
+                    <span className="text-sm font-bold" style={{ color: cat.color }}>
+                      {cat.emoji} {cat.label}
+                    </span>
                   </div>
                 </div>
-              </FadeSection>
+              </Fade>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── SUPPORT BANNER ── */}
-      <div style={{ background: "oklch(0.975 0.012 80)" }}>
-        <div style={{ background: "oklch(0.88 0.05 145 / 0.3)", padding: "0" }}>
-          <WaveDivider flip />
-          <div className="py-14 relative overflow-hidden" style={{ background: "oklch(0.88 0.05 145 / 0.3)" }}>
-            <PaperTexture />
-            <div className="container text-center relative">
-              <FadeSection>
-                <div className="flex justify-center mb-3">
-                  <IconPaw className="w-9 h-9" style={{ color: "oklch(0.62 0.13 48)" } as React.CSSProperties} />
-                </div>
-                <h2 className="text-3xl font-bold mb-3" style={{ fontFamily: "'Klee One', serif", color: "oklch(0.22 0.03 55)" }}>
-                  保護猫たちを応援する
-                </h2>
-                <HandUnderline color="oklch(0.55 0.08 145)" />
-                <p className="mt-4 text-base" style={{ color: "oklch(0.42 0.04 100)" }}>
-                  金銭的な支援も、物資の支援も、どちらも猫たちの命につながります
-                </p>
-              </FadeSection>
+      {/* ── VIDEO SECTION ── */}
+      <section className="py-16 relative overflow-hidden"
+        style={{ background: "oklch(0.92 0.08 165 / 0.25)" }}>
+        <Bubble color="oklch(0.68 0.16 15)" size={180} className="-bottom-10 -right-10" />
+        <div className="container relative z-10">
+          <Fade>
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold mb-2" style={{ fontFamily: "'Klee One', serif", color: "oklch(0.22 0.03 55)" }}>
+                活動の様子🎥
+              </h2>
+              <p className="text-sm" style={{ color: "oklch(0.45 0.04 120)" }}>
+                保護した子たちの日常をご覧ください
+              </p>
             </div>
-          </div>
-          <WaveDivider />
+          </Fade>
+          <Fade delay={100}>
+            <div className="max-w-2xl mx-auto rounded-3xl overflow-hidden"
+              style={{ boxShadow: "0 12px 40px oklch(0.68 0.16 15 / 0.2)", border: "3px solid white" }}>
+              <video
+                src={CAT_VIDEO}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full"
+                style={{ display: "block" }}
+              />
+            </div>
+          </Fade>
         </div>
-      </div>
+      </section>
+
+      {/* ── ABOUT TNR ── */}
+      <section className="py-16 relative overflow-hidden" style={{ background: "white" }}>
+        <div className="container relative z-10">
+          <Fade>
+            <div className="text-center mb-10">
+              <h2 className="text-3xl font-bold mb-2" style={{ fontFamily: "'Klee One', serif", color: "oklch(0.22 0.03 55)" }}>
+                TNR活動ってなに？🐱
+              </h2>
+            </div>
+          </Fade>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { step: "T", label: "Trap（保護）", desc: "外で暮らす猫を保護し、安全な環境で一時的に預かります。", color: "oklch(0.68 0.16 15)", bg: "oklch(0.68 0.16 15 / 0.08)", emoji: "🏠" },
+              { step: "N", label: "Neuter（去勢）", desc: "不妊・去勢手術を行い、猫の数を適切に管理します。", color: "oklch(0.65 0.12 220)", bg: "oklch(0.65 0.12 220 / 0.08)", emoji: "✂️" },
+              { step: "R", label: "Return/里親（譲渡）", desc: "里親さんを探し、猫たちに新しい家族と幸せな生活を。", color: "oklch(0.55 0.10 145)", bg: "oklch(0.55 0.10 145 / 0.08)", emoji: "💕" },
+            ].map((item, i) => (
+              <Fade key={item.step} delay={i * 100}>
+                <div className="pop-card p-7 rounded-3xl text-center"
+                  style={{ background: item.bg, border: `2px solid ${item.color}30` }}>
+                  <div className="text-4xl mb-3">{item.emoji}</div>
+                  <div className="text-5xl font-bold mb-2" style={{ fontFamily: "'Klee One', serif", color: item.color }}>
+                    {item.step}
+                  </div>
+                  <h3 className="text-lg font-bold mb-2" style={{ color: "oklch(0.22 0.03 55)" }}>{item.label}</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: "oklch(0.48 0.025 60)" }}>{item.desc}</p>
+                </div>
+              </Fade>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── SUPPORT HEADER ── */}
+      <section className="py-12 relative overflow-hidden"
+        style={{ background: "oklch(0.68 0.16 15)" }}>
+        <Bubble color="white" size={300} className="-top-20 -right-20" />
+        <Bubble color="oklch(0.88 0.12 90)" size={200} className="bottom-0 left-10" />
+        <div className="container relative z-10 text-center">
+          <Fade>
+            <div className="flex justify-center gap-2 mb-3">
+              {[0,1,2].map(i => <Paw key={i} className="w-7 h-7" color="white" />)}
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-3" style={{ fontFamily: "'Klee One', serif", color: "white" }}>
+              保護猫たちを応援してね！
+            </h2>
+            <p className="text-base" style={{ color: "oklch(1 0 0 / 0.85)" }}>
+              金銭的な支援も、物資の支援も、どちらも猫たちの命につながります💕
+            </p>
+          </Fade>
+        </div>
+      </section>
 
       {/* ── PAYPAY ── */}
-      <section id="paypay" className="relative py-20 overflow-hidden" style={{ background: "oklch(0.975 0.012 80)" }}>
-        <PaperTexture />
-        <div className="container relative">
+      <section id="paypay" className="py-20 relative overflow-hidden" style={{ background: "white" }}>
+        <Bubble color="oklch(0.68 0.16 15)" size={250} className="-top-16 -left-16" />
+        <div className="container relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <FadeSection>
+            {/* Text */}
+            <Fade>
               <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="w-1 h-6 rounded-full" style={{ background: "oklch(0.62 0.13 48)" }} />
-                  <span className="text-xs font-semibold tracking-[0.2em] uppercase" style={{ color: "oklch(0.62 0.13 48)" }}>
-                    金銭的な支援
-                  </span>
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-bold mb-4"
+                  style={{ background: "oklch(0.68 0.16 15 / 0.1)", color: "oklch(0.55 0.16 15)" }}>
+                  💝 金銭的な支援
                 </div>
-                <h2 className="text-3xl font-bold mb-1" style={{ fontFamily: "'Klee One', serif", color: "oklch(0.22 0.03 55)" }}>
-                  PayPayで送金支援
+                <h2 className="text-3xl font-bold mb-4" style={{ fontFamily: "'Klee One', serif", color: "oklch(0.22 0.03 55)" }}>
+                  PayPayで<br />送金支援💕
                 </h2>
-                <HandUnderline />
-                <p className="mt-5 text-base leading-relaxed mb-7" style={{ color: "oklch(0.45 0.025 60)" }}>
+                <p className="text-base leading-relaxed mb-6" style={{ color: "oklch(0.45 0.025 60)" }}>
                   いただいたご支援は、保護猫たちの医療費・フード代・
                   去勢手術費用などに大切に使わせていただきます。
-                  100円からでも大変助かります。
+                  <strong style={{ color: "oklch(0.68 0.16 15)" }}>100円からでも大変助かります！</strong>
                 </p>
-
-                {/* PayPay ID badge */}
-                <div
-                  className="inline-flex items-center gap-3 px-5 py-3 rounded-2xl mb-6"
-                  style={{
-                    background: "oklch(0.62 0.13 48 / 0.08)",
-                    border: "1.5px dashed oklch(0.62 0.13 48 / 0.4)"
-                  }}
-                >
-                  <span className="text-xs font-medium" style={{ color: "oklch(0.55 0.025 60)" }}>PayPay ID</span>
-                  <span className="text-2xl font-bold tracking-wide" style={{ fontFamily: "'Klee One', serif", color: "oklch(0.50 0.13 48)" }}>
+                {/* PayPay ID */}
+                <div className="inline-flex items-center gap-3 px-5 py-3 rounded-2xl mb-6"
+                  style={{ background: "oklch(0.68 0.16 15 / 0.08)", border: "2px dashed oklch(0.68 0.16 15 / 0.4)" }}>
+                  <span className="text-xs font-bold" style={{ color: "oklch(0.55 0.025 60)" }}>PayPay ID</span>
+                  <span className="text-2xl font-bold" style={{ fontFamily: "'Klee One', serif", color: "oklch(0.50 0.16 15)" }}>
                     {PAYPAY_ID}
                   </span>
                 </div>
-
                 {/* What support covers */}
-                <div className="grid grid-cols-2 gap-3">
-                  {[
-                    { icon: <IconMedical className="w-5 h-5" />, label: "医療費・手術費" },
-                    { icon: <IconFood className="w-5 h-5" />, label: "フード・おやつ" },
-                    { icon: <IconShelter className="w-5 h-5" />, label: "保護環境整備" },
-                    { icon: <IconHeart className="w-5 h-5" />, label: "譲渡活動費" },
-                  ].map((item) => (
-                    <div key={item.label} className="flex items-center gap-2 text-sm" style={{ color: "oklch(0.48 0.025 60)" }}>
-                      <span style={{ color: "oklch(0.62 0.13 48)" }}>{item.icon}</span>
-                      {item.label}
+                <div className="grid grid-cols-2 gap-2">
+                  {["🏥 医療費・手術費", "🍚 フード・おやつ", "🏠 保護環境整備", "💕 譲渡活動費"].map(item => (
+                    <div key={item} className="flex items-center gap-2 text-sm px-3 py-2 rounded-xl"
+                      style={{ background: "oklch(0.68 0.16 15 / 0.06)", color: "oklch(0.42 0.025 60)" }}>
+                      {item}
                     </div>
                   ))}
                 </div>
               </div>
-            </FadeSection>
+            </Fade>
 
-            <FadeSection delay={150}>
+            {/* QR */}
+            <Fade delay={150}>
               <div className="flex flex-col items-center gap-5">
-                {/* QR card — scrapbook style */}
-                <div
-                  className="relative p-5 rounded-3xl support-card"
-                  style={{
-                    background: "oklch(0.995 0.006 75)",
-                    border: "1.5px solid oklch(0.90 0.02 70)",
-                    boxShadow: "0 6px 28px oklch(0.62 0.13 48 / 0.1), 0 2px 8px oklch(0 0 0 / 0.05)"
-                  }}
-                >
-                  {/* Corner tape decoration */}
-                  <div className="absolute -top-2 -left-2 w-8 h-8 rounded-sm rotate-12 opacity-60" style={{ background: "oklch(0.62 0.13 48 / 0.25)" }} />
-                  <div className="absolute -top-2 -right-2 w-8 h-8 rounded-sm -rotate-12 opacity-60" style={{ background: "oklch(0.62 0.13 48 / 0.25)" }} />
-                  <img
-                    src={PAYPAY_QR}
-                    alt="PayPay QRコード"
-                    className="w-52 h-52 rounded-2xl"
-                  />
-                  <p className="text-xs text-center mt-3" style={{ color: "oklch(0.55 0.02 60)", fontFamily: "'Klee One', serif" }}>
-                    QRコードをスキャン
+                <div className="relative p-5 rounded-3xl"
+                  style={{ background: "oklch(0.985 0.008 15)", border: "3px solid oklch(0.68 0.16 15 / 0.2)", boxShadow: "0 8px 32px oklch(0.68 0.16 15 / 0.12)" }}>
+                  {/* Cute corner decorations */}
+                  <Heart className="absolute -top-3 -left-3 w-7 h-7" color="oklch(0.68 0.16 15)" />
+                  <Heart className="absolute -top-3 -right-3 w-7 h-7" color="oklch(0.68 0.16 15)" />
+                  <img src={PAYPAY_QR} alt="PayPay QRコード" className="w-52 h-52 rounded-2xl" />
+                  <p className="text-xs text-center mt-3 font-bold" style={{ color: "oklch(0.55 0.02 60)" }}>
+                    QRコードをスキャン📱
                   </p>
                 </div>
                 <p className="text-sm text-center" style={{ color: "oklch(0.55 0.02 60)" }}>
@@ -470,210 +372,164 @@ export default function Home() {
                   href={`https://qr.paypay.ne.jp/p2p01_${PAYPAY_ID}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-press inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-base transition-all w-full max-w-xs justify-center"
-                  style={{
-                    background: "oklch(0.62 0.13 48)",
-                    color: "white",
-                    boxShadow: "0 4px 18px oklch(0.62 0.13 48 / 0.38)"
-                  }}
-                >
-                  <PayPayWordmark className="h-5" />
-                  PayPayアプリで開く
+                  className="btn-press inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-base w-full max-w-xs justify-center"
+                  style={{ background: "oklch(0.68 0.16 15)", color: "white", boxShadow: "0 6px 20px oklch(0.68 0.16 15 / 0.4)" }}>
+                  💝 PayPayアプリで開く
                 </a>
               </div>
-            </FadeSection>
+            </Fade>
           </div>
         </div>
       </section>
 
-      {/* ── DIVIDER LINE ── */}
-      <div className="container">
-        <div style={{ height: "1px", background: "oklch(0.88 0.02 70)" }} />
-      </div>
-
       {/* ── AMAZON ── */}
-      <section id="amazon" className="relative py-20 overflow-hidden" style={{ background: "oklch(0.975 0.012 80)" }}>
-        <PaperTexture />
-        {/* Decorative paw */}
-        <div className="absolute top-10 right-8 opacity-5">
-          <IconPaw className="w-24 h-24" style={{ color: "oklch(0.55 0.08 145)" } as React.CSSProperties} />
-        </div>
-        <div className="container relative">
+      <section id="amazon" className="py-20 relative overflow-hidden"
+        style={{ background: "oklch(0.92 0.10 90 / 0.2)" }}>
+        <Bubble color="oklch(0.88 0.12 90)" size={250} className="-bottom-16 -right-16" />
+        <div className="container relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            {/* Card side */}
-            <FadeSection delay={100} className="order-2 md:order-1">
-              <div className="flex flex-col items-center gap-5">
-                <div
-                  className="support-card w-full max-w-sm p-8 rounded-3xl flex flex-col items-center gap-5 relative"
-                  style={{
-                    background: "oklch(0.995 0.006 75)",
-                    border: "1.5px solid oklch(0.90 0.02 70)",
-                    boxShadow: "0 6px 28px oklch(0 0 0 / 0.07)"
-                  }}
-                >
-                  {/* Scrapbook corner */}
-                  <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-10 h-4 rounded-sm opacity-50" style={{ background: "oklch(0.55 0.08 145 / 0.4)" }} />
-                  <IconBox className="w-14 h-14" style={{ color: "oklch(0.55 0.08 145)" } as React.CSSProperties} />
-                  <div className="text-center">
-                    <p className="font-bold text-lg mb-1" style={{ fontFamily: "'Klee One', serif", color: "oklch(0.22 0.03 55)" }}>
-                      Amazonほしいものリスト
-                    </p>
-                    <p className="text-xs" style={{ color: "oklch(0.55 0.02 60)" }}>猫砂・フード・医療用品など</p>
-                  </div>
-                  <a
-                    href={AMAZON_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-press inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-bold text-base transition-all w-full justify-center"
-                    style={{
-                      background: "oklch(0.55 0.08 145)",
-                      color: "white",
-                      boxShadow: "0 4px 16px oklch(0.55 0.08 145 / 0.35)"
-                    }}
-                  >
-                    ほしいものリストを見る →
-                  </a>
+            {/* Card */}
+            <Fade delay={100} className="order-2 md:order-1">
+              <div className="pop-card max-w-sm mx-auto p-8 rounded-3xl flex flex-col items-center gap-5 text-center"
+                style={{ background: "white", border: "3px solid oklch(0.88 0.12 90 / 0.5)", boxShadow: "0 8px 32px oklch(0.88 0.12 90 / 0.2)" }}>
+                <div className="text-5xl">📦</div>
+                <div>
+                  <p className="font-bold text-lg mb-1" style={{ fontFamily: "'Klee One', serif", color: "oklch(0.22 0.03 55)" }}>
+                    Amazonほしいものリスト
+                  </p>
+                  <p className="text-xs" style={{ color: "oklch(0.55 0.02 60)" }}>猫砂・フード・医療用品など</p>
                 </div>
+                <a
+                  href={AMAZON_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-press inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-base w-full justify-center"
+                  style={{ background: "oklch(0.75 0.14 80)", color: "white", boxShadow: "0 6px 20px oklch(0.75 0.14 80 / 0.4)" }}>
+                  📦 ほしいものリストを見る
+                </a>
               </div>
-            </FadeSection>
+            </Fade>
 
-            {/* Text side */}
-            <FadeSection className="order-1 md:order-2">
+            {/* Text */}
+            <Fade className="order-1 md:order-2">
               <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="w-1 h-6 rounded-full" style={{ background: "oklch(0.55 0.08 145)" }} />
-                  <span className="text-xs font-semibold tracking-[0.2em] uppercase" style={{ color: "oklch(0.45 0.08 145)" }}>
-                    物資の支援
-                  </span>
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-bold mb-4"
+                  style={{ background: "oklch(0.75 0.14 80 / 0.12)", color: "oklch(0.55 0.14 80)" }}>
+                  📦 物資の支援
                 </div>
-                <h2 className="text-3xl font-bold mb-1" style={{ fontFamily: "'Klee One', serif", color: "oklch(0.22 0.03 55)" }}>
-                  Amazonほしいものリスト<br />から物資を支援
+                <h2 className="text-3xl font-bold mb-4" style={{ fontFamily: "'Klee One', serif", color: "oklch(0.22 0.03 55)" }}>
+                  Amazonから<br />物資を支援📦
                 </h2>
-                <HandUnderline color="oklch(0.55 0.08 145)" />
-                <p className="mt-5 text-base leading-relaxed mb-7" style={{ color: "oklch(0.45 0.025 60)" }}>
+                <p className="text-base leading-relaxed mb-6" style={{ color: "oklch(0.45 0.025 60)" }}>
                   猫砂・フード・ウェットフード・医療用品など、
                   日々の活動に必要なものをリストにまとめています。
-                  直接自宅に届けていただける物資支援も大変助かります。
+                  <strong style={{ color: "oklch(0.55 0.14 80)" }}>直接自宅に届けていただける</strong>物資支援も大変助かります！
                 </p>
-                <div className="flex flex-col gap-3">
-                  {[
-                    { icon: <IconFood className="w-5 h-5" />, label: "キャットフード・おやつ" },
-                    { icon: <IconBox className="w-5 h-5" />, label: "猫砂・トイレ用品" },
-                    { icon: <IconMedical className="w-5 h-5" />, label: "医療用品・サプリメント" },
-                    { icon: <IconShelter className="w-5 h-5" />, label: "ケージ・キャリーバッグ" },
-                  ].map((item) => (
-                    <div key={item.label} className="flex items-center gap-3 text-sm" style={{ color: "oklch(0.45 0.025 60)" }}>
-                      <span style={{ color: "oklch(0.55 0.08 145)" }}>{item.icon}</span>
-                      {item.label}
+                <div className="flex flex-col gap-2">
+                  {["🍚 キャットフード・おやつ", "🧹 猫砂・トイレ用品", "💊 医療用品・サプリメント", "🏠 ケージ・キャリーバッグ"].map(item => (
+                    <div key={item} className="flex items-center gap-2 text-sm px-3 py-2 rounded-xl"
+                      style={{ background: "oklch(0.75 0.14 80 / 0.08)", color: "oklch(0.42 0.025 60)" }}>
+                      {item}
                     </div>
                   ))}
                 </div>
               </div>
-            </FadeSection>
+            </Fade>
           </div>
         </div>
       </section>
 
       {/* ── INSTAGRAM ── */}
-      <section
-        className="relative py-20 overflow-hidden"
-        style={{ background: "oklch(0.88 0.05 145 / 0.25)" }}
-      >
-        <PaperTexture />
-        {/* Decorative large paw */}
-        <div className="absolute -bottom-4 -right-4 opacity-[0.04]">
-          <IconPaw className="w-64 h-64" style={{ color: "oklch(0.62 0.13 48)" } as React.CSSProperties} />
-        </div>
-        <div className="container relative text-center">
-          <FadeSection>
+      <section className="py-20 relative overflow-hidden" style={{ background: "white" }}>
+        <Bubble color="oklch(0.68 0.16 15)" size={200} className="-top-10 right-20" />
+        <Bubble color="oklch(0.82 0.10 165)" size={150} className="bottom-10 -left-10" />
+        <div className="container relative z-10 text-center">
+          <Fade>
             <div className="max-w-lg mx-auto">
-              <div className="flex justify-center mb-4">
-                <IconCamera className="w-12 h-12" style={{ color: "oklch(0.62 0.13 48)" } as React.CSSProperties} />
-              </div>
-              <h2 className="text-3xl font-bold mb-1" style={{ fontFamily: "'Klee One', serif", color: "oklch(0.22 0.03 55)" }}>
-                日々の活動はInstagramで
+              <div className="text-5xl mb-4">📸</div>
+              <h2 className="text-3xl font-bold mb-3" style={{ fontFamily: "'Klee One', serif", color: "oklch(0.22 0.03 55)" }}>
+                日々の活動はInstagramで！
               </h2>
-              <HandUnderline />
-              <p className="mt-5 text-base leading-relaxed mb-8" style={{ color: "oklch(0.42 0.04 100)" }}>
+              <p className="text-base leading-relaxed mb-8" style={{ color: "oklch(0.45 0.025 60)" }}>
                 保護猫たちの成長記録、活動の様子、里親募集情報など
-                日々更新しています。フォローして応援してください！
+                毎日更新しています。フォローして応援してください！
               </p>
+              {/* Mini cat photo strip */}
+              <div className="flex justify-center gap-3 mb-8">
+                {[CAT_TABBY, CAT_WHITE, CAT_FLUFFY, CAT_KITTENS].map((src, i) => (
+                  <div key={i} className="w-14 h-14 rounded-2xl overflow-hidden border-2"
+                    style={{ borderColor: "oklch(0.68 0.16 15)", transform: `rotate(${(i % 2 === 0 ? 1 : -1) * 3}deg)` }}>
+                    <img src={src} alt="" className="w-full h-full object-cover" />
+                  </div>
+                ))}
+              </div>
               <a
                 href={INSTAGRAM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-press inline-flex items-center gap-3 px-8 py-4 rounded-full font-bold text-lg transition-all"
+                className="btn-press inline-flex items-center gap-3 px-8 py-4 rounded-full font-bold text-lg"
                 style={{
-                  background: "linear-gradient(135deg, oklch(0.55 0.18 20), oklch(0.52 0.18 320), oklch(0.68 0.15 60))",
+                  background: "linear-gradient(135deg, oklch(0.55 0.18 20), oklch(0.52 0.18 320), oklch(0.72 0.15 60))",
                   color: "white",
-                  boxShadow: "0 6px 24px oklch(0.52 0.18 320 / 0.3)"
-                }}
-              >
+                  boxShadow: "0 8px 28px oklch(0.52 0.18 320 / 0.35)"
+                }}>
                 <InstagramIcon className="w-6 h-6" />
                 @nozue.tnr をフォロー
               </a>
             </div>
-          </FadeSection>
+          </Fade>
         </div>
       </section>
 
       {/* ── FOOTER ── */}
-      <footer
-        className="relative py-12 overflow-hidden"
-        style={{ background: "oklch(0.20 0.03 55)" }}
-      >
-        <div className="absolute inset-0 opacity-5">
-          <IconPaw className="absolute bottom-4 right-8 w-32 h-32" style={{ color: "white" } as React.CSSProperties} />
-        </div>
-        <div className="container relative">
+      <footer className="relative py-12 overflow-hidden"
+        style={{ background: "oklch(0.22 0.03 55)" }}>
+        <Bubble color="oklch(0.68 0.16 15)" size={200} className="-bottom-10 -right-10" />
+        <div className="container relative z-10">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
-            {/* Wordmark */}
-            <div className="flex items-center gap-2">
-              <img src={LOGO_IMAGE} alt="のずえんちロゴ" className="w-9 h-9 object-contain" style={{ filter: "brightness(0) invert(1) opacity(0.75)" }} />
+            <div className="flex items-center gap-3">
+              <img src={PROFILE_ICON} alt="のずえんち" className="w-10 h-10 rounded-full object-cover border-2" style={{ borderColor: "oklch(0.68 0.16 15)" }} />
               <div>
                 <span className="font-bold text-base block leading-none" style={{ fontFamily: "'Klee One', serif", color: "oklch(0.90 0.01 80)" }}>
                   のずえんち
                 </span>
-                <span className="text-[10px] tracking-widest block" style={{ color: "oklch(0.62 0.13 48)" }}>
-                  TNR保護猫活動
+                <span className="text-[10px] tracking-wide block" style={{ color: "oklch(0.68 0.16 15)" }}>
+                  🐾 福岡県 TNR保護猫活動
                 </span>
               </div>
             </div>
             <div className="flex items-center gap-5 text-sm" style={{ color: "oklch(0.65 0.01 80)" }}>
               <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
-                <InstagramIcon className="w-4 h-4" />
-                Instagram
+                <InstagramIcon className="w-4 h-4" /> Instagram
               </a>
               <a href="#paypay" className="hover:opacity-80 transition-opacity">PayPay支援</a>
               <a href="#amazon" className="hover:opacity-80 transition-opacity">物資支援</a>
             </div>
           </div>
-          <div
-            className="mt-8 pt-6 text-center text-xs"
-            style={{ borderTop: "1px solid oklch(1 0 0 / 0.08)", color: "oklch(0.50 0.01 80)" }}
-          >
+          <div className="mt-8 pt-6 text-center text-xs flex items-center justify-center gap-2"
+            style={{ borderTop: "1px solid oklch(1 0 0 / 0.08)", color: "oklch(0.50 0.01 80)" }}>
+            <Paw className="w-4 h-4" color="oklch(0.68 0.16 15)" />
             TNR活動（猫保護 → 去勢 → 譲渡）で猫の命をつないでいます
+            <Paw className="w-4 h-4" color="oklch(0.68 0.16 15)" />
           </div>
         </div>
       </footer>
 
-      {/* ── Global animation styles ── */}
+      {/* ── Styles ── */}
       <style>{`
-        @keyframes scrollDot {
-          0%   { transform: translateY(-100%); opacity: 0; }
-          30%  { opacity: 1; }
-          70%  { opacity: 1; }
-          100% { transform: translateY(200%); opacity: 0; }
-        }
         #site-header {
-          background: oklch(0.975 0.012 80 / 0);
+          background: oklch(0.985 0.008 15 / 0);
           backdrop-filter: blur(0px);
           transition: background 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease;
         }
         #site-header.scrolled {
-          background: oklch(0.975 0.012 80 / 0.93);
+          background: oklch(0.985 0.008 15 / 0.93);
           backdrop-filter: blur(14px);
           box-shadow: 0 1px 20px oklch(0 0 0 / 0.07);
+        }
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
         }
       `}</style>
 
@@ -686,24 +542,11 @@ function HeaderScrollEffect() {
   useEffect(() => {
     const header = document.getElementById("site-header");
     if (!header) return;
-    const onScroll = () => {
-      header.classList.toggle("scrolled", window.scrollY > 60);
-    };
+    const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 60);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
   return null;
-}
-
-// ── Brand icon components ──
-
-function PayPayWordmark({ className = "" }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 60 24" fill="currentColor">
-      <text x="0" y="18" fontSize="16" fontWeight="bold" fontFamily="sans-serif">Pay</text>
-      <text x="30" y="18" fontSize="16" fontWeight="bold" fontFamily="sans-serif" fill="currentColor" opacity="0.75">Pay</text>
-    </svg>
-  );
 }
 
 function InstagramIcon({ className = "" }: { className?: string }) {
