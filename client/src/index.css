@@ -37,36 +37,36 @@
 }
 
 :root {
-  /* Coral pink — signature brand color */
-  --primary: oklch(0.68 0.16 15);
+  /* Orange — signature brand color */
+  --primary: oklch(0.68 0.17 42);
   --primary-foreground: oklch(1 0 0);
 
-  /* Warm pinkish white background */
-  --background: oklch(0.985 0.008 15);
-  --foreground: oklch(0.22 0.03 55);
+  /* Warm orange-tinted white background */
+  --background: oklch(0.985 0.010 60);
+  --foreground: oklch(0.20 0.04 55);
 
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.22 0.03 55);
+  --card-foreground: oklch(0.20 0.04 55);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.22 0.03 55);
+  --popover-foreground: oklch(0.20 0.04 55);
 
-  /* Mint green secondary */
-  --secondary: oklch(0.88 0.08 165);
-  --secondary-foreground: oklch(0.28 0.08 165);
+  /* Sunny yellow secondary */
+  --secondary: oklch(0.90 0.12 88);
+  --secondary-foreground: oklch(0.30 0.08 70);
 
-  --muted: oklch(0.96 0.01 15);
+  --muted: oklch(0.96 0.015 55);
   --muted-foreground: oklch(0.52 0.025 60);
 
-  /* Sunny yellow accent */
-  --accent: oklch(0.92 0.10 90);
-  --accent-foreground: oklch(0.30 0.06 70);
+  /* Mint green accent */
+  --accent: oklch(0.85 0.10 165);
+  --accent-foreground: oklch(0.28 0.08 165);
 
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
 
-  --border: oklch(0.90 0.02 15);
-  --input: oklch(0.90 0.02 15);
-  --ring: oklch(0.68 0.16 15);
+  --border: oklch(0.90 0.025 55);
+  --input: oklch(0.90 0.025 55);
+  --ring: oklch(0.68 0.17 42);
 
   --radius: 1.2rem;
 
@@ -83,7 +83,7 @@
     font-family: 'M PLUS Rounded 1c', 'Noto Sans JP', sans-serif;
   }
   h1, h2, h3 {
-    font-family: 'Klee One', 'M PLUS Rounded 1c', sans-serif;
+    font-family: 'M PLUS Rounded 1c', 'Noto Sans JP', sans-serif;
   }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
@@ -141,7 +141,7 @@
   }
   .pop-card:hover {
     transform: translateY(-6px) scale(1.02);
-    box-shadow: 0 16px 40px oklch(0.68 0.16 15 / 0.18);
+    box-shadow: 0 16px 40px oklch(0.68 0.17 42 / 0.18);
   }
 
   /* Button press */
@@ -155,4 +155,5 @@
   .btn-press:hover {
     transform: translateY(-2px) scale(1.03);
   }
+
 }
