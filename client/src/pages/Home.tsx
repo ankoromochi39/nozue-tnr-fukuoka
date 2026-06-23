@@ -3,7 +3,7 @@
  * Theme: "ポップかわいい猫ラブ" — Kawaii Pop / Cat Lover Zine
  * 場所: 福岡県
  * Colors: Coral Pink primary, Sunny Yellow, Mint Green, warm white bg
- * Fonts: Klee One (headings), M PLUS Rounded 1c (body) — rounded & cute
+ * Fonts: M PLUS Rounded 1c (all text) — rounded & cute gothic
  * Photos: Real rescue cat photos from user
  */
 
@@ -94,7 +94,7 @@ export default function Home() {
           <div className="flex items-center gap-2">
             <img src={PROFILE_ICON} alt="のずえんち" className="w-10 h-10 rounded-full object-cover border-2" style={{ borderColor: "oklch(0.68 0.17 42)" }} />
             <div>
-              <span className="font-bold text-base leading-none block" style={{ fontFamily: "'Klee One', serif", color: "oklch(0.22 0.03 55)" }}>
+              <span className="font-bold text-base leading-none block" style={{ color: "oklch(0.22 0.03 55)" }}>
                 のずえんち
               </span>
               <span className="text-[10px] font-medium tracking-wide block" style={{ color: "oklch(0.68 0.17 42)" }}>
@@ -194,7 +194,7 @@ export default function Home() {
         <div className="container relative z-10">
           <Fade>
             <div className="text-center mb-10">
-              <h2 className="text-3xl font-bold mb-2" style={{ fontFamily: "'Klee One', serif", color: "oklch(0.22 0.03 55)" }}>
+              <h2 className="text-3xl font-bold mb-2" style={{ color: "oklch(0.22 0.03 55)" }}>
                 保護猫たちを紹介するにゃ🐱
               </h2>
               <p className="text-sm" style={{ color: "oklch(0.55 0.02 60)" }}>
@@ -235,7 +235,7 @@ export default function Home() {
         <div className="container relative z-10">
           <Fade>
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold mb-2" style={{ fontFamily: "'Klee One', serif", color: "oklch(0.22 0.03 55)" }}>
+              <h2 className="text-3xl font-bold mb-2" style={{ color: "oklch(0.22 0.03 55)" }}>
                 活動の様子🎥
               </h2>
               <p className="text-sm" style={{ color: "oklch(0.45 0.04 120)" }}>
@@ -265,7 +265,7 @@ export default function Home() {
         <div className="container relative z-10">
           <Fade>
             <div className="text-center mb-10">
-              <h2 className="text-3xl font-bold mb-2" style={{ fontFamily: "'Klee One', serif", color: "oklch(0.22 0.03 55)" }}>
+              <h2 className="text-3xl font-bold mb-2" style={{ color: "oklch(0.22 0.03 55)" }}>
                 TNR活動ってなに？🐱
               </h2>
             </div>
@@ -280,7 +280,7 @@ export default function Home() {
                 <div className="pop-card p-7 rounded-3xl text-center"
                   style={{ background: item.bg, border: `2px solid ${item.color}30` }}>
                   <div className="text-4xl mb-3">{item.emoji}</div>
-                  <div className="text-5xl font-bold mb-2" style={{ fontFamily: "'Klee One', serif", color: item.color }}>
+                  <div className="text-5xl font-bold mb-2" style={{ color: item.color }}>
                     {item.step}
                   </div>
                   <h3 className="text-lg font-bold mb-2" style={{ color: "oklch(0.22 0.03 55)" }}>{item.label}</h3>
@@ -302,7 +302,7 @@ export default function Home() {
             <div className="flex justify-center gap-2 mb-3">
               {[0,1,2].map(i => <Paw key={i} className="w-7 h-7" color="white" />)}
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold mb-3" style={{ fontFamily: "'Klee One', serif", color: "white" }}>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-3" style={{ color: "white" }}>
               保護猫たちを応援してね！
             </h2>
             <p className="text-base" style={{ color: "oklch(1 0 0 / 0.85)" }}>
@@ -324,7 +324,7 @@ export default function Home() {
                   style={{ background: "oklch(0.68 0.16 15 / 0.1)", color: "oklch(0.52 0.17 42)" }}>
                   💝 金銭的な支援
                 </div>
-                <h2 className="text-3xl font-bold mb-4" style={{ fontFamily: "'Klee One', serif", color: "oklch(0.22 0.03 55)" }}>
+                <h2 className="text-3xl font-bold mb-4" style={{ color: "oklch(0.22 0.03 55)" }}>
                   PayPayで<br />送金支援💕
                 </h2>
                 <p className="text-base leading-relaxed mb-6" style={{ color: "oklch(0.45 0.025 60)" }}>
@@ -336,7 +336,7 @@ export default function Home() {
                 <div className="inline-flex items-center gap-3 px-5 py-3 rounded-2xl mb-6"
                   style={{ background: "oklch(0.68 0.16 15 / 0.08)", border: "2px dashed oklch(0.68 0.16 15 / 0.4)" }}>
                   <span className="text-xs font-bold" style={{ color: "oklch(0.55 0.025 60)" }}>PayPay ID</span>
-                  <span className="text-2xl font-bold" style={{ fontFamily: "'Klee One', serif", color: "oklch(0.50 0.17 42)" }}>
+                  <span className="text-2xl font-bold" style={{ color: "oklch(0.50 0.17 42)" }}>
                     {PAYPAY_ID}
                   </span>
                 </div>
@@ -394,7 +394,7 @@ export default function Home() {
                 style={{ background: "white", border: "3px solid oklch(0.88 0.12 90 / 0.5)", boxShadow: "0 8px 32px oklch(0.88 0.12 90 / 0.2)" }}>
                 <div className="text-5xl">📦</div>
                 <div>
-                  <p className="font-bold text-lg mb-1" style={{ fontFamily: "'Klee One', serif", color: "oklch(0.22 0.03 55)" }}>
+                  <p className="font-bold text-lg mb-1" style={{ color: "oklch(0.22 0.03 55)" }}>
                     Amazonほしいものリスト
                   </p>
                   <p className="text-xs" style={{ color: "oklch(0.55 0.02 60)" }}>猫砂・フード・医療用品など</p>
@@ -417,7 +417,7 @@ export default function Home() {
                   style={{ background: "oklch(0.75 0.14 80 / 0.12)", color: "oklch(0.55 0.14 80)" }}>
                   📦 物資の支援
                 </div>
-                <h2 className="text-3xl font-bold mb-4" style={{ fontFamily: "'Klee One', serif", color: "oklch(0.22 0.03 55)" }}>
+                <h2 className="text-3xl font-bold mb-4" style={{ color: "oklch(0.22 0.03 55)" }}>
                   Amazonから<br />物資を支援📦
                 </h2>
                 <p className="text-base leading-relaxed mb-6" style={{ color: "oklch(0.45 0.025 60)" }}>
@@ -447,7 +447,7 @@ export default function Home() {
           <Fade>
             <div className="max-w-lg mx-auto">
               <div className="text-5xl mb-4">📸</div>
-              <h2 className="text-3xl font-bold mb-3" style={{ fontFamily: "'Klee One', serif", color: "oklch(0.22 0.03 55)" }}>
+              <h2 className="text-3xl font-bold mb-3" style={{ color: "oklch(0.22 0.03 55)" }}>
                 日々の活動はInstagramで！
               </h2>
               <p className="text-base leading-relaxed mb-8" style={{ color: "oklch(0.45 0.025 60)" }}>
