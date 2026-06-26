@@ -148,16 +148,18 @@ export default function Home() {
               </p>
             </Fade>
             <Fade delay={240}>
-              <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
+              <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
                 <a href="#paypay"
-                  className="btn-press inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-base"
-                  style={{ background: "oklch(0.68 0.17 42)", color: "white", boxShadow: "0 6px 20px oklch(0.68 0.16 15 / 0.4)" }}>
+                  className="btn-hero-paypay inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-lg"
+                  style={{ background: "oklch(0.68 0.17 42)", color: "white" }}>
                   💝 PayPayで支援する
+                  <span className="arrow-bounce">→</span>
                 </a>
                 <a href="#amazon"
-                  className="btn-press inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-base"
-                  style={{ background: "oklch(0.88 0.12 90)", color: "oklch(0.30 0.06 70)", boxShadow: "0 6px 20px oklch(0.88 0.12 90 / 0.4)" }}>
+                  className="btn-support-amazon inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-lg"
+                  style={{ background: "oklch(0.80 0.14 80)", color: "white" }}>
                   📦 物資を支援する
+                  <span className="arrow-bounce">→</span>
                 </a>
               </div>
             </Fade>
@@ -372,9 +374,10 @@ export default function Home() {
                   href={`https://qr.paypay.ne.jp/p2p01_${PAYPAY_ID}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-press inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-base w-full max-w-xs justify-center"
-                  style={{ background: "oklch(0.68 0.17 42)", color: "white", boxShadow: "0 6px 20px oklch(0.68 0.16 15 / 0.4)" }}>
+                  className="btn-support-paypay inline-flex items-center gap-3 px-8 py-5 rounded-full font-bold text-xl w-full max-w-xs justify-center"
+                  style={{ background: "oklch(0.68 0.17 42)", color: "white" }}>
                   💝 PayPayアプリで開く
+                  <span className="arrow-bounce">→</span>
                 </a>
               </div>
             </Fade>
@@ -390,22 +393,23 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             {/* Card */}
             <Fade delay={100} className="order-2 md:order-1">
-              <div className="pop-card max-w-sm mx-auto p-8 rounded-3xl flex flex-col items-center gap-5 text-center"
-                style={{ background: "white", border: "3px solid oklch(0.88 0.12 90 / 0.5)", boxShadow: "0 8px 32px oklch(0.88 0.12 90 / 0.2)" }}>
-                <div className="text-5xl">📦</div>
+              <div className="support-card max-w-sm mx-auto p-8 rounded-3xl flex flex-col items-center gap-5 text-center"
+                style={{ background: "white", border: "3px solid oklch(0.80 0.14 80 / 0.5)", boxShadow: "0 8px 32px oklch(0.80 0.14 80 / 0.2)" }}>
+                <div className="text-6xl">📦</div>
                 <div>
-                  <p className="font-bold text-lg mb-1" style={{ color: "oklch(0.22 0.03 55)" }}>
+                  <p className="font-bold text-xl mb-1" style={{ color: "oklch(0.22 0.03 55)" }}>
                     Amazonほしいものリスト
                   </p>
-                  <p className="text-xs" style={{ color: "oklch(0.55 0.02 60)" }}>猫砂・フード・医療用品など</p>
+                  <p className="text-sm" style={{ color: "oklch(0.55 0.02 60)" }}>猫砂・フード・医療用品など</p>
                 </div>
                 <a
                   href={AMAZON_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-press inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-base w-full justify-center"
-                  style={{ background: "oklch(0.75 0.14 80)", color: "white", boxShadow: "0 6px 20px oklch(0.75 0.14 80 / 0.4)" }}>
+                  className="btn-support-amazon inline-flex items-center gap-3 px-8 py-5 rounded-full font-bold text-xl w-full justify-center"
+                  style={{ background: "oklch(0.80 0.14 80)", color: "white" }}>
                   📦 ほしいものリストを見る
+                  <span className="arrow-bounce">→</span>
                 </a>
               </div>
             </Fade>
