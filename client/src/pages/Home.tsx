@@ -19,9 +19,10 @@ const CAT_KITTENS  = "/manus-storage/cat4-kittens_4f3810ed.jpg";        // 子�
 const CAT_VIDEO    = "/manus-storage/cats-video_dcfef93a.mp4";
 
 const PAYPAY_ID  = "nozuenchi";
+const PAYPAY_URL = "https://qr.paypay.ne.jp/p2p01_LiCyVOXNFDY4HhDR";
 const AMAZON_URL = "https://www.amazon.jp/hz/wishlist/ls/232W7EZA4H3Q1?ref_=wl_share";
 const INSTAGRAM_URL = "https://www.instagram.com/nozue.tnr";
-const PAYPAY_QR  = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https://qr.paypay.ne.jp/p2p01_${PAYPAY_ID}&bgcolor=FFF0F3&color=C2522A&margin=14`;
+const PAYPAY_QR  = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https://qr.paypay.ne.jp/p2p01_LiCyVOXNFDY4HhDR&bgcolor=FFF0F3&color=C2522A&margin=14`;
 
 // ── Intersection Observer hook ──
 function useFadeInUp() {
@@ -371,7 +372,7 @@ export default function Home() {
                   またはPayPay IDで検索してください
                 </p>
                 <a
-                  href={`https://qr.paypay.ne.jp/p2p01_${PAYPAY_ID}`}
+                  href={PAYPAY_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-support-paypay inline-flex items-center gap-3 px-8 py-5 rounded-full font-bold text-xl w-full max-w-xs justify-center"
