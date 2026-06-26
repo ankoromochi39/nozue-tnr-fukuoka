@@ -1,28 +1,28 @@
 /*
- * のずえんち 保護猫支援ページ v3
+ * のずえんち 保護猫支援ページ v5
  * Theme: "ポップかわいい猫ラブ" — Mobile-First Kawaii Pop
  * 場所: 福岡県
  * Colors: Orange primary, Sunny Yellow, Mint Green, warm white bg
- * Fonts: M PLUS Rounded 1c (all text) — rounded & cute gothic
+ * Fonts: M PLUS Rounded 1c — rounded & cute gothic
  * Layout: Mobile-first, single column, photo-heavy
  */
 
 import { useEffect, useRef, useState } from "react";
 
 // ── Asset URLs ──
-const PROFILE_ICON  = "/manus-storage/cat-icon-cropped_71823e1a.jpg";   // 黒白猫アイコン
-const CAT_TABBY     = "/manus-storage/cat1-tabby_e53711c8.jpg";          // キジトラ子猫（バスタブ）
-const CAT_WHITE     = "/manus-storage/cat2-white-blue_7d2edb32.jpg";     // 白猫（青い目・外）
-const CAT_FLUFFY    = "/manus-storage/cat3-fluffy_485f2c8f.jpg";         // もふもふ子猫（ケージ）
-const CAT_KITTENS   = "/manus-storage/cat4-kittens_4f3810ed.jpg";        // 子猫たち（段ボール）
-const CAT_NEW1      = "/manus-storage/cat-new1_9f17cbd4.jpg";            // キジトラ立ち姿
-const CAT_NEW2      = "/manus-storage/cat-new2_a19b2be6.jpg";            // 子猫4匹トイレ
-const CAT_NEW4      = "/manus-storage/cat-new4_ac10b6c2.jpg";            // キジトラ丸まり
-const CAT_NEW5      = "/manus-storage/cat-new5_93c2636e.jpg";            // グレー白猫立ち
-const CAT_NEW6      = "/manus-storage/cat-new6_a0ce4585.jpg";            // グレー白猫2
-const CAT_SLEEPING  = "/manus-storage/cat-sleeping_59a8ed07.jpg";        // 幸せそうに寝てる
-const CAT_RESCUE1   = "/manus-storage/cat-rescue1_14edf6f2.jpg";         // 白猫（保護前）
-const CAT_RESCUE2   = "/manus-storage/cat-rescue2_1d7c4153.jpg";         // 白猫（日向ぼっこ）
+const PROFILE_ICON  = "/manus-storage/cat-icon-cropped_71823e1a.jpg";
+const CAT_TABBY     = "/manus-storage/cat1-tabby_e53711c8.jpg";
+const CAT_WHITE     = "/manus-storage/cat2-white-blue_7d2edb32.jpg";
+const CAT_FLUFFY    = "/manus-storage/cat3-fluffy_485f2c8f.jpg";
+const CAT_KITTENS   = "/manus-storage/cat4-kittens_4f3810ed.jpg";
+const CAT_NEW1      = "/manus-storage/cat-new1_9f17cbd4.jpg";
+const CAT_NEW2      = "/manus-storage/cat-new2_a19b2be6.jpg";
+const CAT_NEW4      = "/manus-storage/cat-new4_ac10b6c2.jpg";
+const CAT_NEW5      = "/manus-storage/cat-new5_93c2636e.jpg";
+const CAT_NEW6      = "/manus-storage/cat-new6_a0ce4585.jpg";
+const CAT_SLEEPING  = "/manus-storage/cat-sleeping_59a8ed07.jpg";
+const CAT_RESCUE1   = "/manus-storage/cat-rescue1_14edf6f2.jpg";
+const CAT_RESCUE2   = "/manus-storage/cat-rescue2_1d7c4153.jpg";
 const CAT_VIDEO     = "/manus-storage/cats-video_dcfef93a.mp4";
 const CAT_VIDEO2    = "/manus-storage/cat-video2_a5a3194e.mp4";
 
@@ -31,6 +31,24 @@ const PAYPAY_URL = "https://qr.paypay.ne.jp/p2p01_LiCyVOXNFDY4HhDR";
 const AMAZON_URL = "https://www.amazon.jp/hz/wishlist/ls/232W7EZA4H3Q1?ref_=wl_share";
 const INSTAGRAM_URL = "https://www.instagram.com/nozue.tnr";
 const PAYPAY_QR  = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(PAYPAY_URL)}&bgcolor=FFF8F0&color=C2522A&margin=14`;
+
+// ── 写真データ（前半6枚=里親募集中、後半6枚=トライアル〜譲渡済み） ──
+const CATS_LOOKING: { src: string; label: string }[] = [
+  { src: CAT_NEW1,    label: "キジトラちゃん" },
+  { src: CAT_NEW2,    label: "子猫たち" },
+  { src: CAT_NEW4,    label: "まるまりちゃん" },
+  { src: CAT_NEW5,    label: "グレーちゃん" },
+  { src: CAT_NEW6,    label: "グレー白ちゃん" },
+  { src: CAT_FLUFFY,  label: "もふもふちゃん" },
+];
+const CATS_ADOPTED: { src: string; label: string }[] = [
+  { src: CAT_SLEEPING, label: "仲良しねんね" },
+  { src: CAT_WHITE,    label: "白猫ちゃん" },
+  { src: CAT_TABBY,    label: "キジトラ子猫" },
+  { src: CAT_KITTENS,  label: "子猫兄弟" },
+  { src: CAT_RESCUE1,  label: "白猫（保護前）" },
+  { src: CAT_RESCUE2,  label: "日向ぼっこ" },
+];
 
 // ── Intersection Observer hook ──
 function useFadeInUp() {
@@ -65,71 +83,62 @@ function Paw({ className = "", color = "currentColor", style }: { className?: st
   );
 }
 
-// ── Heart SVG ──
-function Heart({ className = "", color = "currentColor", style }: { className?: string; color?: string; style?: React.CSSProperties }) {
+// ── 横スクロールギャラリー ──
+function HorizontalCatScroll({ cats, badge, badgeColor, badgeBg }: {
+  cats: { src: string; label: string }[];
+  badge: string;
+  badgeColor: string;
+  badgeBg: string;
+}) {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill={color} style={style}>
-      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-    </svg>
+    <div className="overflow-x-auto pb-2" style={{ scrollSnapType: "x mandatory", WebkitOverflowScrolling: "touch" }}>
+      <div className="flex gap-3 px-4" style={{ width: "max-content" }}>
+        {cats.map((cat) => (
+          <div key={cat.src} className="relative rounded-2xl overflow-hidden border-2 border-white shadow-sm flex-shrink-0"
+            style={{ width: 140, height: 160, scrollSnapAlign: "start" }}>
+            <img src={cat.src} alt={cat.label} className="w-full h-full object-cover" />
+            {/* バッジ */}
+            <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full text-xs font-black"
+              style={{ background: badgeBg, color: badgeColor, fontSize: "0.65rem" }}>
+              {badge}
+            </div>
+            {/* 名前 */}
+            <div className="absolute bottom-0 left-0 right-0 px-2 py-1.5 text-xs font-bold text-white text-center"
+              style={{ background: "linear-gradient(to top, rgba(30,20,10,0.65), transparent)" }}>
+              {cat.label}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
 // ── Photo Collage Hero ──
 function HeroCollage() {
   return (
-    <div className="relative w-full" style={{ height: "72vw", maxHeight: 340, minHeight: 220 }}>
-      {/* 大きめメイン写真（左上） */}
-      <div className="absolute rounded-2xl overflow-hidden border-4 border-white shadow-lg"
-        style={{ top: 0, left: 0, width: "58%", height: "62%", zIndex: 3 }}>
+    <div className="grid gap-1.5" style={{ gridTemplateColumns: "1fr 1fr 1fr", gridTemplateRows: "auto auto" }}>
+      {/* 左大 */}
+      <div className="rounded-2xl overflow-hidden border-2 border-white shadow-sm" style={{ gridRow: "1 / 3", gridColumn: "1 / 2", aspectRatio: "3/4" }}>
         <img src={CAT_NEW1} alt="保護猫" className="w-full h-full object-cover" />
       </div>
       {/* 右上 */}
-      <div className="absolute rounded-2xl overflow-hidden border-4 border-white shadow-lg"
-        style={{ top: 0, right: 0, width: "40%", height: "48%", zIndex: 3 }}>
-        <img src={CAT_SLEEPING} alt="保護猫" className="w-full h-full object-cover" />
+      <div className="rounded-2xl overflow-hidden border-2 border-white shadow-sm" style={{ gridColumn: "2 / 4", aspectRatio: "2/1" }}>
+        <img src={CAT_SLEEPING} alt="保護猫" className="w-full h-full object-cover object-top" />
       </div>
-      {/* 左下 */}
-      <div className="absolute rounded-2xl overflow-hidden border-4 border-white shadow-lg"
-        style={{ bottom: 0, left: 0, width: "36%", height: "46%", zIndex: 3 }}>
+      {/* 右中 */}
+      <div className="rounded-2xl overflow-hidden border-2 border-white shadow-sm" style={{ aspectRatio: "1/1" }}>
         <img src={CAT_NEW5} alt="保護猫" className="w-full h-full object-cover" />
       </div>
-      {/* 中央下 */}
-      <div className="absolute rounded-2xl overflow-hidden border-4 border-white shadow-lg"
-        style={{ bottom: 0, left: "38%", width: "34%", height: "46%", zIndex: 3 }}>
-        <img src={CAT_NEW2} alt="保護猫" className="w-full h-full object-cover" />
-      </div>
       {/* 右下 */}
-      <div className="absolute rounded-2xl overflow-hidden border-4 border-white shadow-lg"
-        style={{ bottom: 0, right: 0, width: "26%", height: "54%", zIndex: 3 }}>
+      <div className="rounded-2xl overflow-hidden border-2 border-white shadow-sm" style={{ aspectRatio: "1/1" }}>
         <img src={CAT_FLUFFY} alt="保護猫" className="w-full h-full object-cover" />
       </div>
-      {/* 肉球デコ */}
-      <Paw className="absolute w-8 h-8 opacity-40" style={{ top: "30%", left: "60%", zIndex: 4, color: "oklch(0.68 0.17 42)" }} />
-      <Heart className="absolute w-6 h-6" style={{ top: "50%", right: "42%", zIndex: 4, color: "oklch(0.75 0.14 80)", opacity: 0.7 }} />
     </div>
   );
 }
 
-// ── Photo Grid ──
-const ALL_PHOTOS = [
-  { src: CAT_NEW1,     label: "キジトラちゃん" },
-  { src: CAT_NEW2,     label: "子猫たち" },
-  { src: CAT_NEW4,     label: "まるまりちゃん" },
-  { src: CAT_NEW5,     label: "グレーちゃん" },
-  { src: CAT_NEW6,     label: "グレー白ちゃん" },
-  { src: CAT_SLEEPING, label: "仲良しねんね" },
-  { src: CAT_FLUFFY,   label: "もふもふちゃん" },
-  { src: CAT_WHITE,    label: "白猫ちゃん" },
-  { src: CAT_TABBY,    label: "キジトラ子猫" },
-  { src: CAT_KITTENS,  label: "子猫兄弟" },
-  { src: CAT_RESCUE1,  label: "保護前の白猫" },
-  { src: CAT_RESCUE2,  label: "日向ぼっこ" },
-];
-
 export default function Home() {
-  const [showAllPhotos, setShowAllPhotos] = useState(false);
-  const visiblePhotos = showAllPhotos ? ALL_PHOTOS : ALL_PHOTOS.slice(0, 6);
-
   return (
     <div className="min-h-screen overflow-x-hidden" style={{ background: "oklch(0.985 0.010 60)", fontFamily: "'M PLUS Rounded 1c', 'Noto Sans JP', sans-serif" }}>
 
@@ -168,7 +177,7 @@ export default function Home() {
             家族を 🐾
           </h1>
           <p className="text-sm leading-relaxed mb-5" style={{ color: "oklch(0.45 0.025 60)" }}>
-            人間(4) 犬(1) 猫(10) の大家族母ちゃんが<br />
+            人間（4人）犬（1匹）猫（10匹）の大家族母ちゃんが<br />
             TNR活動（猫保護 → 去勢 → 譲渡）をしています。<br />
             一緒に猫の命を救いませんか？
           </p>
@@ -184,51 +193,96 @@ export default function Home() {
           <div className="flex flex-col gap-3 mt-5">
             <a href="#paypay" className="btn-support-paypay flex items-center justify-center gap-2 py-4 rounded-2xl font-black text-lg"
               style={{ background: "oklch(0.68 0.17 42)", color: "white" }}>
-              💝 PayPayで支援する <span className="arrow-bounce">→</span>
+              💝 PayPayで応援する <span className="arrow-bounce">→</span>
             </a>
             <a href="#amazon" className="btn-support-amazon flex items-center justify-center gap-2 py-4 rounded-2xl font-black text-lg"
               style={{ background: "oklch(0.80 0.14 80)", color: "white" }}>
-              📦 物資を支援する <span className="arrow-bounce">→</span>
+              📦 物資で応援する <span className="arrow-bounce">→</span>
             </a>
             <a href="#bank" className="flex items-center justify-center gap-2 py-3.5 rounded-2xl font-bold text-base border-2"
               style={{ borderColor: "oklch(0.68 0.17 42)", color: "oklch(0.68 0.17 42)", background: "white" }}>
-              🏦 銀行振込で支援する
+              🏦 銀行振込で応援する
             </a>
           </div>
         </Fade>
       </section>
 
-      {/* ── PHOTO GALLERY ── */}
-      <section className="px-4 py-6">
+      {/* ── TNR説明 ── */}
+      <section className="mx-4 my-4 p-5 rounded-3xl" style={{ background: "oklch(0.68 0.17 42 / 0.08)", border: "2px solid oklch(0.68 0.17 42 / 0.15)" }}>
         <Fade>
-          <div className="flex items-center gap-2 mb-4">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-lg">🐾</span>
+            <h2 className="text-lg font-black" style={{ color: "oklch(0.22 0.03 55)" }}>TNR活動ってなに？</h2>
+          </div>
+          <p className="text-sm leading-relaxed mb-4" style={{ color: "oklch(0.45 0.025 60)" }}>
+            地域に暮らす野良猫を保護し、不妊・去勢手術を行い、新しい家族のもとへ譲渡する活動です。
+          </p>
+          <div className="flex gap-2">
+            {[
+              { step: "01", icon: "🏠", title: "Trap", sub: "保護", desc: "外で暮らす猫を安全に保護します" },
+              { step: "02", icon: "✂️", title: "Neuter", sub: "去勢", desc: "不妊・去勢手術を行います" },
+              { step: "03", icon: "💕", title: "Return", sub: "譲渡", desc: "新しい家族のもとへ" },
+            ].map((item, i) => (
+              <div key={item.step} className="flex-1 rounded-2xl p-3 text-center relative overflow-hidden"
+                style={{ background: "white", border: "1.5px solid oklch(0.68 0.17 42 / 0.15)" }}>
+                <div className="absolute top-1.5 right-2 text-xs font-black opacity-20" style={{ color: "oklch(0.68 0.17 42)" }}>{item.step}</div>
+                <div className="text-2xl mb-1">{item.icon}</div>
+                <div className="text-xs font-black" style={{ color: "oklch(0.52 0.17 42)" }}>{item.title}</div>
+                <div className="text-xs font-bold mb-1" style={{ color: "oklch(0.52 0.17 42)" }}>（{item.sub}）</div>
+                <div className="text-xs leading-tight" style={{ color: "oklch(0.50 0.02 60)" }}>{item.desc}</div>
+                {i < 2 && (
+                  <div className="absolute -right-1 top-1/2 -translate-y-1/2 text-base font-black z-10"
+                    style={{ color: "oklch(0.68 0.17 42)" }}>›</div>
+                )}
+              </div>
+            ))}
+          </div>
+        </Fade>
+      </section>
+
+      {/* ── 保護猫ギャラリー ── */}
+      <section className="py-6">
+        <Fade>
+          <div className="flex items-center gap-2 mb-1 px-4">
             <Paw className="w-5 h-5" color="oklch(0.68 0.17 42)" />
             <h2 className="text-xl font-black" style={{ color: "oklch(0.22 0.03 55)" }}>保護猫たちを紹介するにゃ🐱</h2>
           </div>
-          <p className="text-sm mb-4" style={{ color: "oklch(0.55 0.02 60)" }}>福岡県で保護した子たちです。みんな里親を待っています！</p>
+          <p className="text-sm mb-5 px-4" style={{ color: "oklch(0.55 0.02 60)" }}>福岡県で保護した子たちです</p>
         </Fade>
-        <div className="grid grid-cols-2 gap-2.5">
-          {visiblePhotos.map((photo, i) => (
-            <Fade key={photo.src} delay={i * 40}>
-              <div className="relative rounded-2xl overflow-hidden aspect-square shadow-sm border-2 border-white">
-                <img src={photo.src} alt={photo.label} className="w-full h-full object-cover" />
-                <div className="absolute bottom-0 left-0 right-0 px-2 py-1.5 text-xs font-bold text-white text-center"
-                  style={{ background: "linear-gradient(to top, oklch(0.22 0.03 55 / 0.7), transparent)" }}>
-                  {photo.label}
-                </div>
-              </div>
-            </Fade>
-          ))}
-        </div>
-        {!showAllPhotos && (
-          <Fade delay={300}>
-            <button onClick={() => setShowAllPhotos(true)}
-              className="w-full mt-4 py-3 rounded-2xl font-bold text-sm border-2"
-              style={{ borderColor: "oklch(0.68 0.17 42 / 0.4)", color: "oklch(0.68 0.17 42)", background: "oklch(0.68 0.17 42 / 0.06)" }}>
-              もっと見る 🐾 ({ALL_PHOTOS.length - 6}匹)
-            </button>
-          </Fade>
-        )}
+
+        {/* 里親募集中 */}
+        <Fade delay={50}>
+          <div className="flex items-center gap-2 mb-3 px-4">
+            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-black"
+              style={{ background: "oklch(0.68 0.17 42)", color: "white" }}>
+              🏠 里親募集中
+            </span>
+            <span className="text-xs" style={{ color: "oklch(0.60 0.025 60)" }}>{CATS_LOOKING.length}匹</span>
+          </div>
+          <HorizontalCatScroll
+            cats={CATS_LOOKING}
+            badge="🏠 里親募集中"
+            badgeColor="white"
+            badgeBg="oklch(0.68 0.17 42)"
+          />
+        </Fade>
+
+        {/* トライアル〜譲渡済み */}
+        <Fade delay={100}>
+          <div className="flex items-center gap-2 mt-6 mb-3 px-4">
+            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-black"
+              style={{ background: "oklch(0.55 0.14 145)", color: "white" }}>
+              💕 トライアル〜譲渡済み
+            </span>
+            <span className="text-xs" style={{ color: "oklch(0.60 0.025 60)" }}>{CATS_ADOPTED.length}匹</span>
+          </div>
+          <HorizontalCatScroll
+            cats={CATS_ADOPTED}
+            badge="💕 譲渡済み"
+            badgeColor="white"
+            badgeBg="oklch(0.55 0.14 145)"
+          />
+        </Fade>
       </section>
 
       {/* ── VIDEOS ── */}
@@ -242,7 +296,7 @@ export default function Home() {
         <div className="flex flex-col gap-4">
           <Fade delay={50}>
             <div className="rounded-2xl overflow-hidden shadow-sm border-2 border-white">
-              <video src={CAT_VIDEO2} controls playsInline className="w-full" style={{ maxHeight: 320, objectFit: "cover" }} />
+              <video src={CAT_VIDEO2} controls playsInline muted className="w-full" style={{ maxHeight: 320, objectFit: "cover" }} />
               <div className="px-3 py-2 text-sm font-bold" style={{ background: "oklch(0.68 0.17 42 / 0.08)", color: "oklch(0.42 0.03 55)" }}>
                 なでなで気持ちよさそう🐾
               </div>
@@ -250,7 +304,7 @@ export default function Home() {
           </Fade>
           <Fade delay={100}>
             <div className="rounded-2xl overflow-hidden shadow-sm border-2 border-white">
-              <video src={CAT_VIDEO} controls playsInline className="w-full" style={{ maxHeight: 320, objectFit: "cover" }} />
+              <video src={CAT_VIDEO} controls playsInline muted className="w-full" style={{ maxHeight: 320, objectFit: "cover" }} />
               <div className="px-3 py-2 text-sm font-bold" style={{ background: "oklch(0.68 0.17 42 / 0.08)", color: "oklch(0.42 0.03 55)" }}>
                 保護した子たちの記録🐱
               </div>
@@ -259,25 +313,23 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── TNR説明 ── */}
-      <section className="mx-4 my-4 p-5 rounded-3xl" style={{ background: "oklch(0.68 0.17 42 / 0.08)", border: "2px solid oklch(0.68 0.17 42 / 0.15)" }}>
+      {/* ── 支援セクション導入 ── */}
+      <section className="px-4 pt-8 pb-2">
         <Fade>
-          <div className="flex items-center gap-2 mb-3">
-            <span className="text-lg">🐾</span>
-            <h2 className="text-lg font-black" style={{ color: "oklch(0.22 0.03 55)" }}>TNR活動ってなに？</h2>
-          </div>
-          <div className="flex gap-3">
-            {[
-              { icon: "🏠", title: "Trap（保護）", desc: "外で暮らす猫を安全に保護" },
-              { icon: "✂️", title: "Neuter（去勢）", desc: "手術で猫の数を適正に" },
-              { icon: "💕", title: "Return（譲渡）", desc: "新しい家族のもとへ" },
-            ].map((item) => (
-              <div key={item.title} className="flex-1 text-center">
-                <div className="text-2xl mb-1">{item.icon}</div>
-                <div className="text-xs font-black mb-0.5" style={{ color: "oklch(0.52 0.17 42)" }}>{item.title}</div>
-                <div className="text-xs" style={{ color: "oklch(0.50 0.02 60)" }}>{item.desc}</div>
-              </div>
-            ))}
+          <div className="text-center">
+            <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-bold mb-4"
+              style={{ background: "oklch(0.68 0.17 42 / 0.12)", color: "oklch(0.52 0.17 42)" }}>
+              🐾 一緒に活動しませんか？
+            </div>
+            <h2 className="text-2xl font-black mb-3" style={{ color: "oklch(0.22 0.03 55)" }}>
+              あなたの応援が、<br />
+              もっとたくさんの命を<br />
+              <span style={{ color: "oklch(0.68 0.17 42)" }}>救うことができます</span>
+            </h2>
+            <p className="text-sm leading-relaxed" style={{ color: "oklch(0.50 0.025 60)" }}>
+              金銭的な支援・物資の支援・銀行振込、<br />
+              できる形で一緒に保護猫活動に参加してください🐱
+            </p>
           </div>
         </Fade>
       </section>
@@ -285,17 +337,16 @@ export default function Home() {
       {/* ── PAYPAY ── */}
       <section id="paypay" className="px-4 py-6">
         <Fade>
-          <div className="p-5 rounded-3xl" style={{ background: "white", border: "3px solid oklch(0.68 0.17 42 / 0.25)", boxShadow: "0 4px 24px oklch(0.68 0.17 42 / 0.12)" }}>
+          <div className="p-5 rounded-3xl" style={{ background: "white", border: "3px solid oklch(0.68 0.17 42 / 0.25)", boxShadow: "0 4px 24px oklch(0.68 0.17 42 / 0.10)" }}>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-3"
               style={{ background: "oklch(0.68 0.17 42 / 0.12)", color: "oklch(0.52 0.17 42)" }}>
-              💝 金銭的な支援
+              💝 PayPayで応援
             </div>
-            <h2 className="text-2xl font-black mb-2" style={{ color: "oklch(0.22 0.03 55)" }}>
-              PayPayで<br />送金支援💕
+            <h2 className="text-2xl font-black mb-3" style={{ color: "oklch(0.22 0.03 55)" }}>
+              PayPayで<br />応援する💕
             </h2>
             <p className="text-sm leading-relaxed mb-4" style={{ color: "oklch(0.45 0.025 60)" }}>
-              いただいたご支援は、保護猫たちの医療費・フード代・去勢手術費用などに大切に使わせていただきます。
-              <strong style={{ color: "oklch(0.68 0.17 42)" }}>100円からでも大変助かります！</strong>
+              保護猫たちの医療費・フード代など、毎月かかる費用として大切に使わせていただきます。100円からでも本当にありがたいです！
             </p>
             {/* QRコード */}
             <div className="flex flex-col items-center gap-3 mb-4 p-4 rounded-2xl" style={{ background: "oklch(0.985 0.010 60)" }}>
@@ -326,17 +377,17 @@ export default function Home() {
       {/* ── AMAZON ── */}
       <section id="amazon" className="px-4 pb-6">
         <Fade>
-          <div className="p-5 rounded-3xl" style={{ background: "white", border: "3px solid oklch(0.80 0.14 80 / 0.35)", boxShadow: "0 4px 24px oklch(0.80 0.14 80 / 0.12)" }}>
+          <div className="p-5 rounded-3xl" style={{ background: "white", border: "3px solid oklch(0.80 0.14 80 / 0.35)", boxShadow: "0 4px 24px oklch(0.80 0.14 80 / 0.10)" }}>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-3"
               style={{ background: "oklch(0.80 0.14 80 / 0.15)", color: "oklch(0.50 0.14 80)" }}>
-              📦 物資の支援
+              📦 物資で応援
             </div>
-            <h2 className="text-2xl font-black mb-2" style={{ color: "oklch(0.22 0.03 55)" }}>
-              Amazonから<br />物資を支援📦
+            <h2 className="text-2xl font-black mb-3" style={{ color: "oklch(0.22 0.03 55)" }}>
+              物資で<br />応援する📦
             </h2>
             <p className="text-sm leading-relaxed mb-4" style={{ color: "oklch(0.45 0.025 60)" }}>
-              猫砂・フード・ウェットフード・医療用品など、日々の活動に必要なものをリストにまとめています。
-              <strong style={{ color: "oklch(0.55 0.14 80)" }}>直接自宅に届けていただける</strong>物資支援も大変助かります！
+              猫砂・フードなど、保護した猫たちが生きていくのに必要な物資をリストにまとめています。1つからでも大変助かります！<br />
+              <span className="font-bold" style={{ color: "oklch(0.50 0.14 80)" }}>※ お互いの個人情報は分からないようになっています</span>
             </p>
             {/* 猫写真 */}
             <div className="grid grid-cols-3 gap-1.5 mb-4 rounded-2xl overflow-hidden">
@@ -364,16 +415,16 @@ export default function Home() {
       {/* ── 銀行振込 ── */}
       <section id="bank" className="px-4 pb-6">
         <Fade>
-          <div className="p-5 rounded-3xl" style={{ background: "white", border: "3px solid oklch(0.55 0.10 240 / 0.25)", boxShadow: "0 4px 24px oklch(0.55 0.10 240 / 0.10)" }}>
+          <div className="p-5 rounded-3xl" style={{ background: "white", border: "3px solid oklch(0.55 0.10 240 / 0.25)", boxShadow: "0 4px 24px oklch(0.55 0.10 240 / 0.08)" }}>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-3"
               style={{ background: "oklch(0.55 0.10 240 / 0.10)", color: "oklch(0.40 0.10 240)" }}>
-              🏦 銀行振込
+              🏦 銀行振込で応援
             </div>
-            <h2 className="text-2xl font-black mb-2" style={{ color: "oklch(0.22 0.03 55)" }}>
-              銀行振込で<br />支援する🏦
+            <h2 className="text-2xl font-black mb-3" style={{ color: "oklch(0.22 0.03 55)" }}>
+              銀行振込で<br />応援する🏦
             </h2>
             <p className="text-sm leading-relaxed mb-4" style={{ color: "oklch(0.45 0.025 60)" }}>
-              銀行振込でのご支援も大歓迎です。いただいたご支援は保護猫たちのために大切に使わせていただきます。
+              いただいたご支援金は全額、保護猫たちのために大切に使わせていただきます。
             </p>
             <div className="rounded-2xl p-4 space-y-2.5" style={{ background: "oklch(0.55 0.10 240 / 0.06)", border: "1.5px solid oklch(0.55 0.10 240 / 0.18)" }}>
               {[
@@ -406,7 +457,6 @@ export default function Home() {
             <p className="text-sm mb-4 opacity-90">
               保護猫たちの成長記録、活動の様子、里親募集情報など毎日更新しています。フォローして応援してください！
             </p>
-            {/* 写真グリッド */}
             <div className="grid grid-cols-4 gap-1.5 mb-4 rounded-xl overflow-hidden">
               {[CAT_TABBY, CAT_WHITE, CAT_NEW1, CAT_SLEEPING].map((src, i) => (
                 <img key={i} src={src} alt="Instagram" className="w-full aspect-square object-cover" />
@@ -432,7 +482,7 @@ export default function Home() {
         <div className="font-black text-base mb-1">のずえんち</div>
         <div className="text-xs opacity-60 mb-4">福岡県 TNR保護猫活動</div>
         <div className="flex justify-center gap-4 text-xs opacity-70">
-          <a href="#paypay" style={{ color: "oklch(0.88 0.12 90)" }}>PayPay支援</a>
+          <a href="#paypay" style={{ color: "oklch(0.88 0.12 90)" }}>PayPay</a>
           <a href="#amazon" style={{ color: "oklch(0.88 0.12 90)" }}>物資支援</a>
           <a href="#bank" style={{ color: "oklch(0.88 0.12 90)" }}>銀行振込</a>
           <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" style={{ color: "oklch(0.88 0.12 90)" }}>Instagram</a>
