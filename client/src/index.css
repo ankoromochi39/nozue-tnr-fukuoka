@@ -174,48 +174,22 @@
     100% { background-position: 200% center; }
   }
   .btn-support-paypay {
-    animation: pulse-glow 2.2s ease-in-out infinite;
     transition: transform 0.18s var(--ease-out), box-shadow 0.18s var(--ease-out);
-    position: relative;
-    overflow: hidden;
-  }
-  .btn-support-paypay::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(105deg, transparent 40%, oklch(1 0 0 / 0.25) 50%, transparent 60%);
-    background-size: 200% 100%;
-    animation: shimmer 2.8s linear infinite;
-    border-radius: inherit;
-    pointer-events: none;
+    box-shadow: 0 6px 24px oklch(0.68 0.17 42 / 0.4);
   }
   .btn-support-paypay:hover {
-    animation: none;
     transform: translateY(-3px) scale(1.04);
     box-shadow: 0 14px 40px oklch(0.68 0.17 42 / 0.55);
   }
   .btn-support-paypay:active { transform: scale(0.96); }
 
   .btn-support-amazon {
-    animation: pulse-glow-yellow 2.2s ease-in-out infinite;
     transition: transform 0.18s var(--ease-out), box-shadow 0.18s var(--ease-out);
-    position: relative;
-    overflow: hidden;
-  }
-  .btn-support-amazon::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(105deg, transparent 40%, oklch(1 0 0 / 0.25) 50%, transparent 60%);
-    background-size: 200% 100%;
-    animation: shimmer 2.8s linear infinite;
-    border-radius: inherit;
-    pointer-events: none;
+    box-shadow: 0 6px 24px oklch(0.80 0.14 80 / 0.4);
   }
   .btn-support-amazon:hover {
-    animation: none;
     transform: translateY(-3px) scale(1.04);
-    box-shadow: 0 14px 40px oklch(0.75 0.14 80 / 0.55);
+    box-shadow: 0 14px 40px oklch(0.80 0.14 80 / 0.55);
   }
   .btn-support-amazon:active { transform: scale(0.96); }
 
@@ -238,10 +212,10 @@
     50%       { box-shadow: 0 8px 28px oklch(0.68 0.17 42 / 0.5), 0 0 0 8px oklch(0.68 0.17 42 / 0); }
   }
   .btn-hero-paypay {
-    animation: pulse-hero 2s ease-in-out infinite;
-    transition: transform 0.18s var(--ease-out);
+    transition: transform 0.18s var(--ease-out), box-shadow 0.18s var(--ease-out);
+    box-shadow: 0 6px 20px oklch(0.68 0.17 42 / 0.4);
   }
-  .btn-hero-paypay:hover { animation: none; transform: translateY(-3px) scale(1.05); }
+  .btn-hero-paypay:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 12px 32px oklch(0.68 0.17 42 / 0.55); }
   .btn-hero-paypay:active { transform: scale(0.96); }
 
 }

@@ -19,7 +19,7 @@ const CAT_KITTENS  = "/manus-storage/cat4-kittens_4f3810ed.jpg";        // Â≠êÁå
 const CAT_VIDEO    = "/manus-storage/cats-video_dcfef93a.mp4";
 
 const PAYPAY_ID  = "nozuenchi";
-const AMAZON_URL = "https://www.amazon.co.jp/hz/wishlist/ls/232W7EZA4";
+const AMAZON_URL = "https://www.amazon.jp/hz/wishlist/ls/232W7EZA4H3Q1?ref_=wl_share";
 const INSTAGRAM_URL = "https://www.instagram.com/nozue.tnr";
 const PAYPAY_QR  = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https://qr.paypay.ne.jp/p2p01_${PAYPAY_ID}&bgcolor=FFF0F3&color=C2522A&margin=14`;
 
