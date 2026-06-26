@@ -193,15 +193,15 @@ export default function Home() {
           <div className="flex flex-col gap-3 mt-5">
             <a href="#paypay" className="btn-support-paypay flex items-center justify-center gap-2 py-4 rounded-2xl font-black text-lg"
               style={{ background: "oklch(0.68 0.17 42)", color: "white" }}>
-              💝 PayPayで応援する <span className="arrow-bounce">→</span>
+              💝 PayPayで参加する <span className="arrow-bounce">→</span>
             </a>
             <a href="#amazon" className="btn-support-amazon flex items-center justify-center gap-2 py-4 rounded-2xl font-black text-lg"
               style={{ background: "oklch(0.80 0.14 80)", color: "white" }}>
-              📦 物資で応援する <span className="arrow-bounce">→</span>
+              📦 物資で参加する <span className="arrow-bounce">→</span>
             </a>
             <a href="#bank" className="flex items-center justify-center gap-2 py-3.5 rounded-2xl font-bold text-base border-2"
               style={{ borderColor: "oklch(0.68 0.17 42)", color: "oklch(0.68 0.17 42)", background: "white" }}>
-              🏦 銀行振込で応援する
+              🏦 銀行振込で参加する
             </a>
           </div>
         </Fade>
@@ -317,18 +317,14 @@ export default function Home() {
       <section className="px-4 pt-8 pb-2">
         <Fade>
           <div className="text-center">
-            <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-bold mb-4"
-              style={{ background: "oklch(0.68 0.17 42 / 0.12)", color: "oklch(0.52 0.17 42)" }}>
-              🐾 一緒に活動しませんか？
-            </div>
-            <h2 className="text-2xl font-black mb-3" style={{ color: "oklch(0.22 0.03 55)" }}>
-              あなたの応援が、<br />
-              もっとたくさんの命を<br />
-              <span style={{ color: "oklch(0.68 0.17 42)" }}>救うことができます</span>
+            <h2 className="text-3xl font-black mb-3" style={{ color: "oklch(0.22 0.03 55)" }}>
+              一緒に保護猫活動<br />
+              <span style={{ color: "oklch(0.68 0.17 42)" }}>しませんか？🐾</span>
             </h2>
-            <p className="text-sm leading-relaxed" style={{ color: "oklch(0.50 0.025 60)" }}>
-              金銭的な支援・物資の支援・銀行振込、<br />
-              できる形で一緒に保護猫活動に参加してください🐱
+            <p className="text-base leading-relaxed" style={{ color: "oklch(0.50 0.025 60)" }}>
+              あなたの応援で<br />
+              もっとたくさんの命を<br />
+              救うことができます
             </p>
           </div>
         </Fade>
@@ -340,10 +336,10 @@ export default function Home() {
           <div className="p-5 rounded-3xl" style={{ background: "white", border: "3px solid oklch(0.68 0.17 42 / 0.25)", boxShadow: "0 4px 24px oklch(0.68 0.17 42 / 0.10)" }}>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-3"
               style={{ background: "oklch(0.68 0.17 42 / 0.12)", color: "oklch(0.52 0.17 42)" }}>
-              💝 PayPayで応援
+              💝 PayPayで参加
             </div>
             <h2 className="text-2xl font-black mb-3" style={{ color: "oklch(0.22 0.03 55)" }}>
-              PayPayで<br />応援する💕
+              PayPayで<br />参加する💕
             </h2>
             <p className="text-sm leading-relaxed mb-4" style={{ color: "oklch(0.45 0.025 60)" }}>
               保護猫たちの医療費・フード代など、毎月かかる費用として大切に使わせていただきます。100円からでも本当にありがたいです！
@@ -360,7 +356,7 @@ export default function Home() {
             <a href={PAYPAY_URL} target="_blank" rel="noopener noreferrer"
               className="btn-support-paypay flex items-center justify-center gap-2 py-4 rounded-2xl font-black text-lg w-full"
               style={{ background: "oklch(0.68 0.17 42)", color: "white" }}>
-              💝 PayPayアプリで開く <span className="arrow-bounce">→</span>
+              💝 PayPayアプリで参加する <span className="arrow-bounce">→</span>
             </a>
             <div className="grid grid-cols-2 gap-2 mt-3">
               {["🏥 医療費・手術費", "🍚 フード・おやつ", "🏠 保護環境整備", "💕 譲渡活動費"].map(item => (
@@ -380,10 +376,10 @@ export default function Home() {
           <div className="p-5 rounded-3xl" style={{ background: "white", border: "3px solid oklch(0.80 0.14 80 / 0.35)", boxShadow: "0 4px 24px oklch(0.80 0.14 80 / 0.10)" }}>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-3"
               style={{ background: "oklch(0.80 0.14 80 / 0.15)", color: "oklch(0.50 0.14 80)" }}>
-              📦 物資で応援
+              📦 物資で参加
             </div>
             <h2 className="text-2xl font-black mb-3" style={{ color: "oklch(0.22 0.03 55)" }}>
-              物資で<br />応援する📦
+              物資で<br />参加する📦
             </h2>
             <p className="text-sm leading-relaxed mb-4" style={{ color: "oklch(0.45 0.025 60)" }}>
               猫砂・フードなど、保護した猫たちが生きていくのに必要な物資をリストにまとめています。1つからでも大変助かります！<br />
@@ -398,7 +394,7 @@ export default function Home() {
             <a href={AMAZON_URL} target="_blank" rel="noopener noreferrer"
               className="btn-support-amazon flex items-center justify-center gap-2 py-4 rounded-2xl font-black text-lg w-full mb-3"
               style={{ background: "oklch(0.80 0.14 80)", color: "white" }}>
-              📦 ほしいものリストを見る <span className="arrow-bounce">→</span>
+              📦 ほしいものリストで参加する <span className="arrow-bounce">→</span>
             </a>
             <div className="flex flex-col gap-1.5">
               {["🍚 キャットフード・おやつ", "🧹 猫砂・トイレ用品", "💊 医療用品・サプリメント", "🏠 ケージ・キャリーバッグ"].map(item => (
@@ -418,10 +414,10 @@ export default function Home() {
           <div className="p-5 rounded-3xl" style={{ background: "white", border: "3px solid oklch(0.55 0.10 240 / 0.25)", boxShadow: "0 4px 24px oklch(0.55 0.10 240 / 0.08)" }}>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-3"
               style={{ background: "oklch(0.55 0.10 240 / 0.10)", color: "oklch(0.40 0.10 240)" }}>
-              🏦 銀行振込で応援
+              🏦 銀行振込で参加
             </div>
             <h2 className="text-2xl font-black mb-3" style={{ color: "oklch(0.22 0.03 55)" }}>
-              銀行振込で<br />応援する🏦
+              銀行振込で<br />参加する🏦
             </h2>
             <p className="text-sm leading-relaxed mb-4" style={{ color: "oklch(0.45 0.025 60)" }}>
               いただいたご支援金は全額、保護猫たちのために大切に使わせていただきます。
