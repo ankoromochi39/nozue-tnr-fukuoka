@@ -50,6 +50,37 @@ const CATS_ADOPTED: { src: string; label: string }[] = [
   { src: CAT_RESCUE2,  label: "日向ぼっこ" },
 ];
 
+// ── 肉球ポップアニメーション ──
+function usePawPop() {
+  return (e: React.MouseEvent<HTMLElement>) => {
+    const btn = e.currentTarget;
+    const rect = btn.getBoundingClientRect();
+    const cx = e.clientX - rect.left;
+    const cy = e.clientY - rect.top;
+    const pawEmojis = ['🐾', '🐾', '🐾', '🐾', '🐾'];
+    const count = 6;
+    for (let i = 0; i < count; i++) {
+      const el = document.createElement('span');
+      el.className = 'paw-particle';
+      el.textContent = pawEmojis[i % pawEmojis.length];
+      const angle = (360 / count) * i + Math.random() * 30 - 15;
+      const dist = 40 + Math.random() * 30;
+      const tx = Math.cos((angle * Math.PI) / 180) * dist;
+      const ty = Math.sin((angle * Math.PI) / 180) * dist;
+      const rot = (Math.random() - 0.5) * 60;
+      el.style.setProperty('--tx', `${tx}px`);
+      el.style.setProperty('--ty', `${ty}px`);
+      el.style.setProperty('--rot', `${rot}deg`);
+      el.style.left = `${cx}px`;
+      el.style.top = `${cy}px`;
+      el.style.marginLeft = '-0.6rem';
+      el.style.marginTop = '-0.6rem';
+      btn.appendChild(el);
+      setTimeout(() => el.remove(), 750);
+    }
+  };
+}
+
 // ── Intersection Observer hook ──
 function useFadeInUp() {
   const ref = useRef<HTMLDivElement>(null);
@@ -139,6 +170,7 @@ function HeroCollage() {
 }
 
 export default function Home() {
+  const pawPop = usePawPop();
   return (
     <div className="min-h-screen overflow-x-hidden" style={{ background: "oklch(0.985 0.010 60)", fontFamily: "'M PLUS Rounded 1c', 'Noto Sans JP', sans-serif" }}>
 
@@ -191,16 +223,16 @@ export default function Home() {
         {/* CTAボタン */}
         <Fade delay={200}>
           <div className="flex flex-col gap-3 mt-5">
-            <a href="#paypay" className="btn-support-paypay flex items-center justify-center gap-2 py-4 rounded-2xl font-black text-lg"
-              style={{ background: "oklch(0.68 0.17 42)", color: "white" }}>
+            <a href="#paypay" className="btn-paw btn-support-paypay flex items-center justify-center gap-2 py-4 rounded-2xl font-black text-lg"
+              style={{ background: "oklch(0.68 0.17 42)", color: "white" }} onClick={pawPop}>
               💝 PayPayで参加する <span className="arrow-bounce">→</span>
             </a>
-            <a href="#amazon" className="btn-support-amazon flex items-center justify-center gap-2 py-4 rounded-2xl font-black text-lg"
-              style={{ background: "oklch(0.80 0.14 80)", color: "white" }}>
+            <a href="#amazon" className="btn-paw btn-support-amazon flex items-center justify-center gap-2 py-4 rounded-2xl font-black text-lg"
+              style={{ background: "oklch(0.80 0.14 80)", color: "white" }} onClick={pawPop}>
               📦 物資で参加する <span className="arrow-bounce">→</span>
             </a>
-            <a href="#bank" className="flex items-center justify-center gap-2 py-3.5 rounded-2xl font-bold text-base border-2"
-              style={{ borderColor: "oklch(0.68 0.17 42)", color: "oklch(0.68 0.17 42)", background: "white" }}>
+            <a href="#bank" className="btn-paw flex items-center justify-center gap-2 py-3.5 rounded-2xl font-bold text-base border-2"
+              style={{ borderColor: "oklch(0.68 0.17 42)", color: "oklch(0.68 0.17 42)", background: "white" }} onClick={pawPop}>
               🏦 銀行振込で参加する
             </a>
           </div>
@@ -354,8 +386,8 @@ export default function Home() {
               </div>
             </div>
             <a href={PAYPAY_URL} target="_blank" rel="noopener noreferrer"
-              className="btn-support-paypay flex items-center justify-center gap-2 py-4 rounded-2xl font-black text-lg w-full"
-              style={{ background: "oklch(0.68 0.17 42)", color: "white" }}>
+              className="btn-paw btn-support-paypay flex items-center justify-center gap-2 py-4 rounded-2xl font-black text-lg w-full"
+              style={{ background: "oklch(0.68 0.17 42)", color: "white" }} onClick={pawPop}>
               💝 PayPayアプリで参加する <span className="arrow-bounce">→</span>
             </a>
             <div className="grid grid-cols-2 gap-2 mt-3">
@@ -392,8 +424,8 @@ export default function Home() {
               <img src={CAT_RESCUE2} alt="保護猫" className="w-full aspect-square object-cover" />
             </div>
             <a href={AMAZON_URL} target="_blank" rel="noopener noreferrer"
-              className="btn-support-amazon flex items-center justify-center gap-2 py-4 rounded-2xl font-black text-lg w-full mb-3"
-              style={{ background: "oklch(0.80 0.14 80)", color: "white" }}>
+              className="btn-paw btn-support-amazon flex items-center justify-center gap-2 py-4 rounded-2xl font-black text-lg w-full mb-3"
+              style={{ background: "oklch(0.80 0.14 80)", color: "white" }} onClick={pawPop}>
               📦 ほしいものリストで参加する <span className="arrow-bounce">→</span>
             </a>
             <div className="flex flex-col gap-1.5">
