@@ -211,7 +211,7 @@ export default function Home() {
             style={{ borderColor: "oklch(0.68 0.17 42)" }} />
           <div>
             <div className="font-bold text-sm leading-none" style={{ color: "oklch(0.22 0.03 55)" }}>のずえんち</div>
-            <div className="text-xs" style={{ color: "oklch(0.68 0.17 42)" }}>🐾 福岡県 TNR保護猫活動</div>
+            <div className="text-xs" style={{ color: "oklch(0.68 0.17 42)" }}>福岡県 TNR保護猫活動 🐾</div>
           </div>
         </div>
         <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer"
@@ -250,8 +250,8 @@ export default function Home() {
               家族を 🐾
             </h1>
             <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.92)", textShadow: "0 1px 4px rgba(100,30,0,0.5)" }}>
-              人間（4人）犬（1匹）猫（10匹）の大家族母ちゃんが<br />
-              TNR活動（猫保護 → 去勢 → 譲渡）をしています。<br />
+              人間(4人) 犬(1匹) 猫(10匹)の大家族母ちゃんが<br />
+              TNR活動(猫保護 → 去勢 → 譲渡)をしています。<br />
               一緒に猫の命を救いませんか？
             </p>
           </Fade>
@@ -389,7 +389,7 @@ export default function Home() {
               <span style={{ color: "oklch(0.96 0.10 80)" }}>しませんか？🐾</span>
             </h2>
             <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.92)", textShadow: "0 1px 4px rgba(100,30,0,0.5)" }}>
-              あなたの応援でもっとたくさんの命を救うことができます
+              １匹でも多く猫の命を救うことができます
             </p>
           </Fade>
         </div>
@@ -407,7 +407,7 @@ export default function Home() {
               PayPayで<br />参加する💕
             </h2>
             <p className="text-sm leading-relaxed mb-4" style={{ color: "oklch(0.45 0.025 60)" }}>
-              保護猫たちの医療費・フード代など、毎月かかる費用として大切に使わせていただきます。100円からでも本当にありがたいです！
+              保護猫たちの医療費・フード代など、毎月かかる費用に、大切に使わせていただきます。<br />100円からでも本当にありがたいです！
             </p>
             {/* QRコード */}
             <div className="flex flex-col items-center gap-3 mb-4 p-4 rounded-2xl" style={{ background: "oklch(0.985 0.010 60)" }}>
@@ -485,7 +485,7 @@ export default function Home() {
               銀行振込で<br />参加する🏦
             </h2>
             <p className="text-sm leading-relaxed mb-4" style={{ color: "oklch(0.45 0.025 60)" }}>
-              いただいたご支援金は全額、保護猫たちのために大切に使わせていただきます。
+              いただいたご支援金は全額、<br />保護猫たちのために大切に使わせていただきます。
             </p>
             <div className="rounded-2xl p-4 space-y-2.5" style={{ background: "oklch(0.55 0.10 240 / 0.06)", border: "1.5px solid oklch(0.55 0.10 240 / 0.18)" }}>
               {[
@@ -501,9 +501,7 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <p className="text-xs mt-3 text-center" style={{ color: "oklch(0.60 0.025 60)" }}>
-              ※ 振込手数料はご負担をお願いしております
-            </p>
+
           </div>
         </Fade>
       </section>
