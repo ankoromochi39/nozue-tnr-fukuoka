@@ -33,21 +33,36 @@ const INSTAGRAM_URL = "https://www.instagram.com/nozue.tnr";
 const PAYPAY_QR  = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(PAYPAY_URL)}&bgcolor=FFF8F0&color=C2522A&margin=14`;
 
 // ── 写真データ（前半6枚=里親募集中、後半6枚=トライアル〜譲渡済み） ──
-const CATS_LOOKING: { src: string; label: string }[] = [
-  { src: CAT_NEW1,    label: "キジトラちゃん" },
-  { src: CAT_NEW2,    label: "子猫たち" },
-  { src: CAT_NEW4,    label: "まるまりちゃん" },
-  { src: CAT_NEW5,    label: "グレーちゃん" },
-  { src: CAT_NEW6,    label: "グレー白ちゃん" },
-  { src: CAT_FLUFFY,  label: "もふもふちゃん" },
+const CATS_LOOKING: { src: string }[] = [
+  { src: CAT_NEW1 },
+  { src: CAT_NEW2 },
+  { src: CAT_NEW4 },
+  { src: CAT_NEW5 },
+  { src: CAT_NEW6 },
+  { src: CAT_FLUFFY },
 ];
-const CATS_ADOPTED: { src: string; label: string }[] = [
-  { src: CAT_SLEEPING, label: "仲良しねんね" },
-  { src: CAT_WHITE,    label: "白猫ちゃん" },
-  { src: CAT_TABBY,    label: "キジトラ子猫" },
-  { src: CAT_KITTENS,  label: "子猫兄弟" },
-  { src: CAT_RESCUE1,  label: "白猫（保護前）" },
-  { src: CAT_RESCUE2,  label: "日向ぼっこ" },
+const CATS_ADOPTED: { src: string }[] = [
+  { src: CAT_SLEEPING },
+  { src: CAT_WHITE },
+  { src: CAT_TABBY },
+  { src: CAT_KITTENS },
+  { src: CAT_RESCUE1 },
+  { src: CAT_RESCUE2 },
+  { src: "/manus-storage/adopted_01_bcb36104.jpg" },
+  { src: "/manus-storage/adopted_02_cbd7a671.jpg" },
+  { src: "/manus-storage/adopted_03_40d8c2a7.jpg" },
+  { src: "/manus-storage/adopted_04_958f5047.jpg" },
+  { src: "/manus-storage/adopted_05_65b580d8.jpg" },
+  { src: "/manus-storage/adopted_06_a4baa389.jpg" },
+  { src: "/manus-storage/adopted_07_25a8efde.jpg" },
+  { src: "/manus-storage/adopted_08_ceef2aaa.jpg" },
+  { src: "/manus-storage/adopted_09_c51fd1b2.jpg" },
+  { src: "/manus-storage/adopted_10_543bc9b4.jpg" },
+  { src: "/manus-storage/adopted_11_7132b815.jpg" },
+  { src: "/manus-storage/adopted_12_fc5db094.jpg" },
+  { src: "/manus-storage/adopted_13_fffd4517.jpg" },
+  { src: "/manus-storage/adopted_14_509b10bf.jpg" },
+  { src: "/manus-storage/adopted_15_5bdf4ad1.jpg" },
 ];
 
 // ── 肉球ポップアニメーション ──
@@ -115,31 +130,49 @@ function Paw({ className = "", color = "currentColor", style }: { className?: st
 }
 
 // ── 横スクロールギャラリー ──
-function HorizontalCatScroll({ cats, badge, badgeColor, badgeBg }: {
-  cats: { src: string; label: string }[];
-  badge: string;
-  badgeColor: string;
-  badgeBg: string;
+function HorizontalCatScroll({ cats }: {
+  cats: { src: string }[];
 }) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const scroll = (dir: 'left' | 'right') => {
+    if (!scrollRef.current) return;
+    scrollRef.current.scrollBy({ left: dir === 'right' ? 160 : -160, behavior: 'smooth' });
+  };
   return (
-    <div className="overflow-x-auto pb-2" style={{ scrollSnapType: "x mandatory", WebkitOverflowScrolling: "touch" }}>
-      <div className="flex gap-3 px-4" style={{ width: "max-content" }}>
-        {cats.map((cat) => (
-          <div key={cat.src} className="relative rounded-2xl overflow-hidden border-2 border-white shadow-sm flex-shrink-0"
-            style={{ width: 140, height: 160, scrollSnapAlign: "start" }}>
-            <img src={cat.src} alt={cat.label} className="w-full h-full object-cover" />
-            {/* バッジ */}
-            <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full text-xs font-black"
-              style={{ background: badgeBg, color: badgeColor, fontSize: "0.65rem" }}>
-              {badge}
+    <div className="relative">
+      {/* 左矢印 */}
+      <button
+        onClick={() => scroll('left')}
+        className="absolute left-1 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full flex items-center justify-center font-black text-sm shadow-md"
+        style={{ background: "rgba(255,255,255,0.92)", color: "oklch(0.68 0.17 42)", border: "1.5px solid oklch(0.68 0.17 42 / 0.25)" }}
+        aria-label="前に戻る"
+      >‹</button>
+      {/* 右矢印 */}
+      <button
+        onClick={() => scroll('right')}
+        className="absolute right-1 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full flex items-center justify-center font-black text-sm shadow-md"
+        style={{ background: "rgba(255,255,255,0.92)", color: "oklch(0.68 0.17 42)", border: "1.5px solid oklch(0.68 0.17 42 / 0.25)" }}
+        aria-label="次へ進む"
+      >›</button>
+      <div
+        ref={scrollRef}
+        className="overflow-x-auto"
+        style={{
+          scrollSnapType: "x mandatory",
+          WebkitOverflowScrolling: "touch",
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+        }}
+      >
+        <style>{`.cat-scroll::-webkit-scrollbar { display: none; }`}</style>
+        <div className="cat-scroll flex gap-3 px-4" style={{ width: "max-content" }}>
+          {cats.map((cat, i) => (
+            <div key={i} className="rounded-2xl overflow-hidden border-2 border-white shadow-sm flex-shrink-0"
+              style={{ width: 140, height: 160, scrollSnapAlign: "start" }}>
+              <img src={cat.src} alt="保護猫" className="w-full h-full object-cover" />
             </div>
-            {/* 名前 */}
-            <div className="absolute bottom-0 left-0 right-0 px-2 py-1.5 text-xs font-bold text-white text-center"
-              style={{ background: "linear-gradient(to top, rgba(30,20,10,0.65), transparent)" }}>
-              {cat.label}
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -204,47 +237,49 @@ export default function Home() {
           className="absolute inset-0 w-full h-full object-cover"
           style={{ objectPosition: "center top" }}
         />
-        {/* グラデーションオーバーレイ：上部は薄め、下半は濃いダークで読みやすく */}
-        <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.50) 40%, rgba(0,0,0,0.78) 70%, rgba(0,0,0,0.90) 100%)" }} />
+        {/* グラデーションオーバーレイ：オレンジ暖色系で明るい乱れ感 */}
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(255,180,80,0.10) 0%, rgba(255,120,30,0.30) 50%, rgba(200,80,10,0.65) 80%, rgba(160,50,0,0.80) 100%)" }} />
 
-        {/* テキスト・ボタン */}
+        {/* テキスト */}
         <div className="relative z-10 flex flex-col justify-end h-full px-5 pt-6 pb-6" style={{ minHeight: "88vw", maxHeight: "520px" }}>
           <Fade>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-3 w-fit"
-              style={{ background: "rgba(255,255,255,0.22)", color: "white", backdropFilter: "blur(6px)" }}>
+              style={{ background: "rgba(255,255,255,0.25)", color: "white", backdropFilter: "blur(6px)" }}>
               <Paw className="w-3.5 h-3.5" color="white" />
               福岡県 保護猫活動
             </div>
-            <h1 className="text-3xl font-black leading-tight mb-2" style={{ color: "white", textShadow: "0 2px 8px rgba(0,0,0,0.4)" }}>
+            <h1 className="text-3xl font-black leading-tight mb-2" style={{ color: "white", textShadow: "0 2px 10px rgba(120,40,0,0.5)" }}>
               保護猫たちに、<br />
-              <span style={{ color: "oklch(0.92 0.12 60)" }}>あたたかい</span><br />
+              <span style={{ color: "oklch(0.96 0.10 80)" }}>あたたかい</span><br />
               家族を 🐾
             </h1>
-            <p className="text-sm leading-relaxed mb-5" style={{ color: "rgba(255,255,255,0.88)", textShadow: "0 1px 4px rgba(0,0,0,0.5)" }}>
+            <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.92)", textShadow: "0 1px 4px rgba(100,30,0,0.5)" }}>
               人間（4人）犬（1匹）猫（10匹）の大家族母ちゃんが<br />
               TNR活動（猫保護 → 去勢 → 譲渡）をしています。<br />
               一緒に猫の命を救いませんか？
             </p>
           </Fade>
-
-          {/* CTAボタン */}
-          <Fade delay={150}>
-            <div className="flex flex-col gap-3">
-              <a href="#paypay" className="btn-paw btn-support-paypay flex items-center justify-center gap-2 py-4 rounded-2xl font-black text-lg"
-                style={{ background: "oklch(0.68 0.17 42)", color: "white" }} onClick={pawPop}>
-                💝 PayPayで参加する <span className="arrow-bounce">→</span>
-              </a>
-              <a href="#amazon" className="btn-paw btn-support-amazon flex items-center justify-center gap-2 py-4 rounded-2xl font-black text-lg"
-                style={{ background: "oklch(0.80 0.14 80)", color: "white" }} onClick={pawPop}>
-                📦 物資で参加する <span className="arrow-bounce">→</span>
-              </a>
-              <a href="#bank" className="btn-paw flex items-center justify-center gap-2 py-3.5 rounded-2xl font-bold text-base border-2"
-                style={{ borderColor: "white", color: "white", background: "rgba(255,255,255,0.15)", backdropFilter: "blur(8px)" }} onClick={pawPop}>
-                🏦 銀行振込で参加する
-              </a>
-            </div>
-          </Fade>
         </div>
+      </section>
+
+      {/* ── ヒーロー直下 CTAボタン ── */}
+      <section className="px-5 pt-5 pb-2">
+        <Fade delay={100}>
+          <div className="flex flex-col gap-3">
+            <a href="#paypay" className="btn-paw btn-support-paypay flex items-center justify-center gap-2 py-4 rounded-2xl font-black text-lg"
+              style={{ background: "oklch(0.68 0.17 42)", color: "white" }} onClick={pawPop}>
+              💝 PayPayで参加する <span className="arrow-bounce">→</span>
+            </a>
+            <a href="#amazon" className="btn-paw btn-support-amazon flex items-center justify-center gap-2 py-4 rounded-2xl font-black text-lg"
+              style={{ background: "oklch(0.80 0.14 80)", color: "white" }} onClick={pawPop}>
+              📦 物資で参加する <span className="arrow-bounce">→</span>
+            </a>
+            <a href="#bank" className="btn-paw flex items-center justify-center gap-2 py-3.5 rounded-2xl font-bold text-base border-2"
+              style={{ borderColor: "oklch(0.68 0.17 42)", color: "oklch(0.68 0.17 42)", background: "white" }} onClick={pawPop}>
+              🏦 銀行振込で参加する
+            </a>
+          </div>
+        </Fade>
       </section>
 
       {/* ── TNR説明 ── */}
@@ -297,31 +332,19 @@ export default function Home() {
               style={{ background: "oklch(0.68 0.17 42)", color: "white" }}>
               🏠 里親募集中
             </span>
-            <span className="text-xs" style={{ color: "oklch(0.60 0.025 60)" }}>{CATS_LOOKING.length}匹</span>
           </div>
-          <HorizontalCatScroll
-            cats={CATS_LOOKING}
-            badge="🏠 里親募集中"
-            badgeColor="white"
-            badgeBg="oklch(0.68 0.17 42)"
-          />
+          <HorizontalCatScroll cats={CATS_LOOKING} />
         </Fade>
 
-        {/* トライアル〜譲渡済み */}
+        {/* 譲渡済み */}
         <Fade delay={100}>
           <div className="flex items-center gap-2 mt-6 mb-3 px-4">
             <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-black"
               style={{ background: "oklch(0.55 0.14 145)", color: "white" }}>
-              💕 トライアル〜譲渡済み
+              💕 譲渡済み
             </span>
-            <span className="text-xs" style={{ color: "oklch(0.60 0.025 60)" }}>{CATS_ADOPTED.length}匹</span>
           </div>
-          <HorizontalCatScroll
-            cats={CATS_ADOPTED}
-            badge="💕 譲渡済み"
-            badgeColor="white"
-            badgeBg="oklch(0.55 0.14 145)"
-          />
+          <HorizontalCatScroll cats={CATS_ADOPTED} />
         </Fade>
       </section>
 
