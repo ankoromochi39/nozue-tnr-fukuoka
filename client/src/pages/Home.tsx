@@ -43,7 +43,6 @@ const CATS_LOOKING: { src: string }[] = [
 ];
 const CATS_ADOPTED: { src: string }[] = [
   { src: CAT_SLEEPING },
-  { src: CAT_WHITE },
   { src: CAT_TABBY },
   { src: CAT_KITTENS },
   { src: CAT_RESCUE1 },
@@ -72,12 +71,16 @@ function usePawPop() {
     const rect = btn.getBoundingClientRect();
     const cx = e.clientX - rect.left;
     const cy = e.clientY - rect.top;
-    const pawEmojis = ['🐾', '🐾', '🐾', '🐾', '🐾'];
     const count = 6;
     for (let i = 0; i < count; i++) {
       const el = document.createElement('span');
       el.className = 'paw-particle';
-      el.textContent = pawEmojis[i % pawEmojis.length];
+      el.style.backgroundImage = `url(${PAW_ICON})`;
+      el.style.backgroundSize = 'contain';
+      el.style.backgroundRepeat = 'no-repeat';
+      el.style.width = '1.4rem';
+      el.style.height = '1.4rem';
+      el.textContent = '';
       const angle = (360 / count) * i + Math.random() * 30 - 15;
       const dist = 40 + Math.random() * 30;
       const tx = Math.cos((angle * Math.PI) / 180) * dist;
@@ -116,17 +119,10 @@ function Fade({ children, className = "", delay = 0 }: { children: React.ReactNo
   return <div ref={ref} className={`fade-in-up ${className}`} style={{ transitionDelay: `${delay}ms` }}>{children}</div>;
 }
 
-// ── Paw print SVG ──
-function Paw({ className = "", color = "currentColor", style }: { className?: string; color?: string; style?: React.CSSProperties }) {
-  return (
-    <svg className={className} viewBox="0 0 40 40" fill={color} style={style}>
-      <ellipse cx="20" cy="26" rx="8" ry="7" />
-      <ellipse cx="10" cy="18" rx="4" ry="3.5" />
-      <ellipse cx="30" cy="18" rx="4" ry="3.5" />
-      <ellipse cx="14" cy="11" rx="3.5" ry="3" />
-      <ellipse cx="26" cy="11" rx="3.5" ry="3" />
-    </svg>
-  );
+// ── Paw print ──
+const PAW_ICON = "/manus-storage/paw_icon_eb761072.png";
+function Paw({ className = "", style }: { className?: string; color?: string; style?: React.CSSProperties }) {
+  return <img src={PAW_ICON} alt="🐾" className={className} style={{ display: "inline-block", ...style }} />;
 }
 
 // ── 横スクロールギャラリー ──
@@ -274,9 +270,9 @@ export default function Home() {
               style={{ background: "oklch(0.80 0.14 80)", color: "white" }} onClick={pawPop}>
               📦 物資で参加する <span className="arrow-bounce">→</span>
             </a>
-            <a href="#bank" className="btn-paw flex items-center justify-center gap-2 py-3.5 rounded-2xl font-bold text-base border-2"
-              style={{ borderColor: "oklch(0.68 0.17 42)", color: "oklch(0.68 0.17 42)", background: "white" }} onClick={pawPop}>
-              🏦 銀行振込で参加する
+            <a href="#bank" className="btn-paw flex items-center justify-center gap-2 py-4 rounded-2xl font-black text-lg"
+              style={{ background: "oklch(0.55 0.10 200)", color: "white" }} onClick={pawPop}>
+              🏦 銀行振込で参加する <span className="arrow-bounce">→</span>
             </a>
           </div>
         </Fade>
