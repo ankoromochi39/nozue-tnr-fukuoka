@@ -10,7 +10,7 @@
 import { useEffect, useRef, useState } from "react";
 
 // ── Asset URLs ──
-const PROFILE_ICON  = "/manus-storage/icon_cat_new_a57ae9ad.jpg";
+const PROFILE_ICON  = "/manus-storage/icon_cat_correct_487e5edc.jpg";
 const CAT_TABBY     = "/manus-storage/cat1-tabby_e53711c8.jpg";
 const CAT_WHITE     = "/manus-storage/cat2-white-blue_7d2edb32.jpg";
 const CAT_FLUFFY    = "/manus-storage/cat3-fluffy_485f2c8f.jpg";
