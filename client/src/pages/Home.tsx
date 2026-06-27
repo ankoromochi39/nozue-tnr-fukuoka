@@ -35,8 +35,6 @@ const PAYPAY_QR  = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&dat
 // ── 写真データ（前半6枚=里親募集中、後半6枚=トライアル〜譲渡済み） ──
 const CATS_LOOKING: { src: string }[] = [
   { src: "/manus-storage/looking_01_400c8400.jpg" },
-  { src: "/manus-storage/looking_02_a3153607.jpg" },
-  { src: "/manus-storage/looking_03_935ad06c.jpg" },
   { src: "/manus-storage/looking_04_da3ca09d.jpg" },
   { src: "/manus-storage/looking_05_cb7df4d7.jpg" },
   { src: "/manus-storage/looking_06_45db4e76.jpg" },
@@ -230,7 +228,7 @@ export default function Home() {
       <section className="relative overflow-hidden" style={{ minHeight: "88vw", maxHeight: "520px" }}>
         {/* 背景画像 */}
         <img
-          src="/manus-storage/hero_collage_81ba4a5c.jpg"
+          src="/manus-storage/hero_bg_b6ee0c87.jpg"
           alt="保護猫たち"
           className="absolute inset-0 w-full h-full object-cover"
           style={{ objectPosition: "center top" }}
@@ -374,21 +372,27 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── 支援セクション導入 ── */}
-      <section className="px-4 pt-8 pb-2">
-        <Fade>
-          <div className="text-center">
-            <h2 className="text-3xl font-black mb-3" style={{ color: "oklch(0.22 0.03 55)" }}>
+      {/* ── 支援セクション導入 — web2画像背景 ── */}
+      <section className="relative overflow-hidden" style={{ minHeight: "220px" }}>
+        <img
+          src="/manus-storage/support_bg_41c6b576.jpg"
+          alt="保護猫たち"
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ objectPosition: "center center" }}
+        />
+        {/* オレンジ暖色グラデーション — ヒーローと同じスタイル */}
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(255,180,80,0.10) 0%, rgba(255,120,30,0.30) 50%, rgba(200,80,10,0.65) 80%, rgba(160,50,0,0.80) 100%)" }} />
+        <div className="relative z-10 flex flex-col justify-end px-5 py-8" style={{ minHeight: "220px" }}>
+          <Fade>
+            <h2 className="text-3xl font-black leading-tight mb-2" style={{ color: "white", textShadow: "0 2px 10px rgba(120,40,0,0.5)" }}>
               一緒に保護猫活動<br />
-              <span style={{ color: "oklch(0.68 0.17 42)" }}>しませんか？🐾</span>
+              <span style={{ color: "oklch(0.96 0.10 80)" }}>しませんか？🐾</span>
             </h2>
-            <p className="text-base leading-relaxed" style={{ color: "oklch(0.50 0.025 60)" }}>
-              あなたの応援で<br />
-              もっとたくさんの命を<br />
-              救うことができます
+            <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.92)", textShadow: "0 1px 4px rgba(100,30,0,0.5)" }}>
+              あなたの応援でもっとたくさんの命を救うことができます
             </p>
-          </div>
-        </Fade>
+          </Fade>
+        </div>
       </section>
 
       {/* ── PAYPAY ── */}
