@@ -196,47 +196,55 @@ export default function Home() {
       </header>
 
       {/* ── HERO ── */}
-      <section className="px-4 pt-6 pb-4">
-        <Fade>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-3"
-            style={{ background: "oklch(0.68 0.17 42 / 0.12)", color: "oklch(0.52 0.17 42)" }}>
-            <Paw className="w-3.5 h-3.5" color="oklch(0.68 0.17 42)" />
-            福岡県 保護猫活動
-          </div>
-          <h1 className="text-3xl font-black leading-tight mb-2" style={{ color: "oklch(0.22 0.03 55)" }}>
-            保護猫たちに、<br />
-            <span style={{ color: "oklch(0.68 0.17 42)" }}>あたたかい</span><br />
-            家族を 🐾
-          </h1>
-          <p className="text-sm leading-relaxed mb-5" style={{ color: "oklch(0.45 0.025 60)" }}>
-            人間（4人）犬（1匹）猫（10匹）の大家族母ちゃんが<br />
-            TNR活動（猫保護 → 去勢 → 譲渡）をしています。<br />
-            一緒に猫の命を救いませんか？
-          </p>
-        </Fade>
+      <section className="relative overflow-hidden" style={{ minHeight: "88vw", maxHeight: "520px" }}>
+        {/* 背景画像 */}
+        <img
+          src="/manus-storage/hero_collage_81ba4a5c.jpg"
+          alt="保護猫たち"
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ objectPosition: "center top" }}
+        />
+        {/* グラデーションオーバーレイ：上部は薄め、下半は濃いダークで読みやすく */}
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.50) 40%, rgba(0,0,0,0.78) 70%, rgba(0,0,0,0.90) 100%)" }} />
 
-        {/* コラージュ写真 */}
-        <Fade delay={100}>
-          <HeroCollage />
-        </Fade>
+        {/* テキスト・ボタン */}
+        <div className="relative z-10 flex flex-col justify-end h-full px-5 pt-6 pb-6" style={{ minHeight: "88vw", maxHeight: "520px" }}>
+          <Fade>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-3 w-fit"
+              style={{ background: "rgba(255,255,255,0.22)", color: "white", backdropFilter: "blur(6px)" }}>
+              <Paw className="w-3.5 h-3.5" color="white" />
+              福岡県 保護猫活動
+            </div>
+            <h1 className="text-3xl font-black leading-tight mb-2" style={{ color: "white", textShadow: "0 2px 8px rgba(0,0,0,0.4)" }}>
+              保護猫たちに、<br />
+              <span style={{ color: "oklch(0.92 0.12 60)" }}>あたたかい</span><br />
+              家族を 🐾
+            </h1>
+            <p className="text-sm leading-relaxed mb-5" style={{ color: "rgba(255,255,255,0.88)", textShadow: "0 1px 4px rgba(0,0,0,0.5)" }}>
+              人間（4人）犬（1匹）猫（10匹）の大家族母ちゃんが<br />
+              TNR活動（猫保護 → 去勢 → 譲渡）をしています。<br />
+              一緒に猫の命を救いませんか？
+            </p>
+          </Fade>
 
-        {/* CTAボタン */}
-        <Fade delay={200}>
-          <div className="flex flex-col gap-3 mt-5">
-            <a href="#paypay" className="btn-paw btn-support-paypay flex items-center justify-center gap-2 py-4 rounded-2xl font-black text-lg"
-              style={{ background: "oklch(0.68 0.17 42)", color: "white" }} onClick={pawPop}>
-              💝 PayPayで参加する <span className="arrow-bounce">→</span>
-            </a>
-            <a href="#amazon" className="btn-paw btn-support-amazon flex items-center justify-center gap-2 py-4 rounded-2xl font-black text-lg"
-              style={{ background: "oklch(0.80 0.14 80)", color: "white" }} onClick={pawPop}>
-              📦 物資で参加する <span className="arrow-bounce">→</span>
-            </a>
-            <a href="#bank" className="btn-paw flex items-center justify-center gap-2 py-3.5 rounded-2xl font-bold text-base border-2"
-              style={{ borderColor: "oklch(0.68 0.17 42)", color: "oklch(0.68 0.17 42)", background: "white" }} onClick={pawPop}>
-              🏦 銀行振込で参加する
-            </a>
-          </div>
-        </Fade>
+          {/* CTAボタン */}
+          <Fade delay={150}>
+            <div className="flex flex-col gap-3">
+              <a href="#paypay" className="btn-paw btn-support-paypay flex items-center justify-center gap-2 py-4 rounded-2xl font-black text-lg"
+                style={{ background: "oklch(0.68 0.17 42)", color: "white" }} onClick={pawPop}>
+                💝 PayPayで参加する <span className="arrow-bounce">→</span>
+              </a>
+              <a href="#amazon" className="btn-paw btn-support-amazon flex items-center justify-center gap-2 py-4 rounded-2xl font-black text-lg"
+                style={{ background: "oklch(0.80 0.14 80)", color: "white" }} onClick={pawPop}>
+                📦 物資で参加する <span className="arrow-bounce">→</span>
+              </a>
+              <a href="#bank" className="btn-paw flex items-center justify-center gap-2 py-3.5 rounded-2xl font-bold text-base border-2"
+                style={{ borderColor: "white", color: "white", background: "rgba(255,255,255,0.15)", backdropFilter: "blur(8px)" }} onClick={pawPop}>
+                🏦 銀行振込で参加する
+              </a>
+            </div>
+          </Fade>
+        </div>
       </section>
 
       {/* ── TNR説明 ── */}
