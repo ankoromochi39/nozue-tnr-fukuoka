@@ -410,7 +410,7 @@ export default function Home() {
               PayPayで<br />参加する
             </h2>
             <p className="text-sm leading-relaxed mb-4" style={{ color: "oklch(0.45 0.025 60)" }}>
-              保護猫たちの医療費・フード代など、毎月かかる費用に、大切に使わせていただきます。<br />100円からでも本当にありがたいです！
+              保護猫たちの医療費・フード代など<br />毎月かかる費用に<br />大切に使わせていただきます<br />100円からでも本当にありがたいです！
             </p>
             {/* QRコード */}
             <div className="flex flex-col items-center gap-3 mb-4 p-4 rounded-2xl" style={{ background: "oklch(0.985 0.010 60)" }}>
@@ -450,7 +450,7 @@ export default function Home() {
               物資で<br />参加する
             </h2>
             <p className="text-sm leading-relaxed mb-4" style={{ color: "oklch(0.45 0.025 60)" }}>
-              猫砂・フードなど、保護した猫たちが生きていくのに必要な物資を<br />Amazonの「ほしいものリスト」にまとめています。1つからでも大変助かります！<br />
+              保護した猫たちが生きていくのに必要な<br />フードなどの物資を<br />Amazonの「ほしいものリスト」にまとめています<br />1つからでも大変助かります！<br />
               <span className="font-bold" style={{ color: "oklch(0.50 0.14 80)" }}>※ お互いの個人情報は分からないようになっています</span>
             </p>
 
@@ -483,7 +483,7 @@ export default function Home() {
               銀行振込で<br />参加する
             </h2>
             <p className="text-sm leading-relaxed mb-4" style={{ color: "oklch(0.45 0.025 60)" }}>
-              PayPayでのご支援と同様に<br />保護猫活動の費用として全額使用させていただきます。<br />100円からでも大変ありがたいです。
+              PayPayでのご支援と同様<br />保護猫活動の費用として<br />全額使用させていただきます<br />100円からでも大変ありがたいです！
             </p>
             <div className="rounded-2xl p-4 space-y-2.5" style={{ background: "oklch(0.55 0.10 240 / 0.06)", border: "1.5px solid oklch(0.55 0.10 240 / 0.18)" }}>
               {[
