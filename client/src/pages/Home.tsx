@@ -12,8 +12,8 @@ import CatScrollAnimation from "@/components/CatScrollAnimation";
 
 // ── カードセクション用の新背景写真 ──
 const CARD_BG1 = "/manus-storage/card_bg1_c1d362a6.svg"; // 一緒に保護猫活動セクション
-const CARD_BG2 = "/manus-storage/card_bg2_2fe22393.svg"; // 物資カード
-const CARD_BG3 = "/manus-storage/card_bg3_28b8abee.svg"; // 銀行振込カード
+const CARD_BG2 = "/manus-storage/card_bg2_new_513b026e.svg"; // 物資カード
+const CARD_BG3 = "/manus-storage/card_bg3_new_367b8d5c.svg"; // 銀行振込カード
 
 // ── Asset URLs ──
 const PROFILE_ICON  = "/manus-storage/icon_cat_correct_487e5edc.jpg";
@@ -53,8 +53,6 @@ const CATS_ADOPTED: { src: string }[] = [
   { src: CAT_RESCUE1 },
   { src: CAT_RESCUE2 },
   { src: "/manus-storage/adopted_01_bcb36104.jpg" },
-  { src: "/manus-storage/adopted_02_cbd7a671.jpg" },
-  { src: "/manus-storage/adopted_03_40d8c2a7.jpg" },
   { src: "/manus-storage/adopted_04_958f5047.jpg" },
   { src: "/manus-storage/adopted_05_65b580d8.jpg" },
   { src: "/manus-storage/adopted_06_a4baa389.jpg" },
@@ -584,9 +582,9 @@ export default function Home() {
       </section>
 
       {/* ── FOOTER ── */}
-      <footer className="px-4 py-8 text-center" style={{ background: "oklch(0.22 0.03 55)", color: "white" }}>
+      <footer className="px-4 py-8 text-center" style={{ background: "oklch(0.68 0.17 42)", color: "white" }}>
         <div className="flex justify-center gap-1 mb-2">
-          {[0,1,2].map(i => <Paw key={i} className="w-5 h-5 opacity-60" color="oklch(0.68 0.17 42)" />)}
+          {[0,1,2].map(i => <Paw key={i} className="w-5 h-5 opacity-60" color="white" />)}
         </div>
         <div className="font-black text-base mb-1">のずえんち</div>
         <div className="text-xs opacity-60 mb-4">福岡県 TNR保護猫活動</div>
