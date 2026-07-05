@@ -307,13 +307,13 @@ export default function Home() {
             <h2 className="text-lg font-black" style={{ color: "oklch(0.22 0.03 55)" }}>TNR活動ってなに？</h2>
           </div>
           <p className="text-sm leading-relaxed mb-4" style={{ color: "oklch(0.45 0.025 60)" }}>
-            地域で暮らす猫や多頭飼育崩壊などで<br />困窮している猫を保護し、不妊・去勢手術を行い<br />新しい家族のもとへ譲渡する活動です
+            地域で暮らす猫や多頭飼育崩壊などで<br />困窮している猫を保護し、不妊・去勢手術を行い<br />元の環境に戻す活動です<br /><span className="text-xs" style={{ color: "oklch(0.45 0.025 60)" }}>※新しい家族のもとへと譲渡する場合もあります</span>
           </p>
           <div className="flex items-center gap-1">
             {[
               { step: "01", iconSrc: "/manus-storage/icon_01_new_38185f60.png", title: "Trap", sub: "保護", desc: "安全に保護" },
               { step: "02", iconSrc: "/manus-storage/icon_02_new_bd6cdfe4.png", title: "Neuter", sub: "去勢", desc: "不妊・去勢手術を行う" },
-              { step: "03", iconSrc: "/manus-storage/icon_03_new_dcfb6832.png", title: "Return", sub: "譲渡", desc: "新しい家族のもとへ" },
+              { step: "03", iconSrc: "/manus-storage/icon_03_new_dcfb6832.png", title: "Return", sub: "譲渡", desc: "元の環境に戻す" },
             ].map((item, i) => (
               <>
                 {i > 0 && (
