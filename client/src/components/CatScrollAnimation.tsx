@@ -272,18 +272,18 @@ export default function CatScrollAnimation({ externalTrigger }: CatScrollAnimati
   // Only show when visible or still playing
   const shouldShow = isVisible || isPlaying;
 
-  // Mobile: cat sits just above the home bar + 150px offset to avoid Manus credit
-  // catBottom = safe-area-inset-bottom + 16px (small gap above home bar) + 150px
+  // Mobile: cat sits just above the home bar + offset to avoid Manus credit
+  // catBottom = safe-area-inset-bottom + 80px
   // This keeps the cat fully visible and clear of the home bar and Manus credit
   const catBottom = isMobile
-    ? `calc(env(safe-area-inset-bottom, 20px) + 166px)`
-    : `166px`;
+    ? `calc(env(safe-area-inset-bottom, 20px) + 80px)`
+    : `80px`;
   const yarnBottom = catBottom;
 
-  // Overlay height = safe-area + 166px offset + catSize + a little extra for float
+  // Overlay height = safe-area + 80px offset + catSize + a little extra for float
   const overlayHeight = isMobile
-    ? `calc(env(safe-area-inset-bottom, 20px) + ${layout.catSize + 182}px)`
-    : `${layout.catSize + 190}px`;
+    ? `calc(env(safe-area-inset-bottom, 20px) + ${layout.catSize + 96}px)`
+    : `${layout.catSize + 104}px`;
 
   return (
     <div
