@@ -1,23 +1,26 @@
 /**
- * CatScrollAnimation
+ * CatScrollAnimation v3
  * ─────────────────────────────────────────────────────────────────────────────
  * Design: Warm / Family / Love — subtle playful delight, never distracting.
  *
- * Mobile-first: uses env(safe-area-inset-bottom) + fixed offset so the cat
- * never hides behind iPhone home bars or Android nav bars.
+ * Trigger: IntersectionObserver — plays once when the component enters the
+ * viewport. Does NOT sync with scroll position. Does NOT reverse on scroll-up.
+ * Re-plays from the beginning if the component leaves and re-enters the viewport.
  *
- * Phases (by scroll progress 0→1):
- *   0.00–0.08  ① Waiting   – cat_looking  (gentle float)
- *   0.08–0.18  ② Noticing  – cat_tilt     (yarn appears)
- *   0.18–0.33  ③ Approach  – cat_walk → cat_crouch
- *   0.33–0.52  ④ Playing   – cat_play     (yarn spins)
- *   0.52–0.78  ⑤ Chasing   – cat_walk     (bouncy walk, yarn rolls)
- *   0.78–0.95  ⑥ Ending    – cat_looking  (fade out)
+ * Timeline (total ~6 seconds):
+ *   0.0–0.8s  ① Waiting   – cat_looking  (gentle float)
+ *   0.8–1.6s  ② Noticing  – cat_tilt     (yarn fades in)
+ *   1.6–2.8s  ③ Approach  – cat_walk → cat_crouch
+ *   2.8–4.0s  ④ Playing   – cat_play     (yarn spins)
+ *   4.0–5.4s  ⑤ Chasing   – cat_walk     (bouncy walk, yarn rolls)
+ *   5.4–6.0s  ⑥ Ending    – cat_looking  (fade out)
+ *
+ * Mobile: env(safe-area-inset-bottom) keeps cat above home bar.
  */
 
 import { useEffect, useRef, useState, useCallback } from "react";
 
-// ── New SVG URLs (v2) ─────────────────────────────────────────────────────────
+// ── SVG URLs (v2) ─────────────────────────────────────────────────────────────
 const SVG = {
   looking: "/manus-storage/cat_looking_03800335.svg",
   tilt:    "/manus-storage/cat_tilt_18822e17.svg",
@@ -33,37 +36,38 @@ const lerp = (a: number, b: number, t: number) => a + (b - a) * clamp01(t);
 const invLerp = (lo: number, hi: number, v: number) =>
   lo === hi ? 0 : clamp01((v - lo) / (hi - lo));
 
-// ── Breakpoints ───────────────────────────────────────────────────────────────
-const BP = {
-  noticeStart:   0.08,
-  approachStart: 0.18,
-  playStart:     0.33,
-  chaseStart:    0.52,
-  endStart:      0.78,
-  endFull:       0.95,
+// ── Timeline breakpoints (seconds) ───────────────────────────────────────────
+const TOTAL_DURATION = 6.0; // seconds
+const T = {
+  noticeStart:   0.8,
+  approachStart: 1.6,
+  playStart:     2.8,
+  chaseStart:    4.0,
+  endStart:      5.4,
+  endFull:       6.0,
 };
 
-// ── Layout constants per device ───────────────────────────────────────────────
+// ── Layout per device ─────────────────────────────────────────────────────────
 interface Layout {
-  catSize: number;      // px
-  yarnSize: number;     // px
-  barHeight: number;    // fixed bar height px
-  safeBottom: number;   // extra bottom offset (px) on top of safe-area
-  startX: number;       // % — cat start position
-  yarnInitX: number;    // % — yarn initial position
-  catEndX: number;      // % — cat final position
-  yarnEndX: number;     // % — yarn final position
+  catSize: number;
+  yarnSize: number;
+  barHeight: number;
+  safeBottom: number;
+  startX: number;
+  yarnInitX: number;
+  catEndX: number;
+  yarnEndX: number;
 }
 
 const MOBILE_LAYOUT: Layout = {
-  catSize: 60,
-  yarnSize: 38,
-  barHeight: 80,
-  safeBottom: 16,   // extra 16px above safe area
+  catSize: 64,
+  yarnSize: 40,
+  barHeight: 90,
+  safeBottom: 20,
   startX: 10,
-  yarnInitX: 28,
-  catEndX: 80,
-  yarnEndX: 90,
+  yarnInitX: 30,
+  catEndX: 78,
+  yarnEndX: 88,
 };
 
 const DESKTOP_LAYOUT: Layout = {
@@ -78,10 +82,7 @@ const DESKTOP_LAYOUT: Layout = {
 };
 
 // ── Animation state ───────────────────────────────────────────────────────────
-type Phase = "waiting" | "noticing" | "approaching" | "playing" | "chasing" | "ending";
-
 interface AnimState {
-  phase: Phase;
   catImg: string;
   catX: number;
   catFloatY: number;
@@ -91,14 +92,108 @@ interface AnimState {
   opacity: number;
 }
 
+function deriveState(t: number, layout: Layout): AnimState {
+  const { startX, yarnInitX, catEndX, yarnEndX } = layout;
+  const yarnShift = (yarnEndX - yarnInitX) * 0.25;
+
+  // ① Waiting
+  if (t < T.noticeStart) {
+    const p = invLerp(0, T.noticeStart, t);
+    return {
+      catImg: SVG.looking,
+      catX: startX,
+      catFloatY: Math.sin(p * Math.PI * 4) * 2,
+      yarnX: yarnInitX,
+      yarnRot: 0,
+      yarnVisible: false,
+      opacity: 1,
+    };
+  }
+
+  // ② Noticing
+  if (t < T.approachStart) {
+    return {
+      catImg: SVG.tilt,
+      catX: startX,
+      catFloatY: 0,
+      yarnX: yarnInitX,
+      yarnRot: 15,
+      yarnVisible: true,
+      opacity: 1,
+    };
+  }
+
+  // ③ Approaching
+  if (t < T.playStart) {
+    const p = invLerp(T.approachStart, T.playStart, t);
+    const catImg = p < 0.5 ? SVG.walk : SVG.crouch;
+    return {
+      catImg,
+      catX: lerp(startX, yarnInitX - 6, p),
+      catFloatY: 0,
+      yarnX: yarnInitX,
+      yarnRot: lerp(15, 30, p),
+      yarnVisible: true,
+      opacity: 1,
+    };
+  }
+
+  // ④ Playing
+  if (t < T.chaseStart) {
+    const p = invLerp(T.playStart, T.chaseStart, t);
+    return {
+      catImg: SVG.play,
+      catX: lerp(yarnInitX - 6, yarnInitX - 4, p),
+      catFloatY: 0,
+      yarnX: lerp(yarnInitX, yarnInitX + yarnShift, p),
+      yarnRot: p * 360 * 1.5,
+      yarnVisible: true,
+      opacity: 1,
+    };
+  }
+
+  // ⑤ Chasing
+  if (t < T.endStart) {
+    const p = invLerp(T.chaseStart, T.endStart, t);
+    const bounceY = Math.sin(p * Math.PI * 6) * 4;
+    return {
+      catImg: SVG.walk,
+      catX: lerp(yarnInitX - 4, catEndX, p),
+      catFloatY: bounceY,
+      yarnX: lerp(yarnInitX + yarnShift, yarnEndX, p),
+      yarnRot: 360 * 1.5 + p * 360 * 2,
+      yarnVisible: true,
+      opacity: 1,
+    };
+  }
+
+  // ⑥ Ending
+  {
+    const p = invLerp(T.endStart, T.endFull, t);
+    return {
+      catImg: SVG.looking,
+      catX: catEndX,
+      catFloatY: 0,
+      yarnX: yarnEndX,
+      yarnRot: 360 * 3.5,
+      yarnVisible: p < 0.5,
+      opacity: lerp(1, 0, p),
+    };
+  }
+}
+
 // ── Component ─────────────────────────────────────────────────────────────────
 export default function CatScrollAnimation() {
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-  const rafRef = useRef<number | null>(null);
-  const lastScrollRef = useRef(0);
+  const [elapsed, setElapsed] = useState(0);       // seconds into animation
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
-  // Detect mobile (≤ 640px)
+  const containerRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number | null>(null);
+  const startTimeRef = useRef<number | null>(null);
+
+  // Detect mobile
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 640);
     check();
@@ -106,59 +201,87 @@ export default function CatScrollAnimation() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Scroll listener (RAF-throttled)
-  const handleScroll = useCallback(() => {
-    if (rafRef.current) return;
-    rafRef.current = requestAnimationFrame(() => {
-      rafRef.current = null;
-      const top = window.scrollY || document.documentElement.scrollTop;
-      const docH = document.documentElement.scrollHeight - window.innerHeight;
-      const p = docH > 0 ? clamp01(top / docH) : 0;
-      if (Math.abs(p - lastScrollRef.current) > 0.001) {
-        lastScrollRef.current = p;
-        setScrollProgress(p);
+  // Animation loop (time-based, not scroll-based)
+  const startAnimation = useCallback(() => {
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    startTimeRef.current = null;
+    setElapsed(0);
+    setIsPlaying(true);
+
+    const tick = (now: number) => {
+      if (startTimeRef.current === null) startTimeRef.current = now;
+      const t = (now - startTimeRef.current) / 1000; // seconds
+      setElapsed(Math.min(t, TOTAL_DURATION));
+
+      if (t < TOTAL_DURATION) {
+        rafRef.current = requestAnimationFrame(tick);
+      } else {
+        setIsPlaying(false);
+        rafRef.current = null;
       }
-    });
+    };
+
+    rafRef.current = requestAnimationFrame(tick);
   }, []);
 
+  // IntersectionObserver — trigger when component enters viewport
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
+    const el = containerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          startAnimation();
+        } else {
+          setIsVisible(false);
+          // Stop animation when out of view (don't reverse)
+          if (rafRef.current) {
+            cancelAnimationFrame(rafRef.current);
+            rafRef.current = null;
+          }
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [startAnimation]);
 
   const layout = isMobile ? MOBILE_LAYOUT : DESKTOP_LAYOUT;
-  const state = deriveState(scrollProgress, layout);
+  const state = deriveState(elapsed, layout);
 
-  // Bouncy Y offset during chase phase
-  const bounceY = state.phase === "chasing"
-    ? Math.sin(scrollProgress * 80) * (isMobile ? 3 : 5)
-    : 0;
+  // Only show when visible or still playing
+  const shouldShow = isVisible || isPlaying;
 
-  // Bottom offset: safe-area + extra padding
-  // On mobile we sit above the home bar using env(safe-area-inset-bottom)
   const bottomStyle = isMobile
     ? `calc(env(safe-area-inset-bottom, 0px) + ${layout.safeBottom}px)`
     : `${layout.safeBottom}px`;
 
   return (
     <div
+      ref={containerRef}
       aria-hidden="true"
       style={{
         position: "fixed",
         bottom: 0,
         left: 0,
         right: 0,
-        // The bar height accounts for safe area on mobile
         height: isMobile
           ? `calc(${layout.barHeight}px + env(safe-area-inset-bottom, 0px))`
           : `${layout.barHeight}px`,
         pointerEvents: "none",
         zIndex: 40,
-        opacity: state.opacity,
-        transition: "opacity 0.8s ease",
-        // Warm gradient so cat is always readable against any page bg
+        opacity: shouldShow ? state.opacity : 0,
+        transition: "opacity 0.6s ease",
         background:
-          "linear-gradient(to top, rgba(255,248,240,0.90) 55%, transparent 100%)",
+          "linear-gradient(to top, rgba(255,248,240,0.92) 55%, transparent 100%)",
       }}
     >
       {/* Yarn ball */}
@@ -173,7 +296,6 @@ export default function CatScrollAnimation() {
             width: layout.yarnSize,
             height: layout.yarnSize,
             transform: `translateX(-50%) rotate(${state.yarnRot}deg)`,
-            transition: "left 0.4s cubic-bezier(0.23,1,0.32,1)",
             willChange: "transform, left",
           }}
         />
@@ -190,110 +312,11 @@ export default function CatScrollAnimation() {
           width: layout.catSize,
           height: layout.catSize,
           objectFit: "contain",
-          transform: `translateX(-50%) translateY(${-(state.catFloatY + bounceY)}px)`,
-          transition: "left 0.5s cubic-bezier(0.23,1,0.32,1)",
+          transform: `translateX(-50%) translateY(${-state.catFloatY}px)`,
           willChange: "transform, left",
           filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.10))",
         }}
       />
     </div>
   );
-}
-
-// ── State derivation ──────────────────────────────────────────────────────────
-function deriveState(p: number, layout: Layout): AnimState {
-  const { noticeStart, approachStart, playStart, chaseStart, endStart, endFull } = BP;
-  const { startX, yarnInitX, catEndX, yarnEndX } = layout;
-
-  // ① Waiting
-  if (p < noticeStart) {
-    const t = invLerp(0, noticeStart, p);
-    return {
-      phase: "waiting",
-      catImg: SVG.looking,
-      catX: startX,
-      catFloatY: Math.sin(t * Math.PI * 4) * 2,
-      yarnX: yarnInitX,
-      yarnRot: 0,
-      yarnVisible: false,
-      opacity: 1,
-    };
-  }
-
-  // ② Noticing
-  if (p < approachStart) {
-    return {
-      phase: "noticing",
-      catImg: SVG.tilt,
-      catX: startX,
-      catFloatY: 0,
-      yarnX: yarnInitX,
-      yarnRot: 15,
-      yarnVisible: true,
-      opacity: 1,
-    };
-  }
-
-  // ③ Approaching
-  if (p < playStart) {
-    const t = invLerp(approachStart, playStart, p);
-    const catImg = t < 0.5 ? SVG.walk : SVG.crouch;
-    return {
-      phase: "approaching",
-      catImg,
-      catX: lerp(startX, yarnInitX - 6, t),
-      catFloatY: 0,
-      yarnX: yarnInitX,
-      yarnRot: lerp(15, 30, t),
-      yarnVisible: true,
-      opacity: 1,
-    };
-  }
-
-  // ④ Playing
-  if (p < chaseStart) {
-    const t = invLerp(playStart, chaseStart, p);
-    const yarnShift = (yarnEndX - yarnInitX) * 0.25; // yarn moves a bit right
-    return {
-      phase: "playing",
-      catImg: SVG.play,
-      catX: lerp(yarnInitX - 6, yarnInitX - 4, t),
-      catFloatY: 0,
-      yarnX: lerp(yarnInitX, yarnInitX + yarnShift, t),
-      yarnRot: t * 360 * 1.5,
-      yarnVisible: true,
-      opacity: 1,
-    };
-  }
-
-  // ⑤ Chasing
-  if (p < endStart) {
-    const t = invLerp(chaseStart, endStart, p);
-    const yarnShift = (yarnEndX - yarnInitX) * 0.25;
-    return {
-      phase: "chasing",
-      catImg: SVG.walk,
-      catX: lerp(yarnInitX - 4, catEndX, t),
-      catFloatY: 0,
-      yarnX: lerp(yarnInitX + yarnShift, yarnEndX, t),
-      yarnRot: 360 * 1.5 + t * 360 * 2,
-      yarnVisible: true,
-      opacity: 1,
-    };
-  }
-
-  // ⑥ Ending
-  {
-    const t = invLerp(endStart, endFull, p);
-    return {
-      phase: "ending",
-      catImg: SVG.looking,
-      catX: catEndX,
-      catFloatY: 0,
-      yarnX: yarnEndX,
-      yarnRot: 360 * 3.5,
-      yarnVisible: t < 0.5,
-      opacity: lerp(1, 0, t),
-    };
-  }
 }
