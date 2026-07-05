@@ -424,7 +424,7 @@ export default function Home() {
             <a href={PAYPAY_URL} target="_blank" rel="noopener noreferrer"
               className="btn-paw btn-support-paypay flex items-center justify-center gap-2 py-4 rounded-2xl font-black text-lg w-full"
               style={{ background: "oklch(0.68 0.17 42)", color: "white" }} onClick={pawPop}>
-              💝 PayPayアプリはこちらから <span className="arrow-bounce">→</span>
+              💝 PayPayアプリに移動 <span className="arrow-bounce">→</span>
             </a>
             <div className="grid grid-cols-2 gap-2 mt-3">
               {["🏥 医療費・手術費", "🍚 フード・おやつ", "🏠 保護環境整備", "💕 譲渡活動費"].map(item => (
@@ -453,19 +453,14 @@ export default function Home() {
               猫砂・フードなど、保護した猫たちが生きていくのに必要な物資を<br />Amazonの「ほしいものリスト」にまとめています。1つからでも大変助かります！<br />
               <span className="font-bold" style={{ color: "oklch(0.50 0.14 80)" }}>※ お互いの個人情報は分からないようになっています</span>
             </p>
-            {/* 猫写真 */}
-            <div className="grid grid-cols-3 gap-1.5 mb-4 rounded-2xl overflow-hidden">
-              <img src={CAT_NEW4} alt="保護猫" className="w-full aspect-square object-cover" />
-              <img src={CAT_NEW6} alt="保護猫" className="w-full aspect-square object-cover" />
-              <img src={CAT_RESCUE2} alt="保護猫" className="w-full aspect-square object-cover" />
-            </div>
+
             <a href={AMAZON_URL} target="_blank" rel="noopener noreferrer"
               className="btn-paw btn-support-amazon flex items-center justify-center gap-2 py-4 rounded-2xl font-black text-lg w-full mb-3"
               style={{ background: "oklch(0.80 0.14 80)", color: "white" }} onClick={pawPop}>
-              📦 ほしいものリストはこちらから <span className="arrow-bounce">→</span>
+              📦 ほしいものリストはこちら <span className="arrow-bounce">→</span>
             </a>
             <div className="flex flex-col gap-1.5">
-              {["🍚 キャットフード・おやつ", "🧹 猫砂・トイレ用品", "💊 医療用品・サプリメント", "🏠 ケージ・キャリーバッグ"].map(item => (
+              {["🍚 キャットフード・おやつ", "🧹 猫砂・トイレ用品"].map(item => (
                 <div key={item} className="text-xs px-3 py-2 rounded-xl"
                   style={{ background: "oklch(0.80 0.14 80 / 0.08)", color: "oklch(0.42 0.025 60)" }}>
                   {item}
