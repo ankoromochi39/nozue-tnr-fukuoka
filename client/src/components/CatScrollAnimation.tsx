@@ -27,7 +27,7 @@ const SVG = {
   crouch:  "/manus-storage/cat_crouch_7e3092f1.svg",
   play:    "/manus-storage/cat_play_602c5a8d.svg",
   walk:    "/manus-storage/cat_walk_edd506d5.svg",
-  yarn:    "/manus-storage/yarn_ball_123e9577.svg",
+  yarn:    "/manus-storage/yarn_new_a2bf70cb.png",
 };
 
 // ── Helpers ───────────────────────────────────────────────────────────────────

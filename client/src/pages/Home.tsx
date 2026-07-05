@@ -311,9 +311,9 @@ export default function Home() {
           </p>
           <div className="flex items-center gap-1">
             {[
-              { step: "01", iconSrc: "/manus-storage/icon_01_288df389.svg", title: "Trap", sub: "保護", desc: "安全に保護" },
-              { step: "02", iconSrc: "/manus-storage/icon_02_2053f267.svg", title: "Neuter", sub: "去勢", desc: "不妊・去勢手術を行う" },
-              { step: "03", iconSrc: "/manus-storage/icon_03_7eeb2082.svg", title: "Return", sub: "譲渡", desc: "新しい家族のもとへ" },
+              { step: "01", iconSrc: "/manus-storage/icon_01_new_38185f60.png", title: "Trap", sub: "保護", desc: "安全に保護" },
+              { step: "02", iconSrc: "/manus-storage/icon_02_new_bd6cdfe4.png", title: "Neuter", sub: "去勢", desc: "不妊・去勢手術を行う" },
+              { step: "03", iconSrc: "/manus-storage/icon_03_new_dcfb6832.png", title: "Return", sub: "譲渡", desc: "新しい家族のもとへ" },
             ].map((item, i) => (
               <>
                 {i > 0 && (
