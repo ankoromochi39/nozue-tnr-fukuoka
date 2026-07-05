@@ -307,7 +307,7 @@ export default function Home() {
             <h2 className="text-lg font-black" style={{ color: "oklch(0.22 0.03 55)" }}>TNR活動ってなに？</h2>
           </div>
           <p className="text-sm leading-relaxed mb-4" style={{ color: "oklch(0.45 0.025 60)" }}>
-            地域で暮らす猫や多頭飼育崩壊などで<br />困窮している猫を保護し、不妊・去勢手術を行い<br />新しい家族のもとへ譲渡する活動です
+            地域で暮らす猫や多頭飼育崩壊などで困窮<br />している猫を保護し、不妊・去勢手術を行い<br />新しい家族のもとへ譲渡する活動です
           </p>
           <div className="flex items-center gap-1">
             {[
