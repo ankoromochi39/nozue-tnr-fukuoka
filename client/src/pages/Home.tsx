@@ -311,9 +311,9 @@ export default function Home() {
           </p>
           <div className="flex items-center gap-1">
             {[
-              { step: "01", icon: "🏠", title: "Trap", sub: "保護", desc: "安全に保護" },
-              { step: "02", icon: "✂️", title: "Neuter", sub: "去勢", desc: "不妊・去勢手術を行う" },
-              { step: "03", icon: "💕", title: "Return", sub: "譲渡", desc: "新しい家族のもとへ" },
+              { step: "01", iconSrc: "/manus-storage/icon_01_288df389.svg", title: "Trap", sub: "保護", desc: "安全に保護" },
+              { step: "02", iconSrc: "/manus-storage/icon_02_2053f267.svg", title: "Neuter", sub: "去勢", desc: "不妊・去勢手術を行う" },
+              { step: "03", iconSrc: "/manus-storage/icon_03_7eeb2082.svg", title: "Return", sub: "譲渡", desc: "新しい家族のもとへ" },
             ].map((item, i) => (
               <>
                 {i > 0 && (
@@ -321,10 +321,10 @@ export default function Home() {
                     <span style={{ color: "oklch(0.68 0.17 42)", fontSize: "12px" }}>&#9654;</span>
                   </div>
                 )}
-                <div key={item.step} className="flex-1 rounded-2xl text-center relative overflow-hidden flex flex-col"
+                <div key={item.step} className="flex-1 rounded-2xl text-center relative overflow-hidden flex flex-col items-center"
                   style={{ background: "white", border: "1.5px solid oklch(0.68 0.17 42 / 0.15)", padding: "10px 6px", height: '124px' }}>
                   <div className="absolute top-1.5 right-2 text-xs font-black opacity-20" style={{ color: "oklch(0.68 0.17 42)" }}>{item.step}</div>
-                  <div className="text-2xl" style={{ lineHeight: "2rem", height: "2rem" }}>{item.icon}</div>
+                  <img src={item.iconSrc} alt={item.sub} style={{ width: "2rem", height: "2rem", objectFit: "contain", flexShrink: 0 }} />
                   <div className="text-xs font-black" style={{ color: "oklch(0.52 0.17 42)", lineHeight: "1.2rem", height: "1.2rem" }}>{item.title}</div>
                   <div className="text-xs font-bold" style={{ color: "oklch(0.52 0.17 42)", lineHeight: "1.2rem", height: "1.2rem" }}>（{item.sub}）</div>
                   <div className="text-xs leading-tight mt-1" style={{ color: "oklch(0.50 0.02 60)" }}>{item.desc}</div>
