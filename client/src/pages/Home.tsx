@@ -406,9 +406,12 @@ export default function Home() {
               style={{ background: "oklch(0.68 0.17 42 / 0.12)", color: "oklch(0.52 0.17 42)" }}>
               1
             </div>
-            <h2 className="text-2xl font-black mb-3" style={{ color: "oklch(0.22 0.03 55)" }}>
-              PayPayで<br />参加する
-            </h2>
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="text-2xl font-black" style={{ color: "oklch(0.22 0.03 55)" }}>
+                PayPayで<br />参加する
+              </h2>
+              <img src={CAT_NEW1} alt="" className="w-16 h-16 rounded-full object-cover flex-shrink-0" style={{ border: "3px solid oklch(0.68 0.17 42 / 0.35)" }} />
+            </div>
             <p className="text-sm leading-relaxed mb-4" style={{ color: "oklch(0.45 0.025 60)" }}>
               保護猫たちの医療費・フード代など<br />毎月かかる費用に<br />大切に使わせていただきます<br />100円からでも本当にありがたいです！
             </p>
@@ -446,11 +449,14 @@ export default function Home() {
               style={{ background: "oklch(0.80 0.14 80 / 0.15)", color: "oklch(0.50 0.14 80)" }}>
               2
             </div>
-            <h2 className="text-2xl font-black mb-3" style={{ color: "oklch(0.22 0.03 55)" }}>
-              物資で<br />参加する
-            </h2>
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="text-2xl font-black" style={{ color: "oklch(0.22 0.03 55)" }}>
+                物資で<br />参加する
+              </h2>
+              <img src={CAT_NEW1} alt="" className="w-16 h-16 rounded-full object-cover flex-shrink-0" style={{ border: "3px solid oklch(0.80 0.14 80 / 0.45)" }} />
+            </div>
             <p className="text-sm leading-relaxed mb-4" style={{ color: "oklch(0.45 0.025 60)" }}>
-              保護した猫たちが生きていくのに必要な<br />フードなどの物資を<br />Amazonの「ほしいものリスト」にまとめています<br />1つからでも大変助かります！<br />
+              保護した猫たちが生きていくのに必要な<br />フードや猫砂などを<br />Amazonの「ほしいものリスト」にまとめています<br />1つからでも大変助かります！<br />
               <span className="font-bold" style={{ color: "oklch(0.50 0.14 80)" }}>※ お互いの個人情報は分からないようになっています</span>
             </p>
 
@@ -479,9 +485,12 @@ export default function Home() {
               style={{ background: "oklch(0.55 0.10 240 / 0.10)", color: "oklch(0.40 0.10 240)" }}>
               3
             </div>
-            <h2 className="text-2xl font-black mb-3" style={{ color: "oklch(0.22 0.03 55)" }}>
-              銀行振込で<br />参加する
-            </h2>
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="text-2xl font-black" style={{ color: "oklch(0.22 0.03 55)" }}>
+                銀行振込で<br />参加する
+              </h2>
+              <img src={CAT_NEW1} alt="" className="w-16 h-16 rounded-full object-cover flex-shrink-0" style={{ border: "3px solid oklch(0.55 0.10 240 / 0.35)" }} />
+            </div>
             <p className="text-sm leading-relaxed mb-4" style={{ color: "oklch(0.45 0.025 60)" }}>
               PayPayでのご支援と同様<br />保護猫活動の費用として<br />全額使用させていただきます<br />100円からでも大変ありがたいです！
             </p>
