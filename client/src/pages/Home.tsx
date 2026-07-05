@@ -288,24 +288,29 @@ export default function Home() {
           <p className="text-sm leading-relaxed mb-4" style={{ color: "oklch(0.45 0.025 60)" }}>
             地域で暮らす猫や多頭飼育崩壊などで困窮している猫を保護し、不妊・去勢手術を行い、新しい家族のもとへ譲渡する活動です。
           </p>
-          <div className="flex gap-2">
+          <div className="flex items-center gap-1">
             {[
               { step: "01", icon: "🏠", title: "Trap", sub: "保護", desc: "安全に保護" },
               { step: "02", icon: "✂️", title: "Neuter", sub: "去勢", desc: "不妊・去勢手術を行う" },
               { step: "03", icon: "💕", title: "Return", sub: "譲渡", desc: "新しい家族のもとへ" },
             ].map((item, i) => (
-              <div key={item.step} className="flex-1 rounded-2xl p-2 text-center relative overflow-hidden"
-                style={{ background: "white", border: "1.5px solid oklch(0.68 0.17 42 / 0.15)" }}>
-                <div className="absolute top-1.5 right-2 text-xs font-black opacity-20" style={{ color: "oklch(0.68 0.17 42)" }}>{item.step}</div>
-                <div className="text-2xl mb-1">{item.icon}</div>
-                <div className="text-xs font-black" style={{ color: "oklch(0.52 0.17 42)" }}>{item.title}</div>
-                <div className="text-xs font-bold mb-1" style={{ color: "oklch(0.52 0.17 42)" }}>（{item.sub}）</div>
-                <div className="text-xs leading-tight" style={{ color: "oklch(0.50 0.02 60)" }}>{item.desc}</div>
+              <>
+                <div key={item.step} className="flex-1 rounded-2xl p-2 text-center relative overflow-hidden"
+                  style={{ background: "white", border: "1.5px solid oklch(0.68 0.17 42 / 0.15)" }}>
+                  <div className="absolute top-1.5 right-2 text-xs font-black opacity-20" style={{ color: "oklch(0.68 0.17 42)" }}>{item.step}</div>
+                  <div className="text-2xl mb-1">{item.icon}</div>
+                  <div className="text-xs font-black" style={{ color: "oklch(0.52 0.17 42)" }}>{item.title}</div>
+                  <div className="text-xs font-bold mb-1" style={{ color: "oklch(0.52 0.17 42)" }}>（{item.sub}）</div>
+                  <div className="text-xs leading-tight" style={{ color: "oklch(0.50 0.02 60)" }}>{item.desc}</div>
+                </div>
                 {i < 2 && (
-                  <div className="absolute -right-1 top-1/2 -translate-y-1/2 text-base font-black z-10"
-                    style={{ color: "oklch(0.68 0.17 42)" }}>›</div>
+                  <div className="flex-shrink-0 flex items-center justify-center" style={{ width: "18px" }}>
+                    <svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M1 1L13 9L1 17" stroke="oklch(0.68 0.17 42)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                    </svg>
+                  </div>
                 )}
-              </div>
+              </>
             ))}
           </div>
         </Fade>
