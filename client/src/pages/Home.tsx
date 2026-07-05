@@ -404,7 +404,7 @@ export default function Home() {
           <div className="p-5 rounded-3xl" style={{ background: "white", border: "3px solid oklch(0.68 0.17 42 / 0.25)", boxShadow: "0 4px 24px oklch(0.68 0.17 42 / 0.10)" }}>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-3"
               style={{ background: "oklch(0.68 0.17 42 / 0.12)", color: "oklch(0.52 0.17 42)" }}>
-              💝 PayPayで参加
+              1
             </div>
             <h2 className="text-2xl font-black mb-3" style={{ color: "oklch(0.22 0.03 55)" }}>
               PayPayで<br />参加する
@@ -444,7 +444,7 @@ export default function Home() {
           <div className="p-5 rounded-3xl" style={{ background: "white", border: "3px solid oklch(0.80 0.14 80 / 0.35)", boxShadow: "0 4px 24px oklch(0.80 0.14 80 / 0.10)" }}>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-3"
               style={{ background: "oklch(0.80 0.14 80 / 0.15)", color: "oklch(0.50 0.14 80)" }}>
-              📦 物資で参加
+              2
             </div>
             <h2 className="text-2xl font-black mb-3" style={{ color: "oklch(0.22 0.03 55)" }}>
               物資で<br />参加する
@@ -482,7 +482,7 @@ export default function Home() {
           <div className="p-5 rounded-3xl" style={{ background: "white", border: "3px solid oklch(0.55 0.10 240 / 0.25)", boxShadow: "0 4px 24px oklch(0.55 0.10 240 / 0.08)" }}>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-3"
               style={{ background: "oklch(0.55 0.10 240 / 0.10)", color: "oklch(0.40 0.10 240)" }}>
-              🏦 銀行振込で参加
+              3
             </div>
             <h2 className="text-2xl font-black mb-3" style={{ color: "oklch(0.22 0.03 55)" }}>
               銀行振込で<br />参加する
