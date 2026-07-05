@@ -440,7 +440,7 @@ export default function Home() {
             {/* コンテンツエリア */}
             <div className="p-5" style={{ background: "white", border: "3px solid oklch(0.68 0.17 42 / 0.25)", borderTop: "none", borderRadius: "0 0 1.5rem 1.5rem" }}>
             <p className="text-sm leading-relaxed mb-4" style={{ color: "oklch(0.45 0.025 60)" }}>
-              保護猫たちの医療費・フード代など<br />毎月かかる費用に<br />大切に使わせていただきます<br />100円からでも本当にありがたいです！
+              保護猫たちの医療費など毎月かかる費用に<br />大切に使わせていただきます<br />100円からでも本当にありがたいです！
             </p>
             {/* QRコード */}
             <div className="flex flex-col items-center gap-3 mb-4 p-4 rounded-2xl" style={{ background: "oklch(0.985 0.010 60)" }}>
@@ -490,8 +490,8 @@ export default function Home() {
             {/* コンテンツエリア */}
             <div className="p-5" style={{ background: "white", border: "3px solid oklch(0.80 0.14 80 / 0.35)", borderTop: "none", borderRadius: "0 0 1.5rem 1.5rem" }}>
             <p className="text-sm leading-relaxed mb-4" style={{ color: "oklch(0.45 0.025 60)" }}>
-              保護した猫たちが生きていくのに必要な<br />フードや猫砂などを<br />Amazonの「ほしいものリスト」にまとめています<br />1つからでも大変助かります！<br />
-              <span className="font-bold" style={{ color: "oklch(0.50 0.14 80)" }}>※ お互いの個人情報は分からないようになっています</span>
+              保護した猫たちが生きていくのに必要なフードや猫砂などの物資を<br />Amazonのほしいものリストにまとめています<br />1つからでも大変助かります！<br />
+              <span className="text-xs" style={{ color: "oklch(0.50 0.14 80)" }}>※ お互いの個人情報は分からないようになっています</span>
             </p>
 
             <a href={AMAZON_URL} target="_blank" rel="noopener noreferrer"
