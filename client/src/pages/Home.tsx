@@ -290,8 +290,8 @@ export default function Home() {
           </p>
           <div className="flex gap-2">
             {[
-              { step: "01", icon: "🏠", title: "Trap", sub: "保護", desc: "外で暮らす猫を安全に保護します" },
-              { step: "02", icon: "✂️", title: "Neuter", sub: "去勢", desc: "不妊・去勢手術を行います" },
+              { step: "01", icon: "🏠", title: "Trap", sub: "保護", desc: "外や危険が伴う場所で暮らす猫を安全に保護" },
+              { step: "02", icon: "✂️", title: "Neuter", sub: "去勢", desc: "不妊・去勢手術を行う" },
               { step: "03", icon: "💕", title: "Return", sub: "譲渡", desc: "新しい家族のもとへ" },
             ].map((item, i) => (
               <div key={item.step} className="flex-1 rounded-2xl p-3 text-center relative overflow-hidden"
@@ -316,7 +316,7 @@ export default function Home() {
         <Fade>
           <div className="flex items-center gap-2 mb-1 px-4">
             <Paw className="w-5 h-5" color="oklch(0.68 0.17 42)" />
-            <h2 className="text-xl font-black" style={{ color: "oklch(0.22 0.03 55)" }}>保護猫たちを紹介するにゃ🐱</h2>
+            <h2 className="text-xl font-black" style={{ color: "oklch(0.22 0.03 55)" }}>今までに保護した猫たち</h2>
           </div>
           <p className="text-sm mb-5 px-4" style={{ color: "oklch(0.55 0.02 60)" }}>福岡県で保護した子たちです</p>
         </Fade>
@@ -326,7 +326,7 @@ export default function Home() {
           <div className="flex items-center gap-2 mb-3 px-4">
             <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-black"
               style={{ background: "oklch(0.68 0.17 42)", color: "white" }}>
-              🏠 里親募集中
+              里親募集中
             </span>
           </div>
           <HorizontalCatScroll cats={CATS_LOOKING} />
@@ -337,7 +337,7 @@ export default function Home() {
           <div className="flex items-center gap-2 mt-6 mb-3 px-4">
             <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-black"
               style={{ background: "oklch(0.55 0.14 145)", color: "white" }}>
-              💕 譲渡済み
+              譲渡完了
             </span>
           </div>
           <HorizontalCatScroll cats={CATS_ADOPTED} />
@@ -349,7 +349,7 @@ export default function Home() {
         <Fade>
           <div className="flex items-center gap-2 mb-4">
             <span className="text-xl">🎥</span>
-            <h2 className="text-xl font-black" style={{ color: "oklch(0.22 0.03 55)" }}>活動の様子</h2>
+            <h2 className="text-xl font-black" style={{ color: "oklch(0.22 0.03 55)" }}>保護後の様子</h2>
           </div>
         </Fade>
         <div className="flex flex-col gap-4">
@@ -365,7 +365,7 @@ export default function Home() {
             <div className="rounded-2xl overflow-hidden shadow-sm border-2 border-white">
               <video src={CAT_VIDEO} controls playsInline muted className="w-full" style={{ maxHeight: 320, objectFit: "cover" }} />
               <div className="px-3 py-2 text-sm font-bold" style={{ background: "oklch(0.68 0.17 42 / 0.08)", color: "oklch(0.42 0.03 55)" }}>
-                保護した子たちの記録🐱
+                一生懸命ご飯を食べている姿が愛おしい💕
               </div>
             </div>
           </Fade>
@@ -404,7 +404,7 @@ export default function Home() {
               💝 PayPayで参加
             </div>
             <h2 className="text-2xl font-black mb-3" style={{ color: "oklch(0.22 0.03 55)" }}>
-              PayPayで<br />参加する💕
+              PayPayで<br />参加する
             </h2>
             <p className="text-sm leading-relaxed mb-4" style={{ color: "oklch(0.45 0.025 60)" }}>
               保護猫たちの医療費・フード代など、毎月かかる費用に、大切に使わせていただきます。<br />100円からでも本当にありがたいです！
@@ -421,7 +421,7 @@ export default function Home() {
             <a href={PAYPAY_URL} target="_blank" rel="noopener noreferrer"
               className="btn-paw btn-support-paypay flex items-center justify-center gap-2 py-4 rounded-2xl font-black text-lg w-full"
               style={{ background: "oklch(0.68 0.17 42)", color: "white" }} onClick={pawPop}>
-              💝 PayPayアプリで参加する <span className="arrow-bounce">→</span>
+              💝 PayPayアプリはこちらから <span className="arrow-bounce">→</span>
             </a>
             <div className="grid grid-cols-2 gap-2 mt-3">
               {["🏥 医療費・手術費", "🍚 フード・おやつ", "🏠 保護環境整備", "💕 譲渡活動費"].map(item => (
@@ -444,10 +444,10 @@ export default function Home() {
               📦 物資で参加
             </div>
             <h2 className="text-2xl font-black mb-3" style={{ color: "oklch(0.22 0.03 55)" }}>
-              物資で<br />参加する📦
+              物資で<br />参加する
             </h2>
             <p className="text-sm leading-relaxed mb-4" style={{ color: "oklch(0.45 0.025 60)" }}>
-              猫砂・フードなど、保護した猫たちが生きていくのに必要な物資をリストにまとめています。1つからでも大変助かります！<br />
+              猫砂・フードなど、保護した猫たちが生きていくのに必要な物資を<br />Amazonの「ほしいものリスト」にまとめています。1つからでも大変助かります！<br />
               <span className="font-bold" style={{ color: "oklch(0.50 0.14 80)" }}>※ お互いの個人情報は分からないようになっています</span>
             </p>
             {/* 猫写真 */}
@@ -459,7 +459,7 @@ export default function Home() {
             <a href={AMAZON_URL} target="_blank" rel="noopener noreferrer"
               className="btn-paw btn-support-amazon flex items-center justify-center gap-2 py-4 rounded-2xl font-black text-lg w-full mb-3"
               style={{ background: "oklch(0.80 0.14 80)", color: "white" }} onClick={pawPop}>
-              📦 ほしいものリストで参加する <span className="arrow-bounce">→</span>
+              📦 ほしいものリストはこちらから <span className="arrow-bounce">→</span>
             </a>
             <div className="flex flex-col gap-1.5">
               {["🍚 キャットフード・おやつ", "🧹 猫砂・トイレ用品", "💊 医療用品・サプリメント", "🏠 ケージ・キャリーバッグ"].map(item => (
@@ -482,10 +482,10 @@ export default function Home() {
               🏦 銀行振込で参加
             </div>
             <h2 className="text-2xl font-black mb-3" style={{ color: "oklch(0.22 0.03 55)" }}>
-              銀行振込で<br />参加する🏦
+              銀行振込で<br />参加する
             </h2>
             <p className="text-sm leading-relaxed mb-4" style={{ color: "oklch(0.45 0.025 60)" }}>
-              いただいたご支援金は全額、<br />保護猫たちのために大切に使わせていただきます。
+              PayPayでのご支援と同様に<br />保護猫活動の費用として全額使用させていただきます。<br />100円からでも大変ありがたいです。
             </p>
             <div className="rounded-2xl p-4 space-y-2.5" style={{ background: "oklch(0.55 0.10 240 / 0.06)", border: "1.5px solid oklch(0.55 0.10 240 / 0.18)" }}>
               {[
