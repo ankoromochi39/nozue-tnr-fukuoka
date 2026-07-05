@@ -296,7 +296,7 @@ export default function Home() {
             ].map((item, i) => (
               <>
                 <div key={item.step} className="flex-1 rounded-2xl text-center relative overflow-hidden flex flex-col justify-between"
-                  style={{ background: "white", border: "1.5px solid oklch(0.68 0.17 42 / 0.15)", padding: "10px 6px", minHeight: "100px" }}>
+                  style={{ background: "white", border: "1.5px solid oklch(0.68 0.17 42 / 0.15)", padding: "10px 6px", minHeight: "120px" }}>
                   <div className="absolute top-1.5 right-2 text-xs font-black opacity-20" style={{ color: "oklch(0.68 0.17 42)" }}>{item.step}</div>
                   <div className="text-2xl mb-1">{item.icon}</div>
                   <div className="text-xs font-black" style={{ color: "oklch(0.52 0.17 42)" }}>{item.title}</div>
