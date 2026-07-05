@@ -401,17 +401,23 @@ export default function Home() {
       {/* ── PAYPAY ── */}
       <section id="paypay" className="px-4 py-6">
         <Fade>
-          <div className="p-5 rounded-3xl" style={{ background: "white", border: "3px solid oklch(0.68 0.17 42 / 0.25)", boxShadow: "0 4px 24px oklch(0.68 0.17 42 / 0.10)" }}>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-3"
-              style={{ background: "oklch(0.68 0.17 42 / 0.12)", color: "oklch(0.52 0.17 42)" }}>
-              1
+          <div className="rounded-3xl overflow-hidden" style={{ boxShadow: "0 4px 24px oklch(0.68 0.17 42 / 0.18)" }}>
+            {/* 背景写真エリア */}
+            <div className="relative h-48">
+              <img src={CAT_NEW2} alt="" className="w-full h-full object-cover" />
+              <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, oklch(0.68 0.17 42 / 0.25), oklch(0.68 0.17 42 / 0.55))" }} />
+              <div className="absolute inset-0 p-5 flex flex-col justify-end">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-2 self-start"
+                  style={{ background: "rgba(255,255,255,0.25)", backdropFilter: "blur(8px)", color: "white" }}>
+                  1
+                </div>
+                <h2 className="text-2xl font-black text-white drop-shadow">
+                  PayPayで<br />参加する
+                </h2>
+              </div>
             </div>
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="text-2xl font-black" style={{ color: "oklch(0.22 0.03 55)" }}>
-                PayPayで<br />参加する
-              </h2>
-              <img src={CAT_NEW1} alt="" className="w-16 h-16 rounded-full object-cover flex-shrink-0" style={{ border: "3px solid oklch(0.68 0.17 42 / 0.35)" }} />
-            </div>
+            {/* コンテンツエリア */}
+            <div className="p-5" style={{ background: "white", border: "3px solid oklch(0.68 0.17 42 / 0.25)", borderTop: "none", borderRadius: "0 0 1.5rem 1.5rem" }}>
             <p className="text-sm leading-relaxed mb-4" style={{ color: "oklch(0.45 0.025 60)" }}>
               保護猫たちの医療費・フード代など<br />毎月かかる費用に<br />大切に使わせていただきます<br />100円からでも本当にありがたいです！
             </p>
@@ -437,6 +443,7 @@ export default function Home() {
                 </div>
               ))}
             </div>
+            </div>
           </div>
         </Fade>
       </section>
@@ -444,17 +451,23 @@ export default function Home() {
       {/* ── AMAZON ── */}
       <section id="amazon" className="px-4 pb-6">
         <Fade>
-          <div className="p-5 rounded-3xl" style={{ background: "white", border: "3px solid oklch(0.80 0.14 80 / 0.35)", boxShadow: "0 4px 24px oklch(0.80 0.14 80 / 0.10)" }}>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-3"
-              style={{ background: "oklch(0.80 0.14 80 / 0.15)", color: "oklch(0.50 0.14 80)" }}>
-              2
+          <div className="rounded-3xl overflow-hidden" style={{ boxShadow: "0 4px 24px oklch(0.80 0.14 80 / 0.18)" }}>
+            {/* 背景写真エリア */}
+            <div className="relative h-48">
+              <img src={CAT_NEW4} alt="" className="w-full h-full object-cover" />
+              <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, oklch(0.80 0.14 80 / 0.20), oklch(0.65 0.14 80 / 0.60))" }} />
+              <div className="absolute inset-0 p-5 flex flex-col justify-end">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-2 self-start"
+                  style={{ background: "rgba(255,255,255,0.25)", backdropFilter: "blur(8px)", color: "white" }}>
+                  2
+                </div>
+                <h2 className="text-2xl font-black text-white drop-shadow">
+                  物資で<br />参加する
+                </h2>
+              </div>
             </div>
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="text-2xl font-black" style={{ color: "oklch(0.22 0.03 55)" }}>
-                物資で<br />参加する
-              </h2>
-              <img src={CAT_NEW1} alt="" className="w-16 h-16 rounded-full object-cover flex-shrink-0" style={{ border: "3px solid oklch(0.80 0.14 80 / 0.45)" }} />
-            </div>
+            {/* コンテンツエリア */}
+            <div className="p-5" style={{ background: "white", border: "3px solid oklch(0.80 0.14 80 / 0.35)", borderTop: "none", borderRadius: "0 0 1.5rem 1.5rem" }}>
             <p className="text-sm leading-relaxed mb-4" style={{ color: "oklch(0.45 0.025 60)" }}>
               保護した猫たちが生きていくのに必要な<br />フードや猫砂などを<br />Amazonの「ほしいものリスト」にまとめています<br />1つからでも大変助かります！<br />
               <span className="font-bold" style={{ color: "oklch(0.50 0.14 80)" }}>※ お互いの個人情報は分からないようになっています</span>
@@ -473,6 +486,7 @@ export default function Home() {
                 </div>
               ))}
             </div>
+            </div>
           </div>
         </Fade>
       </section>
@@ -480,17 +494,23 @@ export default function Home() {
       {/* ── 銀行振込 ── */}
       <section id="bank" className="px-4 pb-6">
         <Fade>
-          <div className="p-5 rounded-3xl" style={{ background: "white", border: "3px solid oklch(0.55 0.10 240 / 0.25)", boxShadow: "0 4px 24px oklch(0.55 0.10 240 / 0.08)" }}>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-3"
-              style={{ background: "oklch(0.55 0.10 240 / 0.10)", color: "oklch(0.40 0.10 240)" }}>
-              3
+          <div className="rounded-3xl overflow-hidden" style={{ boxShadow: "0 4px 24px oklch(0.55 0.10 240 / 0.15)" }}>
+            {/* 背景写真エリア */}
+            <div className="relative h-48">
+              <img src={CAT_NEW5} alt="" className="w-full h-full object-cover" />
+              <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, oklch(0.55 0.10 240 / 0.20), oklch(0.40 0.10 240 / 0.65))" }} />
+              <div className="absolute inset-0 p-5 flex flex-col justify-end">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-2 self-start"
+                  style={{ background: "rgba(255,255,255,0.25)", backdropFilter: "blur(8px)", color: "white" }}>
+                  3
+                </div>
+                <h2 className="text-2xl font-black text-white drop-shadow">
+                  銀行振込で<br />参加する
+                </h2>
+              </div>
             </div>
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="text-2xl font-black" style={{ color: "oklch(0.22 0.03 55)" }}>
-                銀行振込で<br />参加する
-              </h2>
-              <img src={CAT_NEW1} alt="" className="w-16 h-16 rounded-full object-cover flex-shrink-0" style={{ border: "3px solid oklch(0.55 0.10 240 / 0.35)" }} />
-            </div>
+            {/* コンテンツエリア */}
+            <div className="p-5" style={{ background: "white", border: "3px solid oklch(0.55 0.10 240 / 0.25)", borderTop: "none", borderRadius: "0 0 1.5rem 1.5rem" }}>
             <p className="text-sm leading-relaxed mb-4" style={{ color: "oklch(0.45 0.025 60)" }}>
               PayPayでのご支援と同様<br />保護猫活動の費用として<br />全額使用させていただきます<br />100円からでも大変ありがたいです！
             </p>
@@ -508,7 +528,7 @@ export default function Home() {
                 </div>
               ))}
             </div>
-
+            </div>
           </div>
         </Fade>
       </section>
