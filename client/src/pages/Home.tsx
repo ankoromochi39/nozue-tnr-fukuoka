@@ -40,12 +40,12 @@ const PAYPAY_QR  = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&dat
 
 // ── 写真データ（前半6枚=里親募集中、後半6枚=トライアル〜譲渡済み） ──
 const CATS_LOOKING: { src: string }[] = [
+  { src: "/manus-storage/looking_07_f91f473c.jpg" },
+  { src: "/manus-storage/looking_08_415946c6.webp" },
   { src: "/manus-storage/looking_01_400c8400.jpg" },
   { src: "/manus-storage/looking_04_da3ca09d.jpg" },
   { src: "/manus-storage/looking_05_cb7df4d7.jpg" },
   { src: "/manus-storage/looking_06_45db4e76.jpg" },
-  { src: "/manus-storage/looking_07_f91f473c.jpg" },
-  { src: "/manus-storage/looking_08_415946c6.webp" },
 ];
 const CATS_ADOPTED: { src: string }[] = [
   { src: CAT_SLEEPING },
