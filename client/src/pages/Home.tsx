@@ -8,6 +8,7 @@
  */
 
 import { useEffect, useRef, useState } from "react";
+import CatScrollAnimation from "@/components/CatScrollAnimation";
 
 // ── Asset URLs ──
 const PROFILE_ICON  = "/manus-storage/icon_cat_correct_487e5edc.jpg";
@@ -201,6 +202,7 @@ function HeroCollage() {
 export default function Home() {
   const pawPop = usePawPop();
   return (
+    <>
     <div className="min-h-screen overflow-x-hidden" style={{ background: "oklch(0.985 0.010 60)", fontFamily: "'M PLUS Rounded 1c', 'Noto Sans JP', sans-serif" }}>
 
       {/* ── HEADER ── */}
@@ -575,7 +577,9 @@ export default function Home() {
         </div>
         <div className="text-xs opacity-40 mt-4">© 2025 のずえんち All rights reserved.</div>
       </footer>
-
     </div>
+    {/* 猫スクロールアニメーション */}
+    <CatScrollAnimation />
+    </>
   );
 }
