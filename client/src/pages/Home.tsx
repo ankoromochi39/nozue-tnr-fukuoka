@@ -7,8 +7,13 @@
  * Layout: Mobile-first, single column, photo-heavy
  */
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import CatScrollAnimation from "@/components/CatScrollAnimation";
+
+// ── カードセクション用の新背景写真 ──
+const CARD_BG1 = "/manus-storage/card_bg1_c1d362a6.svg"; // 一緒に保護猫活動セクション
+const CARD_BG2 = "/manus-storage/card_bg2_2fe22393.svg"; // 物資カード
+const CARD_BG3 = "/manus-storage/card_bg3_28b8abee.svg"; // 銀行振込カード
 
 // ── Asset URLs ──
 const PROFILE_ICON  = "/manus-storage/icon_cat_correct_487e5edc.jpg";
@@ -44,7 +49,6 @@ const CATS_LOOKING: { src: string }[] = [
 ];
 const CATS_ADOPTED: { src: string }[] = [
   { src: CAT_SLEEPING },
-  { src: CAT_TABBY },
   { src: CAT_KITTENS },
   { src: CAT_RESCUE1 },
   { src: CAT_RESCUE2 },
@@ -201,6 +205,23 @@ function HeroCollage() {
 
 export default function Home() {
   const pawPop = usePawPop();
+
+  // ── 猫アニメーション再生トリガー ──
+  const [catAnimTrigger, setCatAnimTrigger] = useState(0);
+  const joinSectionRef = useRef<HTMLElement>(null);
+  const triggerCatAnim = useCallback(() => {
+    setCatAnimTrigger(prev => prev + 1);
+  }, []);
+  useEffect(() => {
+    const el = joinSectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => { if (entries[0].isIntersecting) triggerCatAnim(); },
+      { threshold: 0.2 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [triggerCatAnim]);
   return (
     <>
     <div className="min-h-screen overflow-x-hidden" style={{ background: "oklch(0.985 0.010 60)", fontFamily: "'M PLUS Rounded 1c', 'Noto Sans JP', sans-serif" }}>
@@ -360,7 +381,7 @@ export default function Home() {
         <div className="flex flex-col gap-4">
           <Fade delay={50}>
             <div className="rounded-2xl overflow-hidden shadow-sm border-2 border-white">
-              <video src={CAT_VIDEO2} controls playsInline muted className="w-full" style={{ maxHeight: 320, objectFit: "cover" }} />
+              <video src={CAT_VIDEO2} autoPlay controls playsInline muted loop className="w-full" style={{ maxHeight: 320, objectFit: "cover" }} />
               <div className="px-3 py-2 text-sm font-bold" style={{ background: "oklch(0.68 0.17 42 / 0.08)", color: "oklch(0.42 0.03 55)" }}>
                 なでなで気持ちよさそう🐾
               </div>
@@ -368,7 +389,7 @@ export default function Home() {
           </Fade>
           <Fade delay={100}>
             <div className="rounded-2xl overflow-hidden shadow-sm border-2 border-white">
-              <video src={CAT_VIDEO} controls playsInline muted className="w-full" style={{ maxHeight: 320, objectFit: "cover" }} />
+              <video src={CAT_VIDEO} autoPlay controls playsInline muted loop className="w-full" style={{ maxHeight: 320, objectFit: "cover" }} />
               <div className="px-3 py-2 text-sm font-bold" style={{ background: "oklch(0.68 0.17 42 / 0.08)", color: "oklch(0.42 0.03 55)" }}>
                 一生懸命ご飯を食べている姿が愛おしい💕
               </div>
@@ -378,7 +399,7 @@ export default function Home() {
       </section>
 
       {/* ── 支援セクション導入 — web2画像背景 ── */}
-      <section className="relative overflow-hidden" style={{ minHeight: "220px" }}>
+      <section ref={joinSectionRef} className="relative overflow-hidden" style={{ minHeight: "220px" }}>
         <img
           src="/manus-storage/support_bg_41c6b576.jpg"
           alt="保護猫たち"
@@ -406,7 +427,7 @@ export default function Home() {
           <div className="rounded-3xl overflow-hidden" style={{ boxShadow: "0 4px 24px oklch(0.68 0.17 42 / 0.18)" }}>
             {/* 背景写真エリア */}
             <div className="relative h-48">
-              <img src={CAT_NEW2} alt="" className="w-full h-full object-cover" />
+              <img src={CARD_BG1} alt="" className="w-full h-full object-cover" />
               <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, oklch(0.68 0.17 42 / 0.25), oklch(0.68 0.17 42 / 0.55))" }} />
               <div className="absolute inset-0 p-5 flex flex-col justify-end">
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-2 self-start"
@@ -456,7 +477,7 @@ export default function Home() {
           <div className="rounded-3xl overflow-hidden" style={{ boxShadow: "0 4px 24px oklch(0.80 0.14 80 / 0.18)" }}>
             {/* 背景写真エリア */}
             <div className="relative h-48">
-              <img src={CAT_NEW4} alt="" className="w-full h-full object-cover" />
+              <img src={CARD_BG2} alt="" className="w-full h-full object-cover" />
               <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, oklch(0.80 0.14 80 / 0.20), oklch(0.65 0.14 80 / 0.60))" }} />
               <div className="absolute inset-0 p-5 flex flex-col justify-end">
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-2 self-start"
@@ -499,7 +520,7 @@ export default function Home() {
           <div className="rounded-3xl overflow-hidden" style={{ boxShadow: "0 4px 24px oklch(0.55 0.10 240 / 0.15)" }}>
             {/* 背景写真エリア */}
             <div className="relative h-48">
-              <img src={CAT_NEW5} alt="" className="w-full h-full object-cover" />
+              <img src={CARD_BG3} alt="" className="w-full h-full object-cover" />
               <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, oklch(0.55 0.10 240 / 0.20), oklch(0.40 0.10 240 / 0.65))" }} />
               <div className="absolute inset-0 p-5 flex flex-col justify-end">
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-2 self-start"
@@ -579,7 +600,7 @@ export default function Home() {
       </footer>
     </div>
     {/* 猫スクロールアニメーション */}
-    <CatScrollAnimation />
+    <CatScrollAnimation externalTrigger={catAnimTrigger} />
     </>
   );
 }

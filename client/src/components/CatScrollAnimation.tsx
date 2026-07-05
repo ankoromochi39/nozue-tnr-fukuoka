@@ -183,7 +183,11 @@ function deriveState(t: number, layout: Layout): AnimState {
 }
 
 // ── Component ─────────────────────────────────────────────────────────────────
-export default function CatScrollAnimation() {
+interface CatScrollAnimationProps {
+  externalTrigger?: number; // increment to force replay
+}
+
+export default function CatScrollAnimation({ externalTrigger }: CatScrollAnimationProps = {}) {
   const [isMobile, setIsMobile] = useState(false);
   const [elapsed, setElapsed] = useState(0);       // seconds into animation
   const [isPlaying, setIsPlaying] = useState(false);
@@ -223,6 +227,14 @@ export default function CatScrollAnimation() {
 
     rafRef.current = requestAnimationFrame(tick);
   }, []);
+
+  // External trigger (e.g. from parent when a section enters view)
+  useEffect(() => {
+    if (externalTrigger && externalTrigger > 0) {
+      startAnimation();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [externalTrigger]);
 
   // IntersectionObserver — trigger when component enters viewport
   useEffect(() => {
