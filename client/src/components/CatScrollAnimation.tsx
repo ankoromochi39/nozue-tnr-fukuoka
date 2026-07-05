@@ -62,8 +62,8 @@ interface Layout {
 const MOBILE_LAYOUT: Layout = {
   catSize: 64,
   yarnSize: 40,
-  barHeight: 90,
-  safeBottom: 20,
+  barHeight: 0,   // unused — we use direct bottom positioning
+  safeBottom: 0,  // unused — calculated inline with CSS
   startX: 10,
   yarnInitX: 30,
   catEndX: 78,
@@ -73,8 +73,8 @@ const MOBILE_LAYOUT: Layout = {
 const DESKTOP_LAYOUT: Layout = {
   catSize: 90,
   yarnSize: 56,
-  barHeight: 100,
-  safeBottom: 0,
+  barHeight: 0,   // unused
+  safeBottom: 0,  // unused
   startX: 7,
   yarnInitX: 20,
   catEndX: 76,
@@ -260,9 +260,18 @@ export default function CatScrollAnimation() {
   // Only show when visible or still playing
   const shouldShow = isVisible || isPlaying;
 
-  const bottomStyle = isMobile
-    ? `calc(env(safe-area-inset-bottom, 0px) + ${layout.safeBottom}px)`
-    : `${layout.safeBottom}px`;
+  // Mobile: cat sits just above the home bar
+  // catBottom = safe-area-inset-bottom + 16px (small gap above home bar)
+  // This keeps the cat fully visible and clear of the home bar
+  const catBottom = isMobile
+    ? `calc(env(safe-area-inset-bottom, 20px) + 16px)`
+    : `16px`;
+  const yarnBottom = catBottom;
+
+  // Overlay height = safe-area + 16px gap + catSize + a little extra for float
+  const overlayHeight = isMobile
+    ? `calc(env(safe-area-inset-bottom, 20px) + ${layout.catSize + 32}px)`
+    : `${layout.catSize + 40}px`;
 
   return (
     <div
@@ -273,9 +282,7 @@ export default function CatScrollAnimation() {
         bottom: 0,
         left: 0,
         right: 0,
-        height: isMobile
-          ? `calc(${layout.barHeight}px + env(safe-area-inset-bottom, 0px))`
-          : `${layout.barHeight}px`,
+        height: overlayHeight,
         pointerEvents: "none",
         zIndex: 40,
         opacity: shouldShow ? state.opacity : 0,
@@ -291,7 +298,7 @@ export default function CatScrollAnimation() {
           alt=""
           style={{
             position: "absolute",
-            bottom: bottomStyle,
+            bottom: yarnBottom,
             left: `${state.yarnX}%`,
             width: layout.yarnSize,
             height: layout.yarnSize,
@@ -307,7 +314,7 @@ export default function CatScrollAnimation() {
         alt=""
         style={{
           position: "absolute",
-          bottom: bottomStyle,
+          bottom: catBottom,
           left: `${state.catX}%`,
           width: layout.catSize,
           height: layout.catSize,
