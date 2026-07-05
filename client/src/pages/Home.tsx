@@ -295,19 +295,17 @@ export default function Home() {
               { step: "03", icon: "💕", title: "Return", sub: "譲渡", desc: "新しい家族のもとへ" },
             ].map((item, i) => (
               <>
-                <div key={item.step} className="flex-1 rounded-2xl p-2 text-center relative overflow-hidden"
-                  style={{ background: "white", border: "1.5px solid oklch(0.68 0.17 42 / 0.15)" }}>
+                <div key={item.step} className="flex-1 rounded-2xl text-center relative overflow-hidden"
+                  style={{ background: "white", border: "1.5px solid oklch(0.68 0.17 42 / 0.15)", padding: "10px 6px" }}>
                   <div className="absolute top-1.5 right-2 text-xs font-black opacity-20" style={{ color: "oklch(0.68 0.17 42)" }}>{item.step}</div>
                   <div className="text-2xl mb-1">{item.icon}</div>
                   <div className="text-xs font-black" style={{ color: "oklch(0.52 0.17 42)" }}>{item.title}</div>
                   <div className="text-xs font-bold mb-1" style={{ color: "oklch(0.52 0.17 42)" }}>（{item.sub}）</div>
-                  <div className="text-xs leading-tight" style={{ color: "oklch(0.50 0.02 60)" }}>{item.desc}</div>
+                  <div className="text-xs leading-tight" style={{ color: "oklch(0.50 0.02 60)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.desc}</div>
                 </div>
                 {i < 2 && (
-                  <div className="flex-shrink-0 flex items-center justify-center" style={{ width: "18px" }}>
-                    <svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M1 1L13 9L1 17" stroke="oklch(0.68 0.17 42)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-                    </svg>
+                  <div className="flex-shrink-0 flex items-center justify-center" style={{ width: "16px" }}>
+                    <span style={{ color: "oklch(0.68 0.17 42)", fontSize: "12px" }}>&#9654;</span>
                   </div>
                 )}
               </>
