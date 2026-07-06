@@ -276,7 +276,7 @@ export default function Home() {
             </h1>
             <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.92)", textShadow: "0 1px 4px rgba(100,30,0,0.5)" }}>
               人間(4人) 犬(1匹) 猫(10匹)の大家族母ちゃんが<br />
-              TNR活動(猫保護 → 去勢→返す)をしています。<br />
+              TNR活動(猫保護 → 去勢 → 返す)をしています。<br />
               一緒に猫の命を救いませんか？
             </p>
           </Fade>
