@@ -38,8 +38,12 @@ const AMAZON_URL = "https://www.amazon.jp/hz/wishlist/ls/232W7EZA4H3Q1?ref_=wl_s
 const INSTAGRAM_URL = "https://www.instagram.com/nozue.tnr";
 const PAYPAY_QR  = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(PAYPAY_URL)}&bgcolor=FFF8F0&color=C2522A&margin=14`;
 
-// ── 写真データ（前半6枚=里親募集中、後半6枚=トライアル〜譲渡済み） ──
+// ── 写真データ（前半10枚=里親募集中、後半6枚=トライアル〜譲渡済み） ──
 const CATS_LOOKING: { src: string }[] = [
+  { src: "/manus-storage/looking_new1_11cf2d6d.jpg" },
+  { src: "/manus-storage/looking_new2_d08effe8.jpg" },
+  { src: "/manus-storage/looking_new3_4c40830f.jpg" },
+  { src: "/manus-storage/looking_new4_e45802e3.jpg" },
   { src: "/manus-storage/looking_07_f91f473c.jpg" },
   { src: "/manus-storage/looking_08_415946c6.webp" },
   { src: "/manus-storage/looking_01_400c8400.jpg" },
@@ -272,7 +276,7 @@ export default function Home() {
             </h1>
             <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.92)", textShadow: "0 1px 4px rgba(100,30,0,0.5)" }}>
               人間(4人) 犬(1匹) 猫(10匹)の大家族母ちゃんが<br />
-              TNR活動(猫保護 → 去勢 → 譲渡)をしています。<br />
+              TNR活動(猫保護 → 去勢→返す)をしています。<br />
               一緒に猫の命を救いませんか？
             </p>
           </Fade>
