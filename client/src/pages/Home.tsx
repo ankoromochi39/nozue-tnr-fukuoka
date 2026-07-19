@@ -11,26 +11,26 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import CatScrollAnimation from "@/components/CatScrollAnimation";
 
 // ── カードセクション用の新背景写真 ──
-const CARD_BG1 = "/manus-storage/card_bg1_c1d362a6.svg"; // 一緒に保護猫活動セクション
-const CARD_BG2 = "/manus-storage/card_bg2_new_513b026e.svg"; // 物資カード
-const CARD_BG3 = "/manus-storage/card_bg3_new_367b8d5c.svg"; // 銀行振込カード
+const CARD_BG1 = "/images/card_bg1_c1d362a6.svg"; // 一緒に保護猫活動セクション
+const CARD_BG2 = "/images/card_bg2_new_513b026e.svg"; // 物資カード
+const CARD_BG3 = "/images/card_bg3_new_367b8d5c.svg"; // 銀行振込カード
 
 // ── Asset URLs ──
-const PROFILE_ICON  = "/manus-storage/icon_cat_correct_487e5edc.jpg";
-const CAT_TABBY     = "/manus-storage/cat1-tabby_e53711c8.jpg";
-const CAT_WHITE     = "/manus-storage/cat2-white-blue_7d2edb32.jpg";
-const CAT_FLUFFY    = "/manus-storage/cat3-fluffy_485f2c8f.jpg";
-const CAT_KITTENS   = "/manus-storage/cat4-kittens_4f3810ed.jpg";
-const CAT_NEW1      = "/manus-storage/cat-new1_9f17cbd4.jpg";
-const CAT_NEW2      = "/manus-storage/cat-new2_a19b2be6.jpg";
-const CAT_NEW4      = "/manus-storage/cat-new4_ac10b6c2.jpg";
-const CAT_NEW5      = "/manus-storage/cat-new5_93c2636e.jpg";
-const CAT_NEW6      = "/manus-storage/cat-new6_a0ce4585.jpg";
-const CAT_SLEEPING  = "/manus-storage/cat-sleeping_59a8ed07.jpg";
-const CAT_RESCUE1   = "/manus-storage/cat-rescue1_14edf6f2.jpg";
-const CAT_RESCUE2   = "/manus-storage/cat-rescue2_1d7c4153.jpg";
-const CAT_VIDEO     = "/manus-storage/cats-video_dcfef93a.mp4";
-const CAT_VIDEO2    = "/manus-storage/cat-video2_a5a3194e.mp4";
+const PROFILE_ICON  = "/images/icon_cat_correct_487e5edc.jpg";
+const CAT_TABBY     = "/images/cat1-tabby_e53711c8.jpg";
+const CAT_WHITE     = "/images/cat2-white-blue_7d2edb32.jpg";
+const CAT_FLUFFY    = "/images/cat3-fluffy_485f2c8f.jpg";
+const CAT_KITTENS   = "/images/cat4-kittens_4f3810ed.jpg";
+const CAT_NEW1      = "/images/cat-new1_9f17cbd4.jpg";
+const CAT_NEW2      = "/images/cat-new2_a19b2be6.jpg";
+const CAT_NEW4      = "/images/cat-new4_ac10b6c2.jpg";
+const CAT_NEW5      = "/images/cat-new5_93c2636e.jpg";
+const CAT_NEW6      = "/images/cat-new6_a0ce4585.jpg";
+const CAT_SLEEPING  = "/images/cat-sleeping_59a8ed07.jpg";
+const CAT_RESCUE1   = "/images/cat-rescue1_14edf6f2.jpg";
+const CAT_RESCUE2   = "/images/cat-rescue2_1d7c4153.jpg";
+const CAT_VIDEO     = "/images/cats-video_dcfef93a.mp4";
+const CAT_VIDEO2    = "/images/cat-video2_a5a3194e.mp4";
 
 const PAYPAY_ID  = "nozuenchi";
 const PAYPAY_URL = "https://qr.paypay.ne.jp/p2p01_LiCyVOXNFDY4HhDR";
@@ -40,35 +40,35 @@ const PAYPAY_QR  = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&dat
 
 // ── 写真データ（前半10枚=里親募集中、後半6枚=トライアル〜譲渡済み） ──
 const CATS_LOOKING: { src: string }[] = [
-  { src: "/manus-storage/looking_new1_11cf2d6d.jpg" },
-  { src: "/manus-storage/looking_new2_d08effe8.jpg" },
-  { src: "/manus-storage/looking_new3_4c40830f.jpg" },
-  { src: "/manus-storage/looking_new4_e45802e3.jpg" },
-  { src: "/manus-storage/looking_07_f91f473c.jpg" },
-  { src: "/manus-storage/looking_08_415946c6.webp" },
-  { src: "/manus-storage/looking_01_400c8400.jpg" },
-  { src: "/manus-storage/looking_04_da3ca09d.jpg" },
-  { src: "/manus-storage/looking_05_cb7df4d7.jpg" },
-  { src: "/manus-storage/looking_06_45db4e76.jpg" },
+  { src: "/images/looking_new1_11cf2d6d.jpg" },
+  { src: "/images/looking_new2_d08effe8.jpg" },
+  { src: "/images/looking_new3_4c40830f.jpg" },
+  { src: "/images/looking_new4_e45802e3.jpg" },
+  { src: "/images/looking_07_f91f473c.jpg" },
+  { src: "/images/looking_08_415946c6.webp" },
+  { src: "/images/looking_01_400c8400.jpg" },
+  { src: "/images/looking_04_da3ca09d.jpg" },
+  { src: "/images/looking_05_cb7df4d7.jpg" },
+  { src: "/images/looking_06_45db4e76.jpg" },
 ];
 const CATS_ADOPTED: { src: string }[] = [
   { src: CAT_SLEEPING },
   { src: CAT_KITTENS },
   { src: CAT_RESCUE1 },
   { src: CAT_RESCUE2 },
-  { src: "/manus-storage/adopted_01_bcb36104.jpg" },
-  { src: "/manus-storage/adopted_04_958f5047.jpg" },
-  { src: "/manus-storage/adopted_05_65b580d8.jpg" },
-  { src: "/manus-storage/adopted_06_a4baa389.jpg" },
-  { src: "/manus-storage/adopted_07_25a8efde.jpg" },
-  { src: "/manus-storage/adopted_08_ceef2aaa.jpg" },
-  { src: "/manus-storage/adopted_09_c51fd1b2.jpg" },
-  { src: "/manus-storage/adopted_10_543bc9b4.jpg" },
-  { src: "/manus-storage/adopted_11_7132b815.jpg" },
-  { src: "/manus-storage/adopted_12_fc5db094.jpg" },
-  { src: "/manus-storage/adopted_13_fffd4517.jpg" },
-  { src: "/manus-storage/adopted_14_509b10bf.jpg" },
-  { src: "/manus-storage/adopted_15_5bdf4ad1.jpg" },
+  { src: "/images/adopted_01_bcb36104.jpg" },
+  { src: "/images/adopted_04_958f5047.jpg" },
+  { src: "/images/adopted_05_65b580d8.jpg" },
+  { src: "/images/adopted_06_a4baa389.jpg" },
+  { src: "/images/adopted_07_25a8efde.jpg" },
+  { src: "/images/adopted_08_ceef2aaa.jpg" },
+  { src: "/images/adopted_09_c51fd1b2.jpg" },
+  { src: "/images/adopted_10_543bc9b4.jpg" },
+  { src: "/images/adopted_11_7132b815.jpg" },
+  { src: "/images/adopted_12_fc5db094.jpg" },
+  { src: "/images/adopted_13_fffd4517.jpg" },
+  { src: "/images/adopted_14_509b10bf.jpg" },
+  { src: "/images/adopted_15_5bdf4ad1.jpg" },
 ];
 
 // ── 肉球ポップアニメーション ──
@@ -127,7 +127,7 @@ function Fade({ children, className = "", delay = 0 }: { children: React.ReactNo
 }
 
 // ── Paw print ──
-const PAW_ICON = "/manus-storage/paw_icon_eb761072.png";
+const PAW_ICON = "/images/paw_icon_eb761072.png";
 function Paw({ className = "", style }: { className?: string; color?: string; style?: React.CSSProperties }) {
   return <img src={PAW_ICON} alt="🐾" className={className} style={{ display: "inline-block", ...style }} />;
 }
@@ -253,7 +253,7 @@ export default function Home() {
       <section className="relative overflow-hidden" style={{ minHeight: "88vw", maxHeight: "520px" }}>
         {/* 背景画像 */}
         <img
-          src="/manus-storage/hero_bg_b6ee0c87.jpg"
+          src="/images/hero_bg_b6ee0c87.jpg"
           alt="保護猫たち"
           className="absolute inset-0 w-full h-full object-cover"
           style={{ objectPosition: "center top" }}
@@ -315,9 +315,9 @@ export default function Home() {
           </p>
           <div className="flex items-center gap-1">
             {[
-              { step: "01", iconSrc: "/manus-storage/icon_01_new_38185f60.png", title: "Trap", sub: "保護", desc: "安全に保護" },
-              { step: "02", iconSrc: "/manus-storage/icon_02_new_bd6cdfe4.png", title: "Neuter", sub: "去勢", desc: "不妊・去勢手術を行う" },
-              { step: "03", iconSrc: "/manus-storage/icon_03_new_dcfb6832.png", title: "Return", sub: "返す", desc: "元の環境に戻す" },
+              { step: "01", iconSrc: "/images/icon_01_new_38185f60.png", title: "Trap", sub: "保護", desc: "安全に保護" },
+              { step: "02", iconSrc: "/images/icon_02_new_bd6cdfe4.png", title: "Neuter", sub: "去勢", desc: "不妊・去勢手術を行う" },
+              { step: "03", iconSrc: "/images/icon_03_new_dcfb6832.png", title: "Return", sub: "返す", desc: "元の環境に戻す" },
             ].map((item, i) => (
               <>
                 {i > 0 && (
@@ -403,7 +403,7 @@ export default function Home() {
       {/* ── 支援セクション導入 — web2画像背景 ── */}
       <section ref={joinSectionRef} className="relative overflow-hidden" style={{ minHeight: "220px" }}>
         <img
-          src="/manus-storage/support_bg_41c6b576.jpg"
+          src="/images/support_bg_41c6b576.jpg"
           alt="保護猫たち"
           className="absolute inset-0 w-full h-full object-cover"
           style={{ objectPosition: "center center" }}

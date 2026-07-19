@@ -22,12 +22,12 @@ import { useEffect, useRef, useState, useCallback } from "react";
 
 // ── SVG URLs (v2) ─────────────────────────────────────────────────────────────
 const SVG = {
-  looking: "/manus-storage/cat_looking_03800335.svg",
-  tilt:    "/manus-storage/cat_tilt_18822e17.svg",
-  crouch:  "/manus-storage/cat_crouch_7e3092f1.svg",
-  play:    "/manus-storage/cat_play_602c5a8d.svg",
-  walk:    "/manus-storage/cat_walk_edd506d5.svg",
-  yarn:    "/manus-storage/yarn_new_a2bf70cb.png",
+  looking: "/images/cat_looking_03800335.svg",
+  tilt:    "/images/cat_tilt_18822e17.svg",
+  crouch:  "/images/cat_crouch_7e3092f1.svg",
+  play:    "/images/cat_play_602c5a8d.svg",
+  walk:    "/images/cat_walk_edd506d5.svg",
+  yarn:    "/images/yarn_new_a2bf70cb.png",
 };
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
