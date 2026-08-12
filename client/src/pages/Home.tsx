@@ -36,7 +36,7 @@ const PAYPAY_ID  = "nozuenchi";
 const PAYPAY_URL = "https://qr.paypay.ne.jp/p2p01_LiCyVOXNFDY4HhDR";
 const AMAZON_URL = "https://www.amazon.jp/hz/wishlist/ls/232W7EZA4H3Q1?ref_=wl_share";
 const INSTAGRAM_URL = "https://www.instagram.com/nozue.tnr";
-const PAYPAY_QR  = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(PAYPAY_URL)}&bgcolor=FFF8F0&color=C2522A&margin=14`;
+const PAYPAY_QR  = "/images/paypay_qr.png";
 
 // ── 写真データ（前半10枚=里親募集中、後半6枚=トライアル〜譲渡済み） ──
 const CATS_LOOKING: { src: string }[] = [
