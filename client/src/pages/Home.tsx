@@ -44,8 +44,6 @@ const CATS_LOOKING: { src: string }[] = [
   { src: "/images/looking_new2_d08effe8.jpg" },
   { src: "/images/looking_new3_4c40830f.jpg" },
   { src: "/images/looking_new4_e45802e3.jpg" },
-  { src: "/images/looking_07_f91f473c.jpg" },
-  { src: "/images/looking_08_415946c6.webp" },
   { src: "/images/looking_01_400c8400.jpg" },
   { src: "/images/looking_04_da3ca09d.jpg" },
   { src: "/images/looking_05_cb7df4d7.jpg" },
@@ -69,6 +67,8 @@ const CATS_ADOPTED: { src: string }[] = [
   { src: "/images/adopted_13_fffd4517.jpg" },
   { src: "/images/adopted_14_509b10bf.jpg" },
   { src: "/images/adopted_15_5bdf4ad1.jpg" },
+  { src: "/images/looking_07_f91f473c.jpg" },
+  { src: "/images/looking_08_415946c6.webp" },
 ];
 
 // ── 肉球ポップアニメーション ──
