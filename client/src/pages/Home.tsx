@@ -33,7 +33,7 @@ const CAT_VIDEO     = "/images/cats-video_dcfef93a.mp4";
 const CAT_VIDEO2    = "/images/cat-video2_a5a3194e.mp4";
 
 const PAYPAY_ID  = "nozuenchi";
-const PAYPAY_URL = "https://qr.paypay.ne.jp/p2p01_LiCyVOXNFDY4HhDR";
+const PAYPAY_URL = "https://qr.paypay.ne.jp/p2p01_Tzt9uZ0c8drPehV1";
 const AMAZON_URL = "https://www.amazon.jp/hz/wishlist/ls/232W7EZA4H3Q1?ref_=wl_share";
 const INSTAGRAM_URL = "https://www.instagram.com/nozue.tnr";
 const PAYPAY_QR  = "/images/paypay_qr.png";
