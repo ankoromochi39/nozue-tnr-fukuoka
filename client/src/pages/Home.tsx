@@ -40,10 +40,11 @@ const PAYPAY_QR  = "/images/paypay_qr.png";
 
 // ── 写真データ（前半10枚=里親募集中、後半6枚=トライアル〜譲渡済み） ──
 const CATS_LOOKING: { src: string }[] = [
-  { src: "/images/looking_new1_11cf2d6d.jpg" },
-  { src: "/images/looking_new2_d08effe8.jpg" },
-  { src: "/images/looking_new3_4c40830f.jpg" },
-  { src: "/images/looking_new4_e45802e3.jpg" },
+  { src: "/images/looking_new5_kittens.jpg" },
+  { src: "/images/looking_new6_tabby1.jpg" },
+  { src: "/images/looking_new7_tabby2.jpg" },
+  { src: "/images/looking_new8_tabby3.jpg" },
+  { src: "/images/looking_new9_tabby4.jpg" },
   { src: "/images/looking_01_400c8400.jpg" },
   { src: "/images/looking_04_da3ca09d.jpg" },
   { src: "/images/looking_05_cb7df4d7.jpg" },
