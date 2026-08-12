@@ -11,9 +11,9 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import CatScrollAnimation from "@/components/CatScrollAnimation";
 
 // ── カードセクション用の新背景写真 ──
-const CARD_BG1 = "/images/card_bg1_c1d362a6.svg"; // 一緒に保護猫活動セクション
-const CARD_BG2 = "/images/card_bg2_new_513b026e.svg"; // 物資カード
-const CARD_BG3 = "/images/card_bg3_new_367b8d5c.svg"; // 銀行振込カード
+const CARD_BG1 = "/images/card_bg1_c1d362a6.jpg"; // 一緒に保護猫活動セクション
+const CARD_BG2 = "/images/card_bg2_new_513b026e.jpg"; // 物資カード
+const CARD_BG3 = "/images/card_bg3_new_367b8d5c.jpg"; // 銀行振込カード
 
 // ── Asset URLs ──
 const PROFILE_ICON  = "/images/icon_cat_correct_487e5edc.jpg";
